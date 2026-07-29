@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunnah Safar — A Sacred Journey to Nikah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Supabase JS SDK (required for Auth + Database) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          maroon: { DEFAULT: '#1F5C43', dark: '#123D2C', light: '#2E7D5B' },
+          rose: { DEFAULT: '#6E9B76', light: '#E7F0E9' },
+          gold: { DEFAULT: '#C6963A', light: '#E4C574', dark: '#9C7529' },
+          ivory: '#FBF5EC',
+          ink: '#20261F',
+        },
+        fontFamily: {
+          display: ['"Playfair Display"', 'serif'],
+          body: ['Jost', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  body { font-family: 'Jost', sans-serif; background-color: #FBF5EC; color: #2A1B1E; }
+  .font-display { font-family: 'Playfair Display', serif; }
+
+  /* Ornamental mandala pattern for hero background */
+  .mandala-bg {
+    background-image: radial-gradient(circle at 15% 20%, rgba(198,150,58,0.10) 0, transparent 45%),
+                       radial-gradient(circle at 85% 15%, rgba(198,150,58,0.08) 0, transparent 40%),
+                       radial-gradient(circle at 50% 90%, rgba(198,150,58,0.10) 0, transparent 50%);
+  }
+
+  /* Corner flourish used on invitation-style cards */
+  .corner-flourish { position: relative; }
+  .corner-flourish::before,
+  .corner-flourish::after {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #C6963A;
+    opacity: 0.9;
+  }
+  .corner-flourish::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .corner-flourish::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+  .divider-motif {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+  }
+  .divider-motif .line { height: 1px; width: 56px; background: linear-gradient(90deg, transparent, #C6963A, transparent); }
+
+  select.filter-select {
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239C7529' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+  }
+
+  .profile-card:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -18px rgba(92,26,36,0.35); }
+  .profile-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+
+  .avatar-ring {
+    background: conic-gradient(from 180deg, #C6963A, #E4C574, #C6963A);
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(35%) sepia(60%) saturate(500%) hue-rotate(2deg); }
+
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- First-visit Bismillah splash — shown once per browser, then never again -->
+<div id="bismillahSplash" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-b from-maroon-dark to-maroon transition-opacity duration-700">
+  <div class="text-center px-6">
+    <div class="text-gold text-5xl mb-5 animate-pulse">☾</div>
+    <p class="font-display text-gold text-3xl sm:text-4xl mb-3" style="font-family:'Amiri','Playfair Display',serif;" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="text-ivory/70 font-body text-xs sm:text-sm mb-8">In the name of Allah, the Most Gracious, the Most Merciful</p>
+    <p class="font-display text-ivory text-2xl mb-1">Sunnah Safar<span class="text-gold">.</span></p>
+    <p class="text-ivory/50 font-body text-xs uppercase tracking-[3px] mb-8">A Sacred Journey to Nikah</p>
+    <div class="flex items-center justify-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce" style="animation-delay:0ms"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce" style="animation-delay:150ms"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-gold/70 animate-bounce" style="animation-delay:300ms"></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="sticky top-0 z-50 bg-ivory/90 backdrop-blur border-b border-gold/30">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-20">
+    <a href="#home" class="flex items-center gap-3">
+      <span class="w-11 h-11 rounded-full bg-maroon flex items-center justify-center text-gold text-lg">
+        <i class="fa-solid fa-mosque"></i>
+      </span>
+      <span class="font-display text-2xl text-maroon tracking-wide">Sunnah Safar<span class="text-gold">.</span></span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-10 font-body text-[15px] tracking-wide text-ink/80">
+      <a href="#home" class="hover:text-maroon transition-colors">Home</a>
+      <a href="#search" class="hover:text-maroon transition-colors">Search</a>
+      <a href="#about" class="hover:text-maroon transition-colors">About</a>
+      <a href="#register" id="registerNavLink" class="hover:text-maroon transition-colors">Register</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-3">
+      <button id="notifBtn" class="hidden relative px-3 py-2.5 rounded-full text-maroon font-body text-sm hover:bg-maroon/5 transition-colors">
+        <i class="fa-solid fa-bell text-gold"></i>
+        <span id="notifBadge" class="hidden absolute -top-0.5 -right-0.5 bg-maroon text-ivory text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">0</span>
+      </button>
+      <button id="myInterestsBtn" class="hidden px-4 py-2.5 rounded-full text-maroon font-body text-sm hover:bg-maroon/5 transition-colors">
+        <i class="fa-solid fa-heart text-gold"></i> Interests
+      </button>
+      <button id="shortlistBtn" class="hidden px-4 py-2.5 rounded-full text-maroon font-body text-sm hover:bg-maroon/5 transition-colors">
+        <i class="fa-solid fa-star text-gold"></i> Shortlist
+      </button>
+      <button id="myProfileBtn" class="hidden px-4 py-2.5 rounded-full text-maroon font-body text-sm hover:bg-maroon/5 transition-colors">
+        <i class="fa-solid fa-user-pen text-gold"></i> My Profile
+      </button>
+      <button id="adminBtn" class="hidden px-4 py-2.5 rounded-full text-maroon font-body text-sm hover:bg-maroon/5 transition-colors">
+        <i class="fa-solid fa-shield-halved text-gold"></i> Admin
+      </button>
+      <button id="loginBtnDesktop" class="px-6 py-2.5 rounded-full border border-maroon text-maroon font-body text-sm tracking-wide hover:bg-maroon hover:text-ivory transition-colors">
+        Login
+      </button>
+    </div>
+
+    <button id="menuBtn" class="md:hidden text-maroon text-xl">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden border-t border-gold/30 bg-ivory px-5 py-5 space-y-4 font-body text-ink/80">
+    <a href="#home" class="block hover:text-maroon">Home</a>
+    <a href="#search" class="block hover:text-maroon">Search</a>
+    <a href="#about" class="block hover:text-maroon">About</a>
+    <a href="#register" id="registerNavLinkMobile" class="block hover:text-maroon">Register</a>
+    <button id="notifBtnMobile" class="hidden w-full text-left hover:text-maroon">Notifications <span id="notifBadgeMobile" class="hidden text-maroon font-bold">(0)</span></button>
+    <button id="myInterestsBtnMobile" class="hidden w-full text-left hover:text-maroon">Interests</button>
+    <button id="shortlistBtnMobile" class="hidden w-full text-left hover:text-maroon">Shortlist</button>
+    <button id="myProfileBtnMobile" class="hidden w-full text-left hover:text-maroon">My Profile</button>
+    <button id="adminBtnMobile" class="hidden w-full text-left hover:text-maroon">Admin</button>
+    <button id="loginBtnMobile" class="w-full mt-2 px-6 py-2.5 rounded-full border border-maroon text-maroon text-sm tracking-wide">Login</button>
+  </div>
+</nav>
+
+<!-- ============ LOGIN MODAL ============ -->
+<div id="loginModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div id="loginModalOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-sm px-8 py-9">
+    <button id="closeLoginModalBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <p class="font-display text-maroon text-2xl text-center mb-1">Welcome Back</p>
+    <p class="text-sm text-ink/50 font-body text-center mb-6">Login to view and manage your profile</p>
+
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Email</label>
+        <input id="loginEmail" type="email" required placeholder="you@example.com" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Password</label>
+        <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <button id="loginSubmitBtn" type="submit" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors">
+        Login
+      </button>
+      <p id="loginMessage" class="text-sm text-center min-h-[1.25rem]"></p>
+      <button id="forgotPasswordBtn" type="button" class="w-full text-xs text-ink/50 hover:text-maroon text-center">Forgot password?</button>
+    </form>
+
+    <div class="flex items-center gap-3 my-5">
+      <span class="flex-1 h-px bg-gold/30"></span>
+      <span class="text-xs text-ink/40 font-body">OR</span>
+      <span class="flex-1 h-px bg-gold/30"></span>
+    </div>
+
+    <div id="otpStep1">
+      <div class="flex gap-2">
+        <input id="otpEmail" type="email" placeholder="Email for a login link" class="flex-1 border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+        <button id="sendOtpBtn" type="button" class="px-4 py-2.5 rounded-full border border-gold/40 text-maroon text-sm hover:bg-ivory/60 transition-colors whitespace-nowrap">Send Link</button>
+      </div>
+    </div>
+    <div id="otpStep2" class="hidden">
+      <p class="text-sm text-center text-ink/60">Check your email and click the sign-in link to log in. You can close this window.</p>
+    </div>
+    <p id="otpMessage" class="text-sm text-center min-h-[1.25rem] mt-2"></p>
+  </div>
+</div>
+
+<!-- ============ VIEW PROFILE MODAL ============ -->
+<div id="shortlistModal" class="hidden fixed inset-0 z-[60] flex items-start justify-center px-5 pt-24">
+  <div class="absolute inset-0 bg-maroon-dark/40" onclick="closeShortlistModal()"></div>
+  <div class="relative bg-ivory rounded-2xl border border-gold/30 shadow-xl max-w-2xl w-full p-6 max-h-[70vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-display text-xl text-maroon">My Shortlist</h3>
+      <button onclick="closeShortlistModal()" class="text-ink/40 hover:text-maroon"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="shortlistGrid" class="grid sm:grid-cols-2 gap-4 font-body text-sm"></div>
+  </div>
+</div>
+
+<div id="notifModal" class="hidden fixed inset-0 z-[60] flex items-start justify-center px-5 pt-24">
+  <div class="absolute inset-0 bg-maroon-dark/40" onclick="closeNotifModal()"></div>
+  <div class="relative bg-ivory rounded-2xl border border-gold/30 shadow-xl max-w-md w-full p-6 max-h-[70vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-display text-xl text-maroon">Notifications</h3>
+      <button onclick="closeNotifModal()" class="text-ink/40 hover:text-maroon"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="notifList" class="space-y-3 font-body text-sm"></div>
+  </div>
+</div>
+
+<div id="viewProfileModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div id="viewProfileOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-md px-8 py-9 text-center">
+    <button id="closeViewProfileBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="w-24 h-24 mx-auto rounded-full avatar-ring p-[3px] mb-4">
+      <div class="w-full h-full rounded-full bg-rose-light flex items-center justify-center">
+        <i class="fa-solid fa-user text-maroon text-3xl"></i>
+      </div>
+    </div>
+    <h3 id="vpName" class="font-display text-2xl text-maroon"></h3>
+    <p id="vpMeta" class="text-sm text-ink/50 font-body mb-3"></p>
+    <p id="vpBio" class="hidden text-sm text-ink/70 font-body italic mb-4"></p>
+    <ul id="vpDetails" class="text-sm text-ink/70 font-body space-y-2 text-left bg-white rounded-xl border border-gold/20 p-5 mb-5"></ul>
+    <button id="sendInterestBtn" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2">
+      <i class="fa-solid fa-heart text-gold"></i> Send Interest
+    </button>
+    <p id="vpMessage" class="text-sm text-center min-h-[1.25rem] mt-3"></p>
+    <div class="flex items-center justify-center gap-5 mt-2">
+      <button id="reportProfileBtn" class="text-xs text-ink/40 hover:text-red-600"><i class="fa-solid fa-flag"></i> Report</button>
+      <button id="blockProfileBtn" class="text-xs text-ink/40 hover:text-red-600"><i class="fa-solid fa-ban"></i> Block</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MY PROFILE (EDIT) MODAL ============ -->
+<div id="myProfileModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div id="myProfileOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-lg px-8 py-9 max-h-[85vh] overflow-y-auto">
+    <button id="closeMyProfileBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <p class="font-display text-maroon text-2xl text-center mb-6">My Profile</p>
+    <div class="flex flex-col items-center mb-6">
+      <div class="w-24 h-24 rounded-full avatar-ring p-[3px] mb-3">
+        <div class="w-full h-full rounded-full bg-rose-light flex items-center justify-center overflow-hidden">
+          <img id="mpAvatarPreview" class="hidden w-full h-full object-cover rounded-full" src="">
+          <i id="mpAvatarIcon" class="fa-solid fa-user text-maroon text-3xl"></i>
+        </div>
+      </div>
+      <label class="text-xs text-maroon font-body cursor-pointer hover:underline">
+        Change Photo
+        <input id="mpAvatarInput" type="file" accept="image/*" class="hidden">
+      </label>
+    </div>
+    <div class="mb-6">
+      <div class="flex items-center justify-between text-xs text-ink/50 mb-1.5">
+        <span>Profile Completion</span>
+        <span id="mpCompletionPct">0%</span>
+      </div>
+      <div class="w-full h-2 rounded-full bg-gold/15 overflow-hidden">
+        <div id="mpCompletionBar" class="h-full bg-gold rounded-full transition-all duration-500" style="width:0%"></div>
+      </div>
+    </div>
+    <form id="myProfileForm" class="grid sm:grid-cols-2 gap-4">
+      <div class="sm:col-span-2">
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Full Name</label>
+        <input id="mpFullName" type="text" required class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Gender</label>
+        <div class="relative">
+          <i class="fa-solid fa-venus-mars absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+          <select id="mpGender" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Date of Birth</label>
+        <div class="relative">
+          <i class="fa-solid fa-cake-candles absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+          <input id="mpDob" type="date" required class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Sect (Maslak)</label>
+        <div class="relative">
+          <i class="fa-solid fa-star-and-crescent absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+          <select id="mpSect" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option>Muslim</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mother Tongue</label>
+        <select id="mpMotherTongue" class="filter-select w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option>Hindi</option><option>Bengali</option><option>Tamil</option><option>Telugu</option><option>Marathi</option><option>Punjabi</option><option>Urdu</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Profession</label>
+        <input id="mpProfession" type="text" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Education</label>
+        <input id="mpEducation" type="text" placeholder="e.g. B.Tech, MBA, Hafiz-e-Quran" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Marital Status</label>
+        <select id="mpMaritalStatus" class="filter-select w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Select…</option>
+          <option>Never Married</option>
+          <option>Divorced</option>
+          <option>Widowed</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Height</label>
+        <select id="mpHeight" class="filter-select w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Select…</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Native Place / Hometown</label>
+        <input id="mpNativePlace" type="text" placeholder="e.g. Lucknow, UP" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Annual Income</label>
+        <input id="mpIncome" type="text" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">State</label>
+        <input id="mpCity" type="text" placeholder="e.g. Maharashtra" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div class="sm:col-span-2">
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">About / Bio</label>
+        <textarea id="mpBio" rows="3" maxlength="500" placeholder="A few lines about yourself, your family, and what you're looking for…" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"></textarea>
+      </div>
+
+      <div class="sm:col-span-2 pt-2 border-t border-gold/20 mt-2">
+        <p class="text-xs uppercase tracking-wider text-gold-dark font-bold mb-3 mt-3">Family Details</p>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Father's Profession</label>
+        <input id="mpFatherProfession" type="text" placeholder="e.g. Retired Govt. Officer" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Family Type</label>
+        <select id="mpFamilyType" class="filter-select w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Select…</option>
+          <option>Joint Family</option>
+          <option>Nuclear Family</option>
+        </select>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Siblings</label>
+        <input id="mpSiblings" type="text" placeholder="e.g. 1 brother, 2 sisters (all married)" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+
+      <div class="sm:col-span-2 pt-2 border-t border-gold/20 mt-2">
+        <p class="text-xs uppercase tracking-wider text-gold-dark font-bold mb-3 mt-3">Deen &amp; Religious Practice</p>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Prayer (Namaz) Habit</label>
+        <select id="mpPrayerHabit" class="filter-select w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Select…</option>
+          <option>5 waqt namazi</option>
+          <option>Zyada tar namazi</option>
+          <option>Kabhi kabhi</option>
+          <option>Seekh raha/rahi hun</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Additional Practice</label>
+        <input id="mpPracticeNotes" type="text" placeholder="e.g. Hijab, Beard, Fasting" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+
+      <div class="sm:col-span-2 pt-2 border-t border-gold/20 mt-2">
+        <p class="text-xs uppercase tracking-wider text-gold-dark font-bold mb-3 mt-3">Private Contact Info</p>
+        <p class="text-[11px] text-ink/40 mb-3">Only visible to a match after mutual interest is accepted.</p>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mobile Number</label>
+        <input id="mpPhone" type="tel" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">WhatsApp Number</label>
+        <input id="mpWhatsapp" type="tel" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Wali / Guardian's Name</label>
+        <input id="mpWaliName" type="text" placeholder="e.g. Father / Brother's name" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Wali's Contact Number</label>
+        <input id="mpWaliPhone" type="tel" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <div class="sm:col-span-2">
+        <button id="myProfileSaveBtn" type="submit" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors">
+          Save Changes
+        </button>
+        <p id="myProfileMessage" class="text-sm text-center min-h-[1.25rem] mt-3"></p>
+      </div>
+    </form>
+
+    <div class="mt-2 pt-4 border-t border-gold/20">
+      <p class="text-xs uppercase tracking-wider text-gold-dark font-bold mb-2">Invite Friends &amp; Family</p>
+      <p class="text-[11px] text-ink/40 mb-3">Share your link — <span id="mpReferralCount">0</span> people have joined through it so far.</p>
+      <div class="flex gap-2">
+        <input id="mpReferralLink" type="text" readonly class="flex-1 border border-gold/40 rounded-lg px-3 py-2 text-xs bg-white/60 text-ink/60">
+        <button id="mpCopyReferralBtn" type="button" class="px-4 py-2 rounded-full border border-gold/40 text-maroon text-xs hover:bg-ivory/60 transition-colors whitespace-nowrap">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MY INTERESTS MODAL ============ -->
+<div id="interestsModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div id="interestsOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-lg px-8 py-9 max-h-[85vh] overflow-y-auto">
+    <button id="closeInterestsBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <p class="font-display text-maroon text-2xl text-center mb-6">My Interests</p>
+
+    <p class="font-body text-sm font-bold text-maroon mb-2">Received</p>
+    <div id="receivedInterestsList" class="space-y-2 mb-6">
+      <p class="text-sm text-ink/40 font-body">Loading…</p>
+    </div>
+
+    <p class="font-body text-sm font-bold text-maroon mb-2">Sent</p>
+    <div id="sentInterestsList" class="space-y-2">
+      <p class="text-sm text-ink/40 font-body">Loading…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN PANEL MODAL ============ -->
+<div id="adminModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div id="adminOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-2xl px-8 py-9 max-h-[85vh] overflow-y-auto">
+    <button id="closeAdminBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <p class="font-display text-maroon text-2xl text-center mb-6">Admin Panel</p>
+
+    <p class="font-body text-sm font-bold text-maroon mb-2">Pending Profiles</p>
+    <div id="adminPendingList" class="space-y-2 mb-8">
+      <p class="text-sm text-ink/40 font-body">Loading…</p>
+    </div>
+
+    <p class="font-body text-sm font-bold text-maroon mb-2">Reported Users</p>
+    <div id="adminReportsList" class="space-y-2">
+      <p class="text-sm text-ink/40 font-body">Loading…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SET NEW PASSWORD MODAL (shown after clicking the reset-password email link) ============ -->
+<div id="resetPasswordModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
+  <div class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-sm px-8 py-9">
+    <p class="font-display text-maroon text-2xl text-center mb-1">Set New Password</p>
+    <p class="text-sm text-ink/50 font-body text-center mb-6">Choose a new password for your account</p>
+    <form id="resetPasswordForm" class="space-y-4">
+      <input id="newPassword" type="password" required minlength="6" placeholder="New password (min 6 characters)" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      <button type="submit" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors">
+        Update Password
+      </button>
+      <p id="resetPasswordMessage" class="text-sm text-center min-h-[1.25rem]"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative bg-maroon mandala-bg">
+  <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background-image:radial-gradient(circle, #E4C574 1px, transparent 1px); background-size: 28px 28px;"></div>
+
+  <div class="relative max-w-3xl mx-auto px-5 sm:px-8 pt-14 pb-12 sm:pt-20 sm:pb-16 text-center">
+    <p class="font-display text-gold-light text-base sm:text-lg mb-3" style="font-family:'Amiri','Playfair Display',serif;" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <h1 class="font-display italic text-3xl sm:text-5xl leading-tight text-ivory">
+      A Bond Rooted in <span class="text-gold">Sukoon</span>
+    </h1>
+    <div class="divider-motif my-5">
+      <span class="line"></span>
+      <i class="fa-solid fa-moon text-gold text-xs"></i>
+      <span class="line"></span>
+    </div>
+    <p class="font-display text-ivory text-base sm:text-lg mb-3 leading-relaxed" style="font-family:'Amiri','Playfair Display',serif;" dir="rtl">
+      وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+    </p>
+    <p class="text-ivory/75 font-body max-w-xl mx-auto text-sm sm:text-base mb-2">
+      "And among His signs is that He created for you spouses from among yourselves, that you may find tranquility in them, and He placed between you love and mercy."
+    </p>
+    <p class="text-ivory/60 font-body max-w-xl mx-auto text-sm sm:text-base mb-2">
+      "और उसकी निशानियों में से यह है कि उसने तुम्हारे लिए तुम्हीं में से जीवनसाथी बनाए, ताकि तुम उनसे सुकून पाओ, और उसने तुम्हारे बीच प्रेम और दया रखी।"
+    </p>
+    <p class="text-gold-light font-body text-xs sm:text-sm tracking-wide">— Surah Ar-Rum 30:21</p>
+  </div>
+
+  <!-- Floating search card -->
+  <div id="search" class="relative max-w-5xl mx-auto px-5 sm:px-8 -mb-16 sm:-mb-14">
+    <div class="corner-flourish bg-ivory rounded-2xl shadow-2xl shadow-maroon-dark/40 px-6 sm:px-10 py-8 border border-gold/40">
+      <p class="font-display text-maroon text-lg sm:text-xl mb-5 text-center sm:text-left">Begin your search</p>
+      <div class="grid grid-cols-2 lg:grid-cols-6 gap-4 items-end">
+
+        <div class="col-span-2 lg:col-span-1">
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">I am a</label>
+          <select id="filterIAmA" class="filter-select w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option value="Male">Man</option>
+            <option value="Female">Woman</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Age From</label>
+          <select id="filterAgeFrom" class="filter-select w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option>18</option><option>21</option><option>25</option><option>30</option><option>35</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Age To</label>
+          <select id="filterAgeTo" class="filter-select w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option>25</option><option>30</option><option>35</option><option>40</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Sect</label>
+          <select id="filterSect" class="filter-select w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option value="">Any</option>
+            <option>Muslim</option>
+          </select>
+        </div>
+
+        <div class="col-span-2 lg:col-span-1">
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mother Tongue</label>
+          <select id="filterMotherTongue" class="filter-select w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+            <option value="">Any</option>
+            <option>Hindi</option><option>Bengali</option><option>Tamil</option><option>Telugu</option><option>Marathi</option><option>Punjabi</option><option>Urdu</option><option>Other</option>
+          </select>
+        </div>
+
+        <div class="col-span-2 lg:col-span-1">
+          <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">State</label>
+          <input id="filterCity" type="text" placeholder="e.g. Maharashtra" class="w-full border border-gold/50 rounded-lg px-3 py-2.5 bg-white text-sm text-ink focus:outline-none focus:ring-2 focus:ring-gold/50">
+        </div>
+      </div>
+
+      <button id="searchBtn" type="button" class="mt-6 w-full sm:w-auto sm:px-12 py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2 mx-auto sm:mx-0">
+        <i class="fa-solid fa-magnifying-glass text-gold"></i> Search Profiles
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED PROFILES ============ -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 pt-28 sm:pt-32 pb-20">
+  <div class="text-center mb-14">
+    <p class="uppercase tracking-[0.3em] text-gold-dark text-xs font-body mb-3">Handpicked for you</p>
+    <h2 class="font-display text-3xl sm:text-4xl text-maroon">Featured Profiles</h2>
+    <div class="divider-motif mt-4">
+      <span class="line"></span>
+      <i class="fa-solid fa-moon text-gold text-xs"></i>
+      <span class="line"></span>
+    </div>
+  </div>
+
+  <!-- This grid is populated dynamically by fetchAndRenderProfiles() in the script below.
+       It shows real data from Supabase, or falls back to sample profiles if Supabase
+       isn't configured yet / no matches are found. -->
+  <div id="profilesGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
+    <p class="col-span-full text-center text-ink/40 font-body py-10">Loading profiles…</p>
+  </div>
+  <div class="text-center mt-10">
+    <button id="loadMoreBtn" class="hidden px-8 py-2.5 rounded-full border border-maroon text-maroon text-sm tracking-wide hover:bg-maroon hover:text-ivory transition-colors">
+      Load More
+    </button>
+  </div>
+</section>
+
+<!-- ============ ABOUT STRIP ============ -->
+<section id="about" class="bg-rose-light/30 border-y border-gold/20">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-16 grid sm:grid-cols-3 gap-10 text-center">
+    <div>
+      <i class="fa-solid fa-shield-heart text-maroon text-2xl mb-3"></i>
+      <h4 class="font-display text-lg text-maroon mb-1">Verified Profiles</h4>
+      <p class="text-sm text-ink/60 font-body">Every profile is reviewed by our team before it goes live.</p>
+    </div>
+    <div>
+      <i class="fa-solid fa-hand-holding-heart text-maroon text-2xl mb-3"></i>
+      <h4 class="font-display text-lg text-maroon mb-1">Family First</h4>
+      <p class="text-sm text-ink/60 font-body">Designed around how Indian families search and decide together.</p>
+    </div>
+    <div>
+      <i class="fa-solid fa-lock text-maroon text-2xl mb-3"></i>
+      <h4 class="font-display text-lg text-maroon mb-1">Private & Secure</h4>
+      <p class="text-sm text-ink/60 font-body">Your details stay visible only to those you choose to connect with.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGISTRATION FORM ============ -->
+<section id="register" class="max-w-4xl mx-auto px-5 sm:px-8 py-24">
+  <div class="text-center mb-12">
+    <p class="uppercase tracking-[0.3em] text-gold-dark text-xs font-body mb-3">Join in minutes</p>
+    <h2 class="font-display text-3xl sm:text-4xl text-maroon">Create Your Profile</h2>
+    <div class="divider-motif mt-4">
+      <span class="line"></span>
+      <i class="fa-solid fa-moon text-gold text-xs"></i>
+      <span class="line"></span>
+    </div>
+  </div>
+
+  <form id="registerForm" class="corner-flourish bg-white rounded-2xl border border-gold/30 shadow-lg shadow-maroon-dark/5 px-6 sm:px-12 py-10 grid sm:grid-cols-2 gap-6">
+
+    <div class="sm:col-span-2">
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Full Name</label>
+      <div class="relative">
+        <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <input id="regFullName" type="text" required placeholder="e.g. Muhammad Ali" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Email</label>
+      <div class="relative">
+        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <input id="regEmail" type="email" required placeholder="you@example.com" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Password</label>
+      <div class="relative">
+        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <input id="regPassword" type="password" required minlength="6" placeholder="At least 6 characters" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Gender</label>
+      <div class="relative">
+        <i class="fa-solid fa-venus-mars absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <select id="regGender" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="sm:col-span-2">
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Date of Birth</label>
+      <div class="grid grid-cols-3 gap-2">
+        <select id="regDobDay" required class="filter-select w-full border border-gold/40 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Day</option>
+        </select>
+        <select id="regDobMonth" required class="filter-select w-full border border-gold/40 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Month</option>
+          <option value="01">January</option><option value="02">February</option><option value="03">March</option>
+          <option value="04">April</option><option value="05">May</option><option value="06">June</option>
+          <option value="07">July</option><option value="08">August</option><option value="09">September</option>
+          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+        </select>
+        <select id="regDobYear" required class="filter-select w-full border border-gold/40 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option value="">Year</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Religion</label>
+      <div class="relative">
+        <i class="fa-solid fa-mosque absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <select id="regReligion" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option>Muslim</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Sect (Maslak)</label>
+      <div class="relative">
+        <i class="fa-solid fa-star-and-crescent absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <select id="regSect" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option>Muslim</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mother Tongue</label>
+      <div class="relative">
+        <i class="fa-solid fa-language absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <select id="regMotherTongue" class="filter-select w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold/50">
+          <option>Hindi</option><option>Bengali</option><option>Tamil</option><option>Telugu</option><option>Marathi</option><option>Punjabi</option><option>Urdu</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mobile Number</label>
+      <div class="relative">
+        <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <input id="regPhone" type="tel" required placeholder="e.g. 9876543210" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">WhatsApp Number</label>
+      <div class="relative">
+        <i class="fa-brands fa-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
+        <input id="regWhatsapp" type="tel" placeholder="e.g. 9876543210" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      </div>
+      <p class="text-[11px] text-ink/40 mt-1">Contact numbers stay private — only shown after mutual interest is accepted.</p>
+    </div>
+
+    <p class="sm:col-span-2 text-[11px] text-ink/40 -mb-2">Profession, income, and state can be added afterwards from "My Profile".</p>
+
+    <div class="sm:col-span-2 pt-2">
+      <button id="registerSubmitBtn" type="submit" class="w-full py-3.5 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2">
+        Create My Profile <i class="fa-solid fa-arrow-right text-gold"></i>
+      </button>
+      <p id="registerMessage" class="text-sm text-center min-h-[1.25rem] mt-4"></p>
+      <p class="text-center text-xs text-ink/40 font-body mt-1">By registering, you agree to our Terms of Service and Privacy Policy.</p>
+    </div>
+  </form>
+</section>
+
+<!-- ============ QURAN & HADITH ============ -->
+<section class="bg-rose-light py-16 sm:py-20 px-5">
+  <div class="max-w-5xl mx-auto text-center mb-10">
+    <p class="font-display text-gold-dark text-lg mb-2" style="font-family:'Amiri','Playfair Display',serif;" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="uppercase tracking-[0.25em] text-gold-dark text-xs sm:text-sm font-body mb-2">In the Light of Faith</p>
+    <h2 class="font-display text-2xl sm:text-3xl text-maroon">Quran &amp; Hadith on Nikah</h2>
+  </div>
+
+  <div class="max-w-5xl mx-auto grid sm:grid-cols-2 gap-5">
+
+    <div class="corner-flourish bg-white rounded-2xl border border-gold/30 p-6 text-center">
+      <p class="text-[10px] uppercase tracking-widest text-gold-dark mb-3">Qur'an — Surah An-Nisa 4:1</p>
+      <p class="font-display text-maroon text-lg mb-3 leading-relaxed" dir="rtl" style="font-family:'Amiri','Playfair Display',serif;">يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا</p>
+      <p class="text-ink/70 font-body text-sm mb-3">"Ae logo! Apne Rabb se daro jisne tumhe ek jaan se paida kiya, aur usi jaan se uski zoj (biwi) ko paida kiya."</p>
+      <p class="text-ink/50 font-body text-xs italic">💡 Husband aur wife ek hi insaan ki do shaakhein hain. Dono ek doosre ke bina adhure hain — yahi islami rishte ki bunyad hai.</p>
+    </div>
+
+    <div class="corner-flourish bg-white rounded-2xl border border-gold/30 p-6 text-center">
+      <p class="text-[10px] uppercase tracking-widest text-gold-dark mb-3">Qur'an — Surah Al-Baqarah 2:187</p>
+      <p class="font-display text-maroon text-lg mb-3 leading-relaxed" dir="rtl" style="font-family:'Amiri','Playfair Display',serif;">هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ</p>
+      <p class="text-ink/70 font-body text-sm mb-3">"Woh tumhara libaas hain aur tum unka libaas ho."</p>
+      <p class="text-ink/50 font-body text-xs italic">💡 Kya khoobsurat misaal hai! Jaise libaas badan ko dhakta, izzat karta, thand se bachata hai — waise hi shohar aur biwi ek doosre ke liye hain. Ek doosre ki hifazat, izzat aur parda.</p>
+    </div>
+
+    <div class="corner-flourish bg-white rounded-2xl border border-gold/30 p-6 text-center">
+      <p class="text-[10px] uppercase tracking-widest text-gold-dark mb-3">Hadith</p>
+      <i class="fa-solid fa-mosque text-gold-dark text-2xl mb-3"></i>
+      <p class="text-ink/70 font-body text-sm mb-2">"Nikah is my Sunnah. Whoever turns away from my Sunnah is not of me."</p>
+      <p class="text-ink/50 font-body text-sm mb-3">"निकाह मेरी सुन्नत है। जो मेरी सुन्नत से मुँह मोड़े, वह मुझसे नहीं।"</p>
+      <p class="text-gold-dark font-body text-xs">— Sahih Muslim</p>
+    </div>
+
+    <div class="corner-flourish bg-white rounded-2xl border border-gold/30 p-6 text-center">
+      <p class="text-[10px] uppercase tracking-widest text-gold-dark mb-3">Hadith</p>
+      <i class="fa-solid fa-heart text-gold-dark text-2xl mb-3"></i>
+      <p class="text-ink/70 font-body text-sm mb-2">"The best of you are those who are best to their wives, and I am the best among you to my wives."</p>
+      <p class="text-ink/50 font-body text-sm mb-3">"तुम में सबसे अच्छा वह है जो अपनी पत्नियों के साथ सबसे अच्छा व्यवहार करे।"</p>
+      <p class="text-gold-dark font-body text-xs">— Sunan al-Tirmidhi</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-maroon-dark text-ivory/80">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 pt-16 pb-8">
+    <div class="grid sm:grid-cols-4 gap-10 mb-12">
+
+      <div class="sm:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+            <i class="fa-solid fa-mosque"></i>
+          </span>
+          <span class="font-display text-xl text-ivory">Sunnah Safar</span>
+        </div>
+        <p class="text-sm text-ivory/60 max-w-sm">Bringing Muslim families together for over a decade, one heartfelt match at a time.</p>
+      </div>
+
+      <div>
+        <h5 class="font-display text-gold mb-4">Explore</h5>
+        <ul class="space-y-2 text-sm text-ivory/60">
+          <li><a href="#home" class="hover:text-ivory">Home</a></li>
+          <li><a href="#search" class="hover:text-ivory">Search</a></li>
+          <li><a href="#about" class="hover:text-ivory">About</a></li>
+          <li id="registerNavLinkFooter"><a href="#register" class="hover:text-ivory">Register</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-display text-gold mb-4">Connect</h5>
+        <div class="flex gap-3">
+          <a href="#" class="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:bg-gold hover:text-maroon-dark transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:bg-gold hover:text-maroon-dark transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:bg-gold hover:text-maroon-dark transition-colors"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+          <a href="#" class="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:bg-gold hover:text-maroon-dark transition-colors"><i class="fa-brands fa-youtube text-sm"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-ivory/10 pt-6 text-center text-xs text-ivory/40">
+      © 2026 Sunnah Safar Matrimony. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   SUPABASE CONFIGURATION — PASTE YOUR KEYS HERE
+   -------------------------------------------------------------------------
+   1. Go to https://supabase.com and create a free project.
+   2. In your project: Settings -> API.
+   3. Copy the "Project URL" and the "anon public" key and paste them below.
+      (Never paste your "service_role" key here — that one is secret and
+      must only ever be used on a server, never in browser code.)
+   ========================================================================= */
+  const SUPABASE_URL = "https://iqbvcdnufnarbyknyhin.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_iH1VUmWgXnnmSMdZamvQQw_cBRryb4G";
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* =========================================================================
+   DATABASE SETUP — run this once in Supabase's SQL Editor
+   -------------------------------------------------------------------------
+   create table profiles (
+     id           uuid primary key default gen_random_uuid(),
+     user_id      uuid references auth.users(id),
+     full_name    text not null,
+     gender       text,
+     dob          date,
+     religion     text default 'Muslim',
+     sect         text,
+     profession   text,
+     income       text,
+     city         text,
+     created_at   timestamptz default now()
+   );
+
+   -- Turn on Row Level Security
+   alter table profiles enable row level security;
+
+   -- Anyone (including logged-out visitors) can VIEW profiles, so the
+   -- search/browse grid works for everyone.
+   create policy "Public profiles are viewable by everyone"
+     on profiles for select
+     using (true);
+
+   -- Only a signed-in user can insert a profile row, and only as themselves.
+   create policy "Users can insert their own profile"
+     on profiles for insert
+     with check (auth.uid() = user_id);
+
+   -- (Optional) let users edit only their own profile later.
+   create policy "Users can update their own profile"
+     on profiles for update
+     using (auth.uid() = user_id);
+
+   -- -----------------------------------------------------------------------
+   -- REQUIRED because "Confirm email" is ON: this trigger automatically
+   -- creates the profiles row the moment someone signs up (using the data
+   -- passed in auth.signUp's `options.data`), *before* they've confirmed
+   -- their email. This bypasses the need for an active session at insert
+   -- time, since it runs with elevated (security definer) privileges.
+   -- -----------------------------------------------------------------------
+   create or replace function public.handle_new_user()
+   returns trigger
+   language plpgsql
+   security definer set search_path = public
+   as $$
+   begin
+     insert into public.profiles (user_id, full_name, gender, dob, religion, sect, profession, income, city)
+     values (
+       new.id,
+       new.raw_user_meta_data->>'full_name',
+       new.raw_user_meta_data->>'gender',
+       nullif(new.raw_user_meta_data->>'dob', '')::date,
+       coalesce(new.raw_user_meta_data->>'religion', 'Muslim'),
+       new.raw_user_meta_data->>'sect',
+       new.raw_user_meta_data->>'profession',
+       new.raw_user_meta_data->>'income',
+       new.raw_user_meta_data->>'city'
+     );
+     return new;
+   end;
+   $$;
+
+   drop trigger if exists on_auth_user_created on auth.users;
+   create trigger on_auth_user_created
+     after insert on auth.users
+     for each row execute procedure public.handle_new_user();
+
+   -- -----------------------------------------------------------------------
+   -- REQUIRED for the "Send Interest" / "My Interests" feature.
+   -- -----------------------------------------------------------------------
+   create table interests (
+     id                   uuid primary key default gen_random_uuid(),
+     sender_id            uuid references auth.users(id) not null,
+     receiver_profile_id  uuid references profiles(id) not null,
+     status               text default 'pending',
+     created_at           timestamptz default now(),
+     unique (sender_id, receiver_profile_id)
+   );
+
+   alter table interests enable row level security;
+
+   -- You can see interests you sent, or interests sent to your own profile.
+   create policy "View own sent or received interests"
+     on interests for select
+     using (
+       sender_id = auth.uid()
+       or receiver_profile_id in (select id from profiles where user_id = auth.uid())
+     );
+
+   -- Any signed-in user can send an interest, only as themselves.
+   create policy "Send interest as self"
+     on interests for insert
+     with check (sender_id = auth.uid());
+
+   -- Only the person who received the interest can accept/decline it.
+   create policy "Receiver can respond to interest"
+     on interests for update
+     using (receiver_profile_id in (select id from profiles where user_id = auth.uid()));
+   ========================================================================= */
+
+
+  /* -----------------------------------------------------------------------
+     Fallback sample data — shown only if Supabase isn't configured yet, or
+     a search/query returns zero rows. Keeps the page looking good out of
+     the box, and is replaced automatically once real data exists.
+  ----------------------------------------------------------------------- */
+  // Escapes user-supplied text before it is inserted via innerHTML, so a
+  // profile field containing "<img onerror=...>" etc. renders as harmless
+  // text instead of executing (stored-XSS protection).
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  const DUMMY_PROFILES = [
+    { full_name: "Ayesha Siddiqui", age: 28, sect: "Sunni",      profession: "Software Engineer",   city: "Pune, India",   isDummy: true },
+    { full_name: "Imran Khan",      age: 31, sect: "Sunni",      profession: "Chartered Accountant", city: "Mumbai, India", isDummy: true },
+    { full_name: "Zara Ahmed",      age: 26, sect: "Shia",       profession: "Doctor (MBBS)",        city: "Kochi, India",  isDummy: true },
+    { full_name: "Faisal Rahman",   age: 29, sect: "Ahle Hadith",profession: "Architect",             city: "Jaipur, India", isDummy: true },
+  ];
+
+  // Holds whatever is currently rendered in the grid, so the View Profile
+  // modal can look up full details by index when a card is clicked.
+  let currentProfiles = [];
+  let shortlistedIds = new Set();
+
+  // Turns a date-of-birth string into an age in years.
+  function calculateAge(dobString) {
+    const dob = new Date(dobString);
+    if (isNaN(dob.getTime())) return "";
+    const diffMs = Date.now() - dob.getTime();
+    return Math.abs(new Date(diffMs).getUTCFullYear() - 1970);
+  }
+
+  // Masks a name like "Zaki Ahmed" -> "Z*** A****" for logged-out visitors,
+  // matching how established matrimonial sites hide identity pre-login.
+  function maskName(name) {
+    if (!name) return '';
+    return name.split(' ').map(w => w.length <= 1 ? w : w[0] + '*'.repeat(w.length - 1)).join(' ');
+  }
+
+  // Builds the HTML markup for one profile card, matching the site's design.
+  function createProfileCard(p, index) {
+    const age = p.age ?? (p.dob ? calculateAge(p.dob) : "");
+    const sect = p.sect || "";
+    const locked = !isUserLoggedIn && !p.isDummy;
+    const avatar = p.avatar_url
+      ? `<img src="${p.avatar_url}" class="w-full h-full object-cover rounded-full ${locked ? 'blur-md' : ''}">`
+      : `<div class="w-full h-full rounded-full bg-rose-light flex items-center justify-center"><i class="fa-solid fa-user text-maroon text-3xl"></i></div>`;
+    const displayName = locked ? maskName(p.full_name) : escapeHtml(p.full_name);
+    const isShortlisted = shortlistedIds.has(p.id);
+    return `
+      <div class="profile-card corner-flourish bg-white rounded-2xl border border-gold/30 shadow-md shadow-maroon-dark/5 px-6 py-8 text-center relative">
+        <button type="button" onclick="toggleShortlist(event, ${index})" title="${isShortlisted ? 'Remove from shortlist' : 'Save to shortlist'}" class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center ${isShortlisted ? 'text-gold' : 'text-ink/30'} hover:text-gold transition-colors">
+          <i class="fa-${isShortlisted ? 'solid' : 'regular'} fa-star"></i>
+        </button>
+        <div class="w-24 h-24 mx-auto rounded-full avatar-ring p-[3px] mb-4 relative">
+          ${avatar}
+          ${locked ? `<i class="fa-solid fa-lock absolute bottom-0 right-0 bg-gold text-maroon-dark text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-white"></i>` : ''}
+        </div>
+        <h3 class="font-display text-xl text-maroon">${displayName}</h3>
+        <p class="text-sm text-ink/50 font-body mb-3">${age ? age + " yrs" : ""}${age && sect ? " · " : ""}${escapeHtml(sect)}</p>
+        <ul class="text-sm text-ink/70 font-body space-y-1.5 mb-5">
+          <li><i class="fa-solid fa-briefcase text-gold-dark w-4"></i> ${escapeHtml(p.profession) || "—"}</li>
+          <li><i class="fa-solid fa-location-dot text-gold-dark w-4"></i> ${escapeHtml(p.city) || "—"}</li>
+        </ul>
+        <button type="button" onclick="showProfileModal(${index})" class="w-full py-2.5 rounded-full border border-maroon text-maroon text-sm tracking-wide hover:bg-maroon hover:text-ivory transition-colors">
+          ${locked ? 'Login to View Full Profile' : 'View Profile'}
+        </button>
+      </div>`;
+  }
+
+  async function toggleShortlist(evt, index) {
+    evt.stopPropagation();
+    const p = currentProfiles[index];
+    if (!p || p.isDummy) return;
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) { openLoginModal(); return; }
+
+    if (shortlistedIds.has(p.id)) {
+      const { error } = await supabaseClient.from('shortlists').delete().eq('user_id', session.user.id).eq('profile_id', p.id);
+      if (error) { alert('Could not remove from shortlist: ' + error.message); return; }
+      shortlistedIds.delete(p.id);
+    } else {
+      const { error } = await supabaseClient.from('shortlists').insert([{ user_id: session.user.id, profile_id: p.id }]);
+      if (error) { alert('Could not save to shortlist: ' + error.message); return; }
+      shortlistedIds.add(p.id);
+    }
+    renderProfiles(currentProfiles);
+  }
+  window.toggleShortlist = toggleShortlist; // used by the inline onclick on each card's star button
+
+  async function openShortlistModal() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) { openLoginModal(); return; }
+    const grid = document.getElementById('shortlistGrid');
+    grid.innerHTML = `<p class="col-span-full text-center text-ink/40 py-6">Loading…</p>`;
+    document.getElementById('shortlistModal').classList.remove('hidden');
+
+    const { data, error } = await supabaseClient
+      .from('shortlists')
+      .select('profiles(*)')
+      .eq('user_id', session.user.id)
+      .order('created_at', { ascending: false });
+
+    if (error || !data || !data.length) {
+      grid.innerHTML = `<p class="col-span-full text-center text-ink/40 py-6">No profiles shortlisted yet.</p>`;
+      return;
+    }
+    grid.innerHTML = data.map(row => {
+      const p = row.profiles;
+      if (!p) return '';
+      const age = p.dob ? calculateAge(p.dob) : '';
+      return `
+        <div class="p-4 rounded-xl border border-gold/20 bg-white flex items-center justify-between gap-3">
+          <div>
+            <p class="text-maroon font-display text-base">${escapeHtml(p.full_name)}</p>
+            <p class="text-ink/50 text-xs">${age ? age + ' yrs · ' : ''}${escapeHtml(p.city) || ''}</p>
+          </div>
+          <button onclick="viewShortlistedProfile('${p.id}')" class="text-xs text-maroon border border-maroon rounded-full px-3 py-1.5 hover:bg-maroon hover:text-ivory transition-colors whitespace-nowrap">View</button>
+        </div>`;
+    }).join('');
+  }
+  function closeShortlistModal() { document.getElementById('shortlistModal').classList.add('hidden'); }
+  window.closeShortlistModal = closeShortlistModal; // used by the inline onclick above
+
+  async function viewShortlistedProfile(profileId) {
+    const { data, error } = await supabaseClient.from('profiles').select('*').eq('id', profileId).single();
+    if (error || !data) return;
+    closeShortlistModal();
+    renderProfileDetail(data);
+  }
+  window.viewShortlistedProfile = viewShortlistedProfile; // used by the inline onclick above
+
+  function renderProfiles(list) {
+    currentProfiles = list;
+    const grid = document.getElementById('profilesGrid');
+    grid.innerHTML = list.map((p, i) => createProfileCard(p, i)).join('');
+  }
+
+  /* -----------------------------------------------------------------------
+     Queries the 'profiles' table in Supabase, applying whichever filters
+     are passed in, and re-renders the Featured Profiles grid with the
+     results. Called on page load (no filters) and whenever "Search
+     Profiles" is clicked (with the selected filters).
+  ----------------------------------------------------------------------- */
+  const PAGE_SIZE = 12;
+  let currentOffset = 0;
+  let currentFilters = {};
+  let currentAppend = false;
+
+  async function fetchAndRenderProfiles(filters = {}, append = false) {
+    const grid = document.getElementById('profilesGrid');
+    if (!append) {
+      currentOffset = 0;
+      currentFilters = filters;
+      grid.innerHTML = `<p class="col-span-full text-center text-ink/40 font-body py-10">Loading profiles…</p>`;
+    }
+
+    try {
+      // Exclude profiles I've blocked, and my own profile; know which ones
+      // I've shortlisted, if logged in
+      let blockedIds = [];
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        const { data: blocked } = await supabaseClient.rpc('get_my_blocked_ids');
+        if (blocked) blockedIds = blocked;
+        const { data: sl } = await supabaseClient.from('shortlists').select('profile_id').eq('user_id', session.user.id);
+        shortlistedIds = new Set((sl || []).map(s => s.profile_id));
+      } else {
+        shortlistedIds = new Set();
+      }
+
+      let query = supabaseClient
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .range(currentOffset, currentOffset + PAGE_SIZE - 1);
+
+      if (session) query = query.neq('user_id', session.user.id);
+
+      if (filters.gender) query = query.eq('gender', filters.gender);
+      if (filters.sect)   query = query.eq('sect', filters.sect);
+      if (filters.motherTongue) query = query.eq('mother_tongue', filters.motherTongue);
+      if (filters.city)   query = query.ilike('city', `%${filters.city}%`);
+      if (blockedIds.length) query = query.not('user_id', 'in', `(${blockedIds.join(',')})`);
+
+      const today = new Date();
+      if (filters.ageTo) {
+        const earliestDob = new Date(today.getFullYear() - filters.ageTo - 1, today.getMonth(), today.getDate());
+        query = query.gte('dob', earliestDob.toISOString().split('T')[0]);
+      }
+      if (filters.ageFrom) {
+        const latestDob = new Date(today.getFullYear() - filters.ageFrom, today.getMonth(), today.getDate());
+        query = query.lte('dob', latestDob.toISOString().split('T')[0]);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if (data && data.length > 0) {
+        if (append) renderProfiles(currentProfiles.concat(data));
+        else renderProfiles(data);
+        currentOffset += PAGE_SIZE;
+        if (loadMoreBtn) loadMoreBtn.classList.toggle('hidden', data.length < PAGE_SIZE);
+      } else {
+        if (!append) renderProfiles(DUMMY_PROFILES);
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+      }
+    } catch (err) {
+      // Most likely cause: SUPABASE_URL / SUPABASE_ANON_KEY above haven't
+      // been filled in yet, or the 'profiles' table doesn't exist yet.
+      console.error('Supabase fetch error:', err.message || err);
+      if (!append) renderProfiles(DUMMY_PROFILES);
+    }
+  }
+
+  /* -----------------------------------------------------------------------
+     "Search Profiles" button — reads the hero filter bar and re-queries.
+     Note: "I am a Man/Woman" searches for the OPPOSITE gender, matching
+     how matrimonial sites conventionally work (a groom's side searches
+     bride profiles, and vice versa).
+  ----------------------------------------------------------------------- */
+  function handleSearchClick() {
+    const iAmA = document.getElementById('filterIAmA').value; // "Male" or "Female"
+    const oppositeGender = iAmA === 'Male' ? 'Female' : 'Male';
+
+    const filters = {
+      gender: oppositeGender,
+      ageFrom: parseInt(document.getElementById('filterAgeFrom').value, 10) || null,
+      ageTo: parseInt(document.getElementById('filterAgeTo').value, 10) || null,
+      sect: document.getElementById('filterSect').value || null,
+      motherTongue: document.getElementById('filterMotherTongue').value || null,
+      city: document.getElementById('filterCity').value.trim() || null,
+    };
+
+    fetchAndRenderProfiles(filters);
+    document.getElementById('profilesGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function handleLoadMoreClick() {
+    fetchAndRenderProfiles(currentFilters, true);
+  }
+
+  /* -----------------------------------------------------------------------
+     Registration — creates a Supabase Auth user (email + password), then
+     inserts the rest of the profile details into the 'profiles' table,
+     linked to that user via user_id.
+  ----------------------------------------------------------------------- */
+  async function handleRegisterSubmit(e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('registerMessage');
+    const submitBtn = document.getElementById('registerSubmitBtn');
+
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const fullName = document.getElementById('regFullName').value.trim();
+    const gender = document.getElementById('regGender').value;
+    const dobDay = document.getElementById('regDobDay').value;
+    const dobMonth = document.getElementById('regDobMonth').value;
+    const dobYear = document.getElementById('regDobYear').value;
+    const dob = (dobDay && dobMonth && dobYear) ? `${dobYear}-${dobMonth}-${dobDay}` : '';
+    const religion = document.getElementById('regReligion').value;
+    const sect = document.getElementById('regSect').value;
+    const motherTongue = document.getElementById('regMotherTongue').value;
+    const phone = document.getElementById('regPhone').value.trim();
+    const whatsapp = document.getElementById('regWhatsapp').value.trim();
+    const referredBy = new URLSearchParams(window.location.search).get('ref') || null;
+
+    if (!fullName || !email || !password || !dob) {
+      msgEl.textContent = 'Please fill in your name, email, password and date of birth.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-4 text-red-600';
+      return;
+    }
+
+    // Real, contactable mobile number required — blocks spam patterns like
+    // repeated/sequential digits (0000000000, 1234567890) before any
+    // account is created or email is sent.
+    const phoneDigits = phone.replace(/\D/g, '');
+    const isValidIndianMobile = /^[6-9]\d{9}$/.test(phoneDigits);
+    const isRepeatedOrSequential = /^(\d)\1{9}$/.test(phoneDigits) || phoneDigits === '1234567890' || phoneDigits === '0123456789';
+    if (!phoneDigits || !isValidIndianMobile || isRepeatedOrSequential) {
+      msgEl.textContent = 'Please enter a valid 10-digit mobile number (e.g. 98765 43210).';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-4 text-red-600';
+      return;
+    }
+
+    if (calculateAge(dob) < 18) {
+      msgEl.textContent = 'You must be 18 or older to register.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-4 text-red-600';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating your profile…';
+
+    try {
+      // Create the Supabase Auth account. Profile details are passed as
+      // user metadata — a database trigger (see setup SQL) automatically
+      // copies them into the 'profiles' table. This works even though
+      // "Confirm email" is ON and no session exists yet.
+      const { error: authError } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            gender: gender,
+            dob: dob,
+            religion: religion,
+            sect: sect,
+            mother_tongue: motherTongue,
+            phone: phone,
+            whatsapp: whatsapp,
+            referred_by: referredBy,
+          },
+        },
+      });
+      if (authError) throw authError;
+
+      msgEl.textContent = 'Almost done! Check your email to confirm your account — your profile will go live once our team verifies it.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-4 text-green-700';
+      document.getElementById('registerForm').reset();
+    } catch (err) {
+      msgEl.textContent = err.message || 'Something went wrong. Please try again.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-4 text-red-600';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Create My Profile <i class="fa-solid fa-arrow-right text-gold"></i>';
+    }
+  }
+
+  /* -----------------------------------------------------------------------
+     Login modal + Supabase Auth sign-in / sign-out.
+  ----------------------------------------------------------------------- */
+  function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+  function closeLoginModal() {
+    document.getElementById('loginModal').classList.add('hidden');
+    document.getElementById('loginMessage').textContent = '';
+    document.getElementById('otpStep1').classList.remove('hidden');
+    document.getElementById('otpStep2').classList.add('hidden');
+    document.getElementById('otpEmail').value = '';
+    document.getElementById('otpMessage').textContent = '';
+  }
+
+  async function handleLoginSubmit(e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('loginMessage');
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      msgEl.textContent = error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] text-red-600';
+      return;
+    }
+    msgEl.textContent = 'Logged in successfully!';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] text-green-700';
+    setTimeout(closeLoginModal, 800);
+  }
+
+  // Magic Link login — sends a one-click sign-in link to the given email;
+  // no password, no code to type, and works with Supabase's default email
+  // setup (no custom SMTP or template edits required).
+  async function handleSendOtp() {
+    const email = document.getElementById('otpEmail').value.trim();
+    const msgEl = document.getElementById('otpMessage');
+    if (!email) { msgEl.textContent = 'Enter your email first.'; msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-2 text-red-600'; return; }
+
+    const { error } = await supabaseClient.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.href },
+    });
+    if (error) {
+      msgEl.textContent = error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-2 text-red-600';
+      return;
+    }
+    document.getElementById('otpStep1').classList.add('hidden');
+    document.getElementById('otpStep2').classList.remove('hidden');
+    msgEl.textContent = 'Link sent! Check your email.';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-2 text-green-700';
+  }
+
+  // The nav "Login" button becomes "Logout" once a session exists, and the
+  // "My Profile" / "Interests" buttons only show when logged in.
+  let isUserLoggedIn = false;
+
+  function updateAuthUI(session) {
+    isUserLoggedIn = !!session;
+    const label = session ? 'Logout' : 'Login';
+    document.getElementById('loginBtnDesktop').textContent = label;
+    document.getElementById('loginBtnMobile').textContent = label;
+
+    const displayStyle = session ? '' : 'none';
+    ['myProfileBtn', 'myProfileBtnMobile', 'myInterestsBtn', 'myInterestsBtnMobile', 'notifBtn', 'notifBtnMobile', 'shortlistBtn', 'shortlistBtnMobile'].forEach(id => {
+      document.getElementById(id).classList.toggle('hidden', !session);
+    });
+    if (session) refreshNotifBadge(); 
+
+    // Already-logged-in users shouldn't see "Register" (it would let them
+    // accidentally create a second, separate account) — hide the nav links
+    // and the whole registration section while a session is active.
+    ['registerNavLink', 'registerNavLinkMobile', 'registerNavLinkFooter'].forEach(id => {
+      document.getElementById(id).classList.toggle('hidden', !!session);
+    });
+    document.getElementById('register').classList.toggle('hidden', !!session);
+  }
+
+  async function handleAuthButtonClick() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      await supabaseClient.auth.signOut();
+    } else {
+      openLoginModal();
+    }
+  }
+
+  // "Forgot password?" — sends a reset-password email. Supabase redirects
+  // the user back to this same page with a recovery session, which we
+  // detect below (PASSWORD_RECOVERY event) and show the reset form for.
+  async function handleForgotPassword() {
+    const msgEl = document.getElementById('loginMessage');
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+      msgEl.textContent = 'Enter your email above first, then click "Forgot password?".';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] text-red-600';
+      return;
+    }
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.href,
+    });
+    if (error) {
+      msgEl.textContent = error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] text-red-600';
+      return;
+    }
+    msgEl.textContent = 'Password reset email sent — check your inbox.';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] text-green-700';
+  }
+
+  async function handleResetPasswordSubmit(e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('resetPasswordMessage');
+    const newPassword = document.getElementById('newPassword').value;
+    const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
+    if (error) {
+      msgEl.textContent = error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] text-red-600';
+      return;
+    }
+    msgEl.textContent = 'Password updated! You can close this and continue.';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] text-green-700';
+    setTimeout(() => document.getElementById('resetPasswordModal').classList.add('hidden'), 1200);
+  }
+
+  /* -----------------------------------------------------------------------
+     View Profile modal — shows full details for a card from the grid, and
+     lets a logged-in visitor send an interest to that profile.
+  ----------------------------------------------------------------------- */
+  function showProfileModal(index) {
+    const p = currentProfiles[index];
+    if (!p) return;
+    if (!isUserLoggedIn && !p.isDummy) {
+      openLoginModal();
+      return;
+    }
+    renderProfileDetail(p);
+  }
+
+  async function renderProfileDetail(p) {
+    const age = p.age ?? (p.dob ? calculateAge(p.dob) : "");
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const isOwnProfile = !!(session && p.user_id === session.user.id);
+
+    const avatarBox = document.querySelector('#viewProfileModal .avatar-ring > div');
+    avatarBox.innerHTML = p.avatar_url
+      ? `<img src="${p.avatar_url}" class="w-full h-full object-cover rounded-full">`
+      : `<i class="fa-solid fa-user text-maroon text-3xl"></i>`;
+
+    document.getElementById('vpName').textContent = p.full_name;
+    document.getElementById('vpMeta').textContent = [age ? age + ' yrs' : '', p.sect].filter(Boolean).join(' · ');
+    const vpBioEl = document.getElementById('vpBio');
+    vpBioEl.textContent = p.bio ? `"${p.bio}"` : '';
+    vpBioEl.classList.toggle('hidden', !p.bio);
+    document.getElementById('vpDetails').innerHTML = `
+      <li><i class="fa-solid fa-briefcase text-gold-dark w-4"></i> ${escapeHtml(p.profession) || '—'}</li>
+      <li><i class="fa-solid fa-graduation-cap text-gold-dark w-4"></i> ${escapeHtml(p.education) || '—'}</li>
+      <li><i class="fa-solid fa-ring text-gold-dark w-4"></i> ${escapeHtml(p.marital_status) || '—'}</li>
+      <li><i class="fa-solid fa-ruler-vertical text-gold-dark w-4"></i> ${escapeHtml(p.height) || '—'}</li>
+      <li><i class="fa-solid fa-house-flag text-gold-dark w-4"></i> ${escapeHtml(p.native_place) || '—'}</li>
+      <li><i class="fa-solid fa-sack-dollar text-gold-dark w-4"></i> ${escapeHtml(p.income) || '—'}</li>
+      <li><i class="fa-solid fa-location-dot text-gold-dark w-4"></i> ${escapeHtml(p.city) || '—'}</li>
+      <li><i class="fa-solid fa-language text-gold-dark w-4"></i> ${escapeHtml(p.mother_tongue) || '—'}</li>
+      <li><i class="fa-solid fa-mosque text-gold-dark w-4"></i> ${escapeHtml(p.religion) || 'Muslim'}</li>
+      <li class="pt-2 mt-2 border-t border-gold/10"><i class="fa-solid fa-people-roof text-gold-dark w-4"></i> ${escapeHtml(p.father_profession) ? "Father: " + escapeHtml(p.father_profession) : 'Family details not shared'}</li>
+      ${p.family_type ? `<li><i class="fa-solid fa-house text-gold-dark w-4"></i> ${escapeHtml(p.family_type)}</li>` : ''}
+      ${p.siblings ? `<li><i class="fa-solid fa-user-group text-gold-dark w-4"></i> ${escapeHtml(p.siblings)}</li>` : ''}
+    `;
+    document.getElementById('vpMessage').textContent = isOwnProfile ? 'This is your own profile.' : '';
+
+    const sendBtn = document.getElementById('sendInterestBtn');
+    sendBtn.onclick = () => sendInterest(p);
+    sendBtn.classList.toggle('hidden', !!p.isDummy || isOwnProfile);
+
+    const reportBtn = document.getElementById('reportProfileBtn');
+    const blockBtn = document.getElementById('blockProfileBtn');
+    reportBtn.classList.toggle('hidden', !!p.isDummy || isOwnProfile);
+    blockBtn.classList.toggle('hidden', !!p.isDummy || isOwnProfile);
+    reportBtn.onclick = () => reportProfile(p);
+    blockBtn.onclick = () => blockProfile(p);
+
+    document.getElementById('viewProfileModal').classList.remove('hidden');
+  }
+  function closeViewProfileModal() { document.getElementById('viewProfileModal').classList.add('hidden'); }
+  window.showProfileModal = showProfileModal; // used by the inline onclick in each card
+
+
+  async function reportProfile(p) {
+    const msgEl = document.getElementById('vpMessage');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) { msgEl.textContent = 'Please login first.'; msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600'; return; }
+    const reason = prompt('Why are you reporting this profile? (optional)') || '';
+    const { error } = await supabaseClient.from('reports').insert([{ reporter_id: session.user.id, reported_user_id: p.user_id, reason }]);
+    msgEl.textContent = error ? error.message : 'Reported — our team will review this.';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 ' + (error ? 'text-red-600' : 'text-green-700');
+  }
+
+  async function blockProfile(p) {
+    const msgEl = document.getElementById('vpMessage');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) { msgEl.textContent = 'Please login first.'; msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600'; return; }
+    if (!confirm(`Block ${p.full_name}? You won't see this profile again.`)) return;
+    const { error } = await supabaseClient.from('blocks').insert([{ blocker_id: session.user.id, blocked_id: p.user_id }]);
+    if (error) { msgEl.textContent = error.message; msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600'; return; }
+    closeViewProfileModal();
+    fetchAndRenderProfiles(currentFilters);
+  }
+
+  async function sendInterest(profile) {
+    const msgEl = document.getElementById('vpMessage');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) {
+      msgEl.textContent = 'Please login first to send an interest.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+      return;
+    }
+    const { data: myProfile } = await supabaseClient.from('profiles').select('status').eq('user_id', session.user.id).single();
+    if (!myProfile || myProfile.status !== 'approved') {
+      msgEl.textContent = 'Your profile is still under review — you can send interests once it is approved.';
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+      return;
+    }
+    const { error } = await supabaseClient.from('interests').insert([{
+      sender_id: session.user.id,
+      receiver_profile_id: profile.id,
+    }]);
+    if (error) {
+      msgEl.textContent = error.message.includes('duplicate') ? 'You already sent an interest here.' : error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+      return;
+    }
+    msgEl.textContent = 'Interest sent!';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-green-700';
+  }
+
+  /* -----------------------------------------------------------------------
+     Notifications — a bell icon shows the unread count; the panel lists
+     recent notifications (interest received/accepted, profile approved).
+     Rows are created server-side by database triggers (see SQL setup),
+     never inserted directly from the client.
+  ----------------------------------------------------------------------- */
+  async function refreshNotifBadge() {
+    const { data, error } = await supabaseClient.rpc('get_my_notifications');
+    const unread = (!error && data) ? data.filter(n => !n.is_read).length : 0;
+    const badge = document.getElementById('notifBadge');
+    const badgeMobile = document.getElementById('notifBadgeMobile');
+    badge.textContent = unread;
+    badge.classList.toggle('hidden', unread === 0);
+    badgeMobile.textContent = `(${unread})`;
+    badgeMobile.classList.toggle('hidden', unread === 0);
+  }
+
+  async function openNotifModal() {
+    const { data, error } = await supabaseClient.rpc('get_my_notifications');
+    const list = document.getElementById('notifList');
+    if (error || !data || !data.length) {
+      list.innerHTML = `<p class="text-ink/40 text-center">No notifications yet.</p>`;
+    } else {
+      list.innerHTML = data.map(n => `
+        <div class="p-3 rounded-lg border ${n.is_read ? 'border-gold/10 bg-white' : 'border-gold/40 bg-rose-light'}">
+          <p class="text-ink/80">${escapeHtml(n.message)}</p>
+          <p class="text-[11px] text-ink/40 mt-1">${new Date(n.created_at).toLocaleString()}</p>
+        </div>
+      `).join('');
+    }
+    document.getElementById('notifModal').classList.remove('hidden');
+    await supabaseClient.rpc('mark_notifications_read');
+    refreshNotifBadge();
+  }
+  function closeNotifModal() { document.getElementById('notifModal').classList.add('hidden'); }
+  window.closeNotifModal = closeNotifModal; // used by the inline onclick above
+
+
+  async function openMyProfileModal() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) return;
+    const { data, error } = await supabaseClient.from('profiles').select('*').eq('user_id', session.user.id).single();
+    if (error || !data) {
+      alert('Could not load your profile yet — try again once your email is confirmed.');
+      return;
+    }
+    document.getElementById('mpFullName').value = data.full_name || '';
+    document.getElementById('mpGender').value = data.gender || 'Female';
+    document.getElementById('mpDob').value = data.dob || '';
+    document.getElementById('mpSect').value = data.sect || 'Muslim';
+    document.getElementById('mpMotherTongue').value = data.mother_tongue || 'Hindi';
+    document.getElementById('mpProfession').value = data.profession || '';
+    document.getElementById('mpEducation').value = data.education || '';
+    document.getElementById('mpMaritalStatus').value = data.marital_status || '';
+    document.getElementById('mpHeight').value = data.height || '';
+    document.getElementById('mpNativePlace').value = data.native_place || '';
+    document.getElementById('mpIncome').value = data.income || '';
+    document.getElementById('mpCity').value = data.city || '';
+    document.getElementById('mpBio').value = data.bio || '';
+    document.getElementById('mpFatherProfession').value = data.father_profession || '';
+    document.getElementById('mpFamilyType').value = data.family_type || '';
+    document.getElementById('mpSiblings').value = data.siblings || '';
+    document.getElementById('mpPrayerHabit').value = data.prayer_habit || '';
+    document.getElementById('mpPracticeNotes').value = data.practice_notes || '';
+
+    const preview = document.getElementById('mpAvatarPreview');
+    const icon = document.getElementById('mpAvatarIcon');
+    if (data.avatar_url) { preview.src = data.avatar_url; preview.classList.remove('hidden'); icon.classList.add('hidden'); }
+    else { preview.classList.add('hidden'); icon.classList.remove('hidden'); }
+
+    // Private contact info — self row, allowed by RLS
+    const { data: contact } = await supabaseClient.from('profile_contacts').select('*').eq('user_id', session.user.id).maybeSingle();
+    document.getElementById('mpPhone').value = contact?.phone || '';
+    document.getElementById('mpWhatsapp').value = contact?.whatsapp || '';
+    document.getElementById('mpWaliName').value = contact?.wali_name || '';
+    document.getElementById('mpWaliPhone').value = contact?.wali_phone || '';
+
+    // Referral link + count of profiles that used it
+    if (!data.referral_code) {
+      const code = (session.user.id || '').replace(/-/g, '').slice(0, 8);
+      await supabaseClient.from('profiles').update({ referral_code: code }).eq('user_id', session.user.id);
+      data.referral_code = code;
+    }
+    document.getElementById('mpReferralLink').value = `${window.location.origin}${window.location.pathname}?ref=${data.referral_code}`;
+    const { count } = await supabaseClient.from('profiles').select('id', { count: 'exact', head: true }).eq('referred_by', data.referral_code);
+    document.getElementById('mpReferralCount').textContent = count || 0;
+
+    updateCompletionBar(data, contact);
+
+    document.getElementById('myProfileModal').classList.remove('hidden');
+  }
+  function closeMyProfileModal() { document.getElementById('myProfileModal').classList.add('hidden'); }
+
+  // Profile completion — a simple checklist of the fields that make a
+  // profile genuinely useful for others to consider.
+  function updateCompletionBar(data, contact) {
+    const checks = [
+      data.full_name, data.dob, data.profession, data.city, data.bio,
+      data.avatar_url, data.father_profession, data.family_type,
+      data.prayer_habit, contact?.phone,
+    ];
+    const filled = checks.filter(Boolean).length;
+    const pct = Math.round((filled / checks.length) * 100);
+    document.getElementById('mpCompletionPct').textContent = pct + '%';
+    document.getElementById('mpCompletionBar').style.width = pct + '%';
+  }
+
+  let pendingAvatarFile = null;
+  function handleAvatarInputChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      alert('Please choose a JPG, PNG, or WEBP image.');
+      e.target.value = '';
+      return;
+    }
+    if (file.size > 4 * 1024 * 1024) {
+      alert('Image is too large — please choose one under 4MB.');
+      e.target.value = '';
+      return;
+    }
+    pendingAvatarFile = file;
+    const preview = document.getElementById('mpAvatarPreview');
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove('hidden');
+    document.getElementById('mpAvatarIcon').classList.add('hidden');
+  }
+
+  async function handleMyProfileSave(e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('myProfileMessage');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) return;
+
+    let avatarUrl;
+    if (pendingAvatarFile) {
+      const ext = pendingAvatarFile.name.split('.').pop();
+      const path = `${session.user.id}/avatar.${ext}`;
+      const { error: upErr } = await supabaseClient.storage.from('avatars').upload(path, pendingAvatarFile, { upsert: true });
+      if (upErr) {
+        msgEl.textContent = 'Photo upload failed: ' + upErr.message;
+        msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+        return;
+      }
+      const { data: pub } = supabaseClient.storage.from('avatars').getPublicUrl(path);
+      avatarUrl = pub.publicUrl + '?t=' + Date.now();
+      pendingAvatarFile = null;
+    }
+
+    const updatePayload = {
+      full_name: document.getElementById('mpFullName').value.trim(),
+      gender: document.getElementById('mpGender').value,
+      dob: document.getElementById('mpDob').value,
+      sect: document.getElementById('mpSect').value,
+      mother_tongue: document.getElementById('mpMotherTongue').value,
+      profession: document.getElementById('mpProfession').value.trim(),
+      education: document.getElementById('mpEducation').value.trim(),
+      marital_status: document.getElementById('mpMaritalStatus').value,
+      height: document.getElementById('mpHeight').value,
+      native_place: document.getElementById('mpNativePlace').value.trim(),
+      income: document.getElementById('mpIncome').value.trim(),
+      city: document.getElementById('mpCity').value.trim(),
+      bio: document.getElementById('mpBio').value.trim(),
+      father_profession: document.getElementById('mpFatherProfession').value.trim(),
+      family_type: document.getElementById('mpFamilyType').value,
+      siblings: document.getElementById('mpSiblings').value.trim(),
+      prayer_habit: document.getElementById('mpPrayerHabit').value,
+      practice_notes: document.getElementById('mpPracticeNotes').value.trim(),
+    };
+    if (avatarUrl) updatePayload.avatar_url = avatarUrl;
+
+    const { error } = await supabaseClient.from('profiles').update(updatePayload).eq('user_id', session.user.id);
+    if (error) {
+      msgEl.textContent = error.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+      return;
+    }
+
+    // Private contact info (separate table, upsert)
+    const { error: contactErr } = await supabaseClient.from('profile_contacts').upsert({
+      user_id: session.user.id,
+      phone: document.getElementById('mpPhone').value.trim(),
+      whatsapp: document.getElementById('mpWhatsapp').value.trim(),
+      wali_name: document.getElementById('mpWaliName').value.trim(),
+      wali_phone: document.getElementById('mpWaliPhone').value.trim(),
+    });
+    if (contactErr) {
+      msgEl.textContent = 'Profile saved, but contact info failed: ' + contactErr.message;
+      msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-red-600';
+      return;
+    }
+
+    updateCompletionBar(updatePayload, { phone: document.getElementById('mpPhone').value.trim() });
+
+    msgEl.textContent = 'Profile updated!';
+    msgEl.className = 'text-sm text-center min-h-[1.25rem] mt-3 text-green-700';
+    fetchAndRenderProfiles(currentFilters);
+  }
+
+  /* -----------------------------------------------------------------------
+     My Interests — shows interests the user has sent and received, and
+     lets the receiver accept/decline.
+  ----------------------------------------------------------------------- */
+  async function openInterestsModal() {
+    document.getElementById('interestsModal').classList.remove('hidden');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) return;
+
+    const receivedEl = document.getElementById('receivedInterestsList');
+    const sentEl = document.getElementById('sentInterestsList');
+    receivedEl.innerHTML = '<p class="text-sm text-ink/40 font-body">Loading…</p>';
+    sentEl.innerHTML = '<p class="text-sm text-ink/40 font-body">Loading…</p>';
+
+    // Interests received — now with the sender's actual profile details
+    const { data: received, error: recvErr } = await supabaseClient.rpc('get_received_interests');
+    receivedEl.innerHTML = (!recvErr && received && received.length)
+      ? received.map(i => {
+          const age = i.dob ? calculateAge(i.dob) : '';
+          return `
+            <div class="bg-white border border-gold/20 rounded-lg px-4 py-3 text-sm font-body">
+              <div class="flex items-center justify-between">
+                <span><strong>${escapeHtml(i.full_name)}</strong> ${age ? `· ${age} yrs` : ''} ${i.sect ? `· ${escapeHtml(i.sect)}` : ''}<br>
+                  <span class="text-ink/50 text-xs">${escapeHtml(i.profession) || '—'} · ${escapeHtml(i.city) || '—'}</span>
+                </span>
+                <span class="text-xs uppercase tracking-wide text-gold-dark">${escapeHtml(i.status)}</span>
+              </div>
+              <div class="flex gap-3 mt-2" id="recv-actions-${i.interest_id}">
+                ${i.status === 'pending' ? `
+                  <button onclick="respondToInterest('${i.interest_id}','accepted')" class="text-green-700 hover:underline text-xs">Accept</button>
+                  <button onclick="respondToInterest('${i.interest_id}','declined')" class="text-red-600 hover:underline text-xs">Decline</button>
+                ` : i.status === 'accepted' ? `
+                  <button onclick="viewContact('${i.sender_id}','recv-contact-${i.interest_id}')" class="text-maroon hover:underline text-xs"><i class="fa-solid fa-phone"></i> View Contact</button>
+                ` : ''}
+              </div>
+              <div id="recv-contact-${i.interest_id}" class="text-xs text-green-700 mt-1"></div>
+            </div>`;
+        }).join('')
+      : '<p class="text-sm text-ink/40 font-body">Kisi ne interest nahi bheja abhi.</p>';
+
+    // Interests I've sent
+    const { data: sent } = await supabaseClient
+      .from('interests')
+      .select('id, status, receiver_profile_id, profiles:receiver_profile_id (full_name, user_id)')
+      .eq('sender_id', session.user.id);
+    sentEl.innerHTML = (sent && sent.length)
+      ? sent.map(i => `
+          <div class="bg-white border border-gold/20 rounded-lg px-4 py-3 text-sm font-body">
+            <div class="flex items-center justify-between">
+              <span>${i.profiles ? escapeHtml(i.profiles.full_name) : 'Profile'}</span>
+              <span class="text-xs uppercase tracking-wide text-gold-dark">${escapeHtml(i.status)}</span>
+            </div>
+            ${i.status === 'accepted' && i.profiles ? `
+              <div class="mt-2">
+                <button onclick="viewContact('${i.profiles.user_id}','sent-contact-${i.id}')" class="text-maroon hover:underline text-xs"><i class="fa-solid fa-phone"></i> View Contact</button>
+                <div id="sent-contact-${i.id}" class="text-xs text-green-700 mt-1"></div>
+              </div>` : ''}
+          </div>`).join('')
+      : '<p class="text-sm text-ink/40 font-body">You haven\'t sent any interests yet.</p>';
+  }
+  function closeInterestsModal() { document.getElementById('interestsModal').classList.add('hidden'); }
+
+  async function respondToInterest(interestId, status) {
+    await supabaseClient.from('interests').update({ status }).eq('id', interestId);
+    openInterestsModal(); // refresh the lists
+  }
+  window.respondToInterest = respondToInterest; // used by inline onclick above
+
+  async function viewContact(targetUserId, elId) {
+    const el = document.getElementById(elId);
+    el.textContent = 'Loading…';
+    const { data, error } = await supabaseClient.rpc('get_contact', { p_target_user: targetUserId });
+    if (error || !data || !data.length) { el.textContent = 'Contact not shared yet.'; return; }
+    const c = data[0];
+    el.innerHTML = `${c.phone ? `📞 ${escapeHtml(c.phone)}` : ''} ${c.whatsapp ? `&nbsp;&nbsp;💬 ${escapeHtml(c.whatsapp)}` : ''}` || 'Contact not shared yet.';
+  }
+  window.viewContact = viewContact; // used by inline onclick above
+
+  /* -----------------------------------------------------------------------
+     Admin Panel — approve/reject pending profiles, view reported users.
+     The adminBtn is only shown if am_i_admin() returns true for the
+     current session (checked server-side, not just hidden in the UI).
+  ----------------------------------------------------------------------- */
+  async function checkAdminAndToggleUI() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    let isAdmin = false;
+    if (session) {
+      const { data } = await supabaseClient.rpc('am_i_admin');
+      isAdmin = !!data;
+    }
+    ['adminBtn', 'adminBtnMobile'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
+  }
+
+  function openAdminModal() {
+    document.getElementById('adminModal').classList.remove('hidden');
+    loadAdminPending();
+    loadAdminReports();
+  }
+  function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+  async function loadAdminPending() {
+    const el = document.getElementById('adminPendingList');
+    el.innerHTML = '<p class="text-sm text-ink/40 font-body">Loading…</p>';
+    const { data, error } = await supabaseClient.rpc('admin_list_pending');
+    el.innerHTML = (!error && data && data.length)
+      ? data.map(p => {
+          const age = p.dob ? calculateAge(p.dob) : '';
+          return `
+            <div class="flex items-center justify-between bg-white border border-gold/20 rounded-lg px-4 py-2.5 text-sm font-body">
+              <span><strong>${escapeHtml(p.full_name)}</strong> ${age ? `· ${age} yrs` : ''} · ${escapeHtml(p.city) || '—'}</span>
+              <span class="flex gap-2">
+                <button onclick="adminSetStatus('${p.id}','approved')" class="text-green-700 hover:underline text-xs">Approve</button>
+                <button onclick="adminSetStatus('${p.id}','rejected')" class="text-red-600 hover:underline text-xs">Reject</button>
+              </span>
+            </div>`;
+        }).join('')
+      : '<p class="text-sm text-ink/40 font-body">No pending profiles.</p>';
+  }
+
+  async function adminSetStatus(profileId, status) {
+    await supabaseClient.rpc('admin_set_profile_status', { p_profile_id: profileId, p_status: status });
+    loadAdminPending();
+  }
+  window.adminSetStatus = adminSetStatus;
+
+  async function loadAdminReports() {
+    const el = document.getElementById('adminReportsList');
+    el.innerHTML = '<p class="text-sm text-ink/40 font-body">Loading…</p>';
+    const { data, error } = await supabaseClient.rpc('admin_list_reports');
+    el.innerHTML = (!error && data && data.length)
+      ? data.map(r => `
+          <div class="bg-white border border-gold/20 rounded-lg px-4 py-2.5 text-sm font-body">
+            <span class="text-xs text-ink/40">${new Date(r.created_at).toLocaleDateString()}</span>
+            <p>Reported user: <span class="text-ink/60">${escapeHtml(r.reported_user_id)}</span></p>
+            ${r.reason ? `<p class="text-xs text-ink/50 mt-1">"${escapeHtml(r.reason)}"</p>` : ''}
+          </div>`).join('')
+      : '<p class="text-sm text-ink/40 font-body">No reports.</p>';
+  }
+
+  /* -----------------------------------------------------------------------
+     Wire everything up once the page has loaded.
+  ----------------------------------------------------------------------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    // First-visit Bismillah splash — shows once per browser, then remembers via localStorage
+    if (!localStorage.getItem('rishta_seen_bismillah')) {
+      const splash = document.getElementById('bismillahSplash');
+      splash.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.classList.add('hidden');
+          document.body.style.overflow = '';
+        }, 700);
+      }, 2400);
+      localStorage.setItem('rishta_seen_bismillah', '1');
+    }
+
+    // Mobile nav menu toggle
+    document.getElementById('menuBtn').addEventListener('click', function () {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+    // Close the mobile menu automatically whenever any link or button
+    // inside it is clicked (Home/Search/About/Register, Interests, My
+    // Profile, Login/Logout) — previously it stayed open after Logout.
+    document.getElementById('mobileMenu').addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) {
+        document.getElementById('mobileMenu').classList.add('hidden');
+      }
+    });
+
+    // Login modal open/close
+    document.getElementById('loginBtnDesktop').addEventListener('click', handleAuthButtonClick);
+    document.getElementById('loginBtnMobile').addEventListener('click', handleAuthButtonClick);
+    document.getElementById('closeLoginModalBtn').addEventListener('click', closeLoginModal);
+    document.getElementById('loginModalOverlay').addEventListener('click', closeLoginModal);
+    document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+    document.getElementById('sendOtpBtn').addEventListener('click', handleSendOtp);
+    document.getElementById('forgotPasswordBtn').addEventListener('click', handleForgotPassword);
+
+    // Registration form
+    document.getElementById('registerForm').addEventListener('submit', handleRegisterSubmit);
+
+    // Search filter bar
+    document.getElementById('searchBtn').addEventListener('click', handleSearchClick);
+
+    // View Profile modal open/close (opened via inline onclick from each card)
+    document.getElementById('closeViewProfileBtn').addEventListener('click', closeViewProfileModal);
+    document.getElementById('viewProfileOverlay').addEventListener('click', closeViewProfileModal);
+
+    // My Profile (edit) modal
+    document.getElementById('myProfileBtn').addEventListener('click', openMyProfileModal);
+    document.getElementById('myProfileBtnMobile').addEventListener('click', openMyProfileModal);
+    document.getElementById('closeMyProfileBtn').addEventListener('click', closeMyProfileModal);
+    document.getElementById('myProfileOverlay').addEventListener('click', closeMyProfileModal);
+    document.getElementById('myProfileForm').addEventListener('submit', handleMyProfileSave);
+
+    // My Interests modal
+    document.getElementById('myInterestsBtn').addEventListener('click', openInterestsModal);
+    document.getElementById('myInterestsBtnMobile').addEventListener('click', openInterestsModal);
+    document.getElementById('notifBtn').addEventListener('click', openNotifModal);
+    document.getElementById('notifBtnMobile').addEventListener('click', openNotifModal);
+    document.getElementById('shortlistBtn').addEventListener('click', openShortlistModal);
+    document.getElementById('shortlistBtnMobile').addEventListener('click', openShortlistModal);
+    document.getElementById('closeInterestsBtn').addEventListener('click', closeInterestsModal);
+    document.getElementById('interestsOverlay').addEventListener('click', closeInterestsModal);
+
+    // Avatar upload preview
+    // Populate Height dropdown (4'6" to 6'6")
+    const heightSel = document.getElementById('mpHeight');
+    for (let totalIn = 54; totalIn <= 78; totalIn++) {
+      const ft = Math.floor(totalIn / 12);
+      const inch = totalIn % 12;
+      const label = `${ft}ft ${inch}in`;
+      const opt = document.createElement('option');
+      opt.value = label;
+      opt.textContent = label;
+      heightSel.appendChild(opt);
+    }
+
+    // Populate DOB day/year dropdowns (ages 18-80)
+    const dobDaySel = document.getElementById('regDobDay');
+    for (let d = 1; d <= 31; d++) {
+      const opt = document.createElement('option');
+      opt.value = String(d).padStart(2, '0');
+      opt.textContent = d;
+      dobDaySel.appendChild(opt);
+    }
+    const dobYearSel = document.getElementById('regDobYear');
+    const thisYear = new Date().getFullYear();
+    for (let y = thisYear - 18; y >= thisYear - 80; y--) {
+      const opt = document.createElement('option');
+      opt.value = String(y);
+      opt.textContent = y;
+      dobYearSel.appendChild(opt);
+    }
+
+    document.getElementById('mpAvatarInput').addEventListener('change', handleAvatarInputChange);
+    document.getElementById('mpCopyReferralBtn').addEventListener('click', () => {
+      const input = document.getElementById('mpReferralLink');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        const btn = document.getElementById('mpCopyReferralBtn');
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      });
+    });
+
+    // Load More profiles
+    document.getElementById('loadMoreBtn').addEventListener('click', handleLoadMoreClick);
+
+    // Report / Block buttons live inside the View Profile modal and are
+    // wired per-open in showProfileModal() since they need the current p.
+
+    // Admin panel
+    document.getElementById('adminBtn').addEventListener('click', openAdminModal);
+    document.getElementById('adminBtnMobile').addEventListener('click', openAdminModal);
+    document.getElementById('closeAdminBtn').addEventListener('click', closeAdminModal);
+    document.getElementById('adminOverlay').addEventListener('click', closeAdminModal);
+
+    // Set New Password form (shown after clicking the reset-password email link)
+    document.getElementById('resetPasswordForm').addEventListener('submit', handleResetPasswordSubmit);
+
+    // Keep the Login/Logout label in sync with the current session, and
+    // open the "Set New Password" modal when Supabase redirects back here
+    // after a password-reset email link is clicked.
+    supabaseClient.auth.getSession().then(({ data: { session } }) => { updateAuthUI(session); checkAdminAndToggleUI(); });
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      updateAuthUI(session);
+      checkAdminAndToggleUI();
+      fetchAndRenderProfiles(currentFilters);
+      if (event === 'PASSWORD_RECOVERY') {
+        document.getElementById('resetPasswordModal').classList.remove('hidden');
+      }
+    });
+
+    // Initial load of the Featured Profiles grid
+    fetchAndRenderProfiles();
+  });
+</script>
+
+</body>
+</html>
