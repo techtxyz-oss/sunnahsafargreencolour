@@ -512,6 +512,29 @@
     </button>
     <p class="font-display text-maroon text-2xl text-center mb-6">Admin Panel</p>
 
+    <p class="font-body text-sm font-bold text-maroon mb-2">Find &amp; Edit Profile</p>
+    <div class="flex gap-2 mb-3">
+      <input id="adminSearchInput" type="text" placeholder="Search by name…" class="flex-1 border border-gold/40 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+      <button id="adminSearchBtn" type="button" class="px-4 py-2 rounded-lg bg-maroon text-ivory text-sm">Search</button>
+    </div>
+    <div id="adminSearchResults" class="space-y-2 mb-4"></div>
+    <div id="adminEditBox" class="hidden bg-white border border-gold/30 rounded-lg p-4 mb-8 space-y-3 text-sm font-body">
+      <p class="font-bold text-maroon">Editing: <span id="aeName"></span></p>
+      <p class="text-[11px] text-ink/40">Sirf bio, profession, city aur photo edit ho sakte hain. Har change ka reason zaroori hai aur audit log me save hota hai.</p>
+      <div><label class="block text-xs uppercase tracking-wider text-ink/50 mb-1">Bio</label><textarea id="aeBio" rows="3" class="w-full border border-gold/40 rounded-lg px-3 py-2 text-sm"></textarea></div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="block text-xs uppercase tracking-wider text-ink/50 mb-1">Profession</label><input id="aeProfession" type="text" class="w-full border border-gold/40 rounded-lg px-3 py-2 text-sm"></div>
+        <div><label class="block text-xs uppercase tracking-wider text-ink/50 mb-1">City</label><input id="aeCity" type="text" class="w-full border border-gold/40 rounded-lg px-3 py-2 text-sm"></div>
+      </div>
+      <label id="aePhotoRow" class="flex items-center gap-2 text-sm"><input id="aeRemovePhoto" type="checkbox"> Photo hata do</label>
+      <div><label class="block text-xs uppercase tracking-wider text-ink/50 mb-1">Reason (required)</label><input id="aeReason" type="text" placeholder="e.g. Bio me phone number tha" class="w-full border border-gold/40 rounded-lg px-3 py-2 text-sm"></div>
+      <div class="flex gap-2 items-center">
+        <button id="aeSaveBtn" type="button" class="px-4 py-2 rounded-lg bg-maroon text-ivory text-sm">Save</button>
+        <button id="aeCancelBtn" type="button" class="px-4 py-2 rounded-lg border border-gold/40 text-sm">Cancel</button>
+        <span id="aeMsg" class="text-xs"></span>
+      </div>
+    </div>
+
     <p class="font-body text-sm font-bold text-maroon mb-2">Pending Profiles</p>
     <div id="adminPendingList" class="space-y-2 mb-8">
       <p class="text-sm text-ink/40 font-body">Loading…</p>
@@ -754,7 +777,7 @@
       <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Mobile Number</label>
       <div class="relative">
         <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
-        <input id="regPhone" type="tel" required placeholder="e.g. 9876543210" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+        <input id="regPhone" type="tel" required placeholder="e.g. 99999 99999" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
       </div>
     </div>
 
@@ -762,7 +785,7 @@
       <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">WhatsApp Number</label>
       <div class="relative">
         <i class="fa-brands fa-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark text-sm"></i>
-        <input id="regWhatsapp" type="tel" placeholder="e.g. 9876543210" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+        <input id="regWhatsapp" type="tel" placeholder="e.g. 99999 99999" class="w-full border border-gold/40 rounded-lg pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
       </div>
       <p class="text-[11px] text-ink/40 mt-1">Contact numbers stay private — only shown after mutual interest is accepted.</p>
     </div>
@@ -1868,6 +1891,7 @@
             <div class="flex items-center justify-between bg-white border border-gold/20 rounded-lg px-4 py-2.5 text-sm font-body">
               <span><strong>${escapeHtml(p.full_name)}</strong> ${age ? `· ${age} yrs` : ''} · ${escapeHtml(p.city) || '—'}</span>
               <span class="flex gap-2">
+                <button onclick="adminOpenEdit('${p.id}')" class="text-maroon hover:underline text-xs">Edit</button>
                 <button onclick="adminSetStatus('${p.id}','approved')" class="text-green-700 hover:underline text-xs">Approve</button>
                 <button onclick="adminSetStatus('${p.id}','rejected')" class="text-red-600 hover:underline text-xs">Reject</button>
               </span>
@@ -1881,6 +1905,71 @@
     loadAdminPending();
   }
   window.adminSetStatus = adminSetStatus;
+
+
+  /* ---- Admin: search + limited edit (bio / profession / city / photo) + suspend ---- */
+  let adminEditing = null; // original row being edited
+  async function adminSearch() {
+    const el = document.getElementById('adminSearchResults');
+    const q = document.getElementById('adminSearchInput').value.trim();
+    el.innerHTML = '<p class="text-sm text-ink/40">Searching…</p>';
+    const { data, error } = await supabaseClient.rpc('admin_search_profiles', { p_q: q });
+    el.innerHTML = (!error && data && data.length) ? data.map(p => `
+      <div class="flex items-center justify-between bg-white border border-gold/20 rounded-lg px-4 py-2.5 text-sm font-body">
+        <span><strong>${escapeHtml(p.full_name)}</strong> · ${escapeHtml(p.city) || '—'} · <span class="text-xs uppercase text-gold-dark">${escapeHtml(p.status)}</span></span>
+        <span class="flex gap-3">
+          <button onclick="adminOpenEdit('${p.id}')" class="text-maroon hover:underline text-xs">Edit</button>
+          <button onclick="adminToggleSuspend('${p.id}', ${p.status === 'suspended'})" class="${p.status === 'suspended' ? 'text-green-700' : 'text-red-600'} hover:underline text-xs">${p.status === 'suspended' ? 'Unsuspend' : 'Suspend'}</button>
+        </span>
+      </div>`).join('') : `<p class="text-sm text-ink/40">${error ? escapeHtml(error.message) : 'No profiles found.'}</p>`;
+  }
+  async function adminOpenEdit(id) {
+    const { data, error } = await supabaseClient.rpc('admin_get_profile', { p_profile_id: id });
+    const p = data && data[0];
+    if (error || !p) { alert(error ? error.message : 'Profile not found'); return; }
+    adminEditing = p;
+    document.getElementById('aeName').textContent = p.full_name;
+    document.getElementById('aeBio').value = p.bio || '';
+    document.getElementById('aeProfession').value = p.profession || '';
+    document.getElementById('aeCity').value = p.city || '';
+    document.getElementById('aeRemovePhoto').checked = false;
+    document.getElementById('aePhotoRow').classList.toggle('hidden', !p.avatar_url);
+    document.getElementById('aeReason').value = '';
+    document.getElementById('aeMsg').textContent = '';
+    const box = document.getElementById('adminEditBox');
+    box.classList.remove('hidden');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  async function adminSaveEdit() {
+    const msg = document.getElementById('aeMsg');
+    const reason = document.getElementById('aeReason').value.trim();
+    if (!adminEditing) return;
+    if (!reason) { msg.textContent = 'Reason likhna zaroori hai.'; msg.className = 'text-xs text-red-600'; return; }
+    const v = { bio: aeBio.value.trim(), profession: aeProfession.value.trim(), city: aeCity.value.trim() };
+    const o = adminEditing;
+    const diff = (k) => v[k] !== (o[k] || '') ? v[k] : null; // null = unchanged
+    const removePhoto = aeRemovePhoto.checked;
+    if (diff('bio') === null && diff('profession') === null && diff('city') === null && !removePhoto) {
+      msg.textContent = 'Kuch change nahi hua.'; msg.className = 'text-xs text-ink/50'; return;
+    }
+    const { error } = await supabaseClient.rpc('admin_update_profile', {
+      p_profile_id: o.id, p_bio: diff('bio'), p_profession: diff('profession'), p_city: diff('city'),
+      p_remove_avatar: removePhoto, p_reason: reason,
+    });
+    if (error) { msg.textContent = error.message; msg.className = 'text-xs text-red-600'; return; }
+    msg.textContent = 'Saved.'; msg.className = 'text-xs text-green-700';
+    adminEditing = null;
+    setTimeout(() => { document.getElementById('adminEditBox').classList.add('hidden'); adminSearch(); loadAdminPending(); }, 600);
+  }
+  async function adminToggleSuspend(id, isSuspended) {
+    const reason = prompt(isSuspended ? 'Unsuspend ka reason?' : 'Suspend ka reason? (required)');
+    if (!reason || !reason.trim()) return;
+    const { error } = await supabaseClient.rpc('admin_suspend_profile', { p_profile_id: id, p_suspend: !isSuspended, p_reason: reason.trim() });
+    if (error) { alert(error.message); return; }
+    adminSearch(); loadAdminPending();
+  }
+  window.adminOpenEdit = adminOpenEdit;
+  window.adminToggleSuspend = adminToggleSuspend;
 
   async function loadAdminReports() {
     const el = document.getElementById('adminReportsList');
@@ -2023,6 +2112,10 @@
     document.getElementById('adminBtn').addEventListener('click', openAdminModal);
     document.getElementById('adminBtnMobile').addEventListener('click', openAdminModal);
     document.getElementById('closeAdminBtn').addEventListener('click', closeAdminModal);
+    document.getElementById('adminSearchBtn').addEventListener('click', adminSearch);
+    document.getElementById('adminSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); adminSearch(); } });
+    document.getElementById('aeSaveBtn').addEventListener('click', adminSaveEdit);
+    document.getElementById('aeCancelBtn').addEventListener('click', () => { adminEditing = null; document.getElementById('adminEditBox').classList.add('hidden'); });
     document.getElementById('adminOverlay').addEventListener('click', closeAdminModal);
 
     // Set New Password form (shown after clicking the reset-password email link)
