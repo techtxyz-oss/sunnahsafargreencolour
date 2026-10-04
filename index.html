@@ -275,7 +275,7 @@
 
 <div id="viewProfileModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
   <div id="viewProfileOverlay" class="absolute inset-0 bg-maroon-dark/70 backdrop-blur-sm"></div>
-  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-md px-8 py-9 text-center">
+  <div class="corner-flourish relative bg-ivory rounded-2xl shadow-2xl border border-gold/40 w-full max-w-md px-6 sm:px-8 py-7 sm:py-9 text-center max-h-[90vh] overflow-y-auto">
     <button id="closeViewProfileBtn" class="absolute top-4 right-4 text-ink/40 hover:text-maroon text-lg">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -287,7 +287,7 @@
     <h3 id="vpName" class="font-display text-2xl text-maroon"></h3>
     <p id="vpMeta" class="text-sm text-ink/50 font-body mb-3"></p>
     <p id="vpBio" class="hidden text-sm text-ink/70 font-body italic mb-4"></p>
-    <ul id="vpDetails" class="text-sm text-ink/70 font-body space-y-2 text-left bg-white rounded-xl border border-gold/20 p-5 mb-5"></ul>
+    <ul id="vpDetails" class="text-sm text-ink/70 font-body space-y-1.5 text-left bg-white rounded-xl border border-gold/20 p-4 mb-4"></ul>
     <button id="sendInterestBtn" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2">
       <i class="fa-solid fa-heart text-gold"></i> Send Interest
     </button>
@@ -1428,21 +1428,16 @@
     const vpBioEl = document.getElementById('vpBio');
     vpBioEl.textContent = p.bio ? `"${p.bio}"` : '';
     vpBioEl.classList.toggle('hidden', !p.bio);
+    const vpRows = [
+      ['fa-briefcase', p.profession], ['fa-graduation-cap', p.education], ['fa-ring', p.marital_status],
+      ['fa-ruler-vertical', p.height], ['fa-house-flag', p.native_place], ['fa-sack-dollar', p.income],
+      ['fa-location-dot', p.city], ['fa-language', p.mother_tongue], ['fa-mosque', p.religion || 'Muslim'],
+    ].filter(r => r[1]);
     document.getElementById('vpDetails').innerHTML = `
-      <li><i class="fa-solid fa-briefcase text-gold-dark w-4"></i> ${escapeHtml(p.profession) || '—'}</li>
-      <li><i class="fa-solid fa-graduation-cap text-gold-dark w-4"></i> ${escapeHtml(p.education) || '—'}</li>
-      <li><i class="fa-solid fa-ring text-gold-dark w-4"></i> ${escapeHtml(p.marital_status) || '—'}</li>
-      <li><i class="fa-solid fa-ruler-vertical text-gold-dark w-4"></i> ${escapeHtml(p.height) || '—'}</li>
-      <li><i class="fa-solid fa-house-flag text-gold-dark w-4"></i> ${escapeHtml(p.native_place) || '—'}</li>
-      <li><i class="fa-solid fa-sack-dollar text-gold-dark w-4"></i> ${escapeHtml(p.income) || '—'}</li>
-      <li><i class="fa-solid fa-location-dot text-gold-dark w-4"></i> ${escapeHtml(p.city) || '—'}</li>
-      <li><i class="fa-solid fa-language text-gold-dark w-4"></i> ${escapeHtml(p.mother_tongue) || '—'}</li>
-      <li><i class="fa-solid fa-mosque text-gold-dark w-4"></i> ${escapeHtml(p.religion) || 'Muslim'}</li>
+      ${vpRows.map(r => `<li><i class="fa-solid ${r[0]} text-gold-dark w-4"></i> ${escapeHtml(r[1])}</li>`).join('')}
       <li class="pt-2 mt-2 border-t border-gold/10"><i class="fa-solid fa-people-roof text-gold-dark w-4"></i> ${escapeHtml(p.father_profession) ? "Father: " + escapeHtml(p.father_profession) : 'Family details not shared'}</li>
       ${p.family_type ? `<li><i class="fa-solid fa-house text-gold-dark w-4"></i> ${escapeHtml(p.family_type)}</li>` : ''}
       ${p.siblings ? `<li><i class="fa-solid fa-user-group text-gold-dark w-4"></i> ${escapeHtml(p.siblings)}</li>` : ''}
-      ${p.prayer_habit ? `<li><i class="fa-solid fa-person-praying text-gold-dark w-4"></i> ${escapeHtml(p.prayer_habit)}</li>` : ''}
-      ${p.practice_notes ? `<li><i class="fa-solid fa-star-and-crescent text-gold-dark w-4"></i> ${escapeHtml(p.practice_notes)}</li>` : ''}
     `;
     document.getElementById('vpMessage').textContent = isOwnProfile ? 'This is your own profile.' : '';
 
