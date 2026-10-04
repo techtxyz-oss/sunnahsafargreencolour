@@ -288,6 +288,7 @@
     <p id="vpMeta" class="text-sm text-ink/50 font-body mb-3"></p>
     <p id="vpBio" class="hidden text-sm text-ink/70 font-body italic mb-4"></p>
     <ul id="vpDetails" class="text-sm text-ink/70 font-body space-y-1.5 text-left bg-white rounded-xl border border-gold/20 p-4 mb-4"></ul>
+    <div id="vpMatch" class="hidden bg-white rounded-xl border border-gold/20 p-4 mb-4 text-left text-sm font-body text-ink/70"></div>
     <button id="sendInterestBtn" class="w-full py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2">
       <i class="fa-solid fa-heart text-gold"></i> Send Interest
     </button>
@@ -296,6 +297,9 @@
       <button id="reportProfileBtn" class="text-xs text-ink/40 hover:text-red-600"><i class="fa-solid fa-flag"></i> Report</button>
       <button id="blockProfileBtn" class="text-xs text-ink/40 hover:text-red-600"><i class="fa-solid fa-ban"></i> Block</button>
     </div>
+    <button id="vpAdminEditBtn" type="button" class="hidden w-full mt-4 py-2.5 rounded-full border border-maroon text-maroon text-sm font-body hover:bg-maroon hover:text-ivory transition-colors">
+      <i class="fa-solid fa-shield-halved"></i> Admin: Edit / Contact / Suspend
+    </button>
   </div>
 </div>
 
@@ -456,6 +460,11 @@
         <input id="mpWhatsapp" type="tel" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
       </div>
       <div>
+        <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Pincode</label>
+        <input id="mpPincode" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="e.g. 823001" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
+        <p class="text-[11px] text-ink/40 mt-1">Private rehta hai. Sirf location match ke liye use hota hai, kisi ko dikhta nahi.</p>
+      </div>
+      <div>
         <label class="block text-xs uppercase tracking-wider text-ink/50 mb-1.5">Wali / Guardian's Name</label>
         <input id="mpWaliName" type="text" placeholder="e.g. Father / Brother's name" class="w-full border border-gold/40 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/50">
       </div>
@@ -528,6 +537,10 @@
       </div>
       <label id="aePhotoRow" class="flex items-center gap-2 text-sm"><input id="aeRemovePhoto" type="checkbox"> Photo hata do</label>
       <div><label class="block text-xs uppercase tracking-wider text-ink/50 mb-1">Reason (required)</label><input id="aeReason" type="text" placeholder="e.g. Bio me phone number tha" class="w-full border border-gold/40 rounded-lg px-3 py-2 text-sm"></div>
+      <div class="border-t border-gold/20 pt-3">
+        <button id="aeContactBtn" type="button" class="text-maroon hover:underline text-xs"><i class="fa-solid fa-phone"></i> Contact dekho (reason ke saath, log hota hai)</button>
+        <div id="aeContact" class="mt-2 text-sm"></div>
+      </div>
       <div class="flex gap-2 items-center">
         <button id="aeSaveBtn" type="button" class="px-4 py-2 rounded-lg bg-maroon text-ivory text-sm">Save</button>
         <button id="aeCancelBtn" type="button" class="px-4 py-2 rounded-lg border border-gold/40 text-sm">Cancel</button>
@@ -645,6 +658,7 @@
       <button id="searchBtn" type="button" class="mt-6 w-full sm:w-auto sm:px-12 py-3 rounded-full bg-maroon text-ivory font-body tracking-wide text-sm hover:bg-maroon-dark transition-colors flex items-center justify-center gap-2 mx-auto sm:mx-0">
         <i class="fa-solid fa-magnifying-glass text-gold"></i> Search Profiles
       </button>
+      <button id="searchMyStateBtn" type="button" class="mt-3 block text-sm text-maroon underline"><i class="fa-solid fa-location-dot"></i> Mere state ke profiles dikhao</button>
     </div>
   </div>
 </section>
@@ -1413,6 +1427,30 @@
     renderProfileDetail(p);
   }
 
+  async function loadMatchInfo(profileId, el) {
+    el.dataset.pid = profileId;
+    const { data, error } = await supabaseClient.rpc('get_match_info', { p_profile_id: profileId });
+    if (el.dataset.pid !== profileId) return; // user ne dusri profile khol li
+    if (error || !Array.isArray(data) || !data.length) return;
+    const yes = data.filter(x => x.r === 'yes').length, no = data.filter(x => x.r === 'no').length;
+    const icon = r => r === 'yes' ? '<i class="fa-solid fa-circle-check text-green-600"></i>'
+      : r === 'no' ? '<i class="fa-solid fa-circle-xmark text-red-500"></i>' : '<i class="fa-solid fa-minus text-ink/30"></i>';
+    const pinNa = data.some(x => x.key === 'pincode' && x.r === 'na');
+    el.innerHTML = `<p class="font-bold text-maroon mb-2">Aapse match: ${yes}/${yes + no}</p>`
+      + data.map(x => `<p class="flex items-center gap-2 py-0.5 ${x.r === 'na' ? 'text-ink/40' : ''}">${icon(x.r)} ${escapeHtml(x.label)}${x.r === 'na' ? ' <span class="text-[11px]">(info nahi)</span>' : ''}</p>`).join('')
+      + (pinNa ? '<p class="text-[11px] text-ink/40 mt-2">Pincode match ke liye dono ke pincode chahiye. Apna pincode My Profile me daalo.</p>' : '');
+    el.classList.remove('hidden');
+  }
+
+  async function searchMyState() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) { openLoginModal(); return; }
+    const { data } = await supabaseClient.from('profiles').select('city').eq('user_id', session.user.id).maybeSingle();
+    if (!data || !data.city) { alert('Pehle My Profile me apna State bharo.'); return; }
+    document.getElementById('filterCity').value = data.city;
+    handleSearchClick();
+  }
+
   async function renderProfileDetail(p) {
     const age = p.age ?? (p.dob ? calculateAge(p.dob) : "");
     const { data: { session } } = await supabaseClient.auth.getSession();
@@ -1432,6 +1470,7 @@
       ['fa-briefcase', p.profession], ['fa-graduation-cap', p.education], ['fa-ring', p.marital_status],
       ['fa-ruler-vertical', p.height], ['fa-house-flag', p.native_place], ['fa-sack-dollar', p.income],
       ['fa-location-dot', p.city], ['fa-language', p.mother_tongue], ['fa-mosque', p.religion || 'Muslim'],
+      ['fa-person-praying', p.prayer_habit], ['fa-star-and-crescent', p.practice_notes],
     ].filter(r => r[1]);
     document.getElementById('vpDetails').innerHTML = `
       ${vpRows.map(r => `<li><i class="fa-solid ${r[0]} text-gold-dark w-4"></i> ${escapeHtml(r[1])}</li>`).join('')}
@@ -1440,6 +1479,9 @@
       ${p.siblings ? `<li><i class="fa-solid fa-user-group text-gold-dark w-4"></i> ${escapeHtml(p.siblings)}</li>` : ''}
     `;
     document.getElementById('vpMessage').textContent = isOwnProfile ? 'This is your own profile.' : '';
+    const vpMatchEl = document.getElementById('vpMatch');
+    vpMatchEl.classList.add('hidden'); vpMatchEl.innerHTML = ''; vpMatchEl.dataset.pid = '';
+    if (session && !isOwnProfile && !p.isDummy && p.id) loadMatchInfo(p.id, vpMatchEl);
 
     const sendBtn = document.getElementById('sendInterestBtn');
     sendBtn.onclick = () => sendInterest(p);
@@ -1451,6 +1493,10 @@
     blockBtn.classList.toggle('hidden', !!p.isDummy || isOwnProfile);
     reportBtn.onclick = () => reportProfile(p);
     blockBtn.onclick = () => blockProfile(p);
+
+    const adminEditBtn = document.getElementById('vpAdminEditBtn');
+    adminEditBtn.classList.toggle('hidden', !(isAdminUser && !p.isDummy && p.id));
+    adminEditBtn.onclick = () => { closeViewProfileModal(); openAdminModal(); adminOpenEdit(p.id); };
 
     document.getElementById('viewProfileModal').classList.remove('hidden');
   }
@@ -1581,6 +1627,7 @@
     const { data: contact } = await supabaseClient.from('profile_contacts').select('*').eq('user_id', session.user.id).maybeSingle();
     document.getElementById('mpPhone').value = contact?.phone || '';
     document.getElementById('mpWhatsapp').value = contact?.whatsapp || '';
+    document.getElementById('mpPincode').value = contact?.pincode || '';
     document.getElementById('mpWaliName').value = contact?.wali_name || '';
     document.getElementById('mpWaliPhone').value = contact?.wali_phone || '';
 
@@ -1758,6 +1805,7 @@
       user_id: session.user.id,
       phone: document.getElementById('mpPhone').value.trim(),
       whatsapp: document.getElementById('mpWhatsapp').value.trim(),
+      pincode: document.getElementById('mpPincode').value.trim() || null,
       wali_name: document.getElementById('mpWaliName').value.trim(),
       wali_phone: document.getElementById('mpWaliPhone').value.trim(),
     });
@@ -1858,6 +1906,7 @@
      The adminBtn is only shown if am_i_admin() returns true for the
      current session (checked server-side, not just hidden in the UI).
   ----------------------------------------------------------------------- */
+  let isAdminUser = false;
   async function checkAdminAndToggleUI() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     let isAdmin = false;
@@ -1865,6 +1914,7 @@
       const { data } = await supabaseClient.rpc('am_i_admin');
       isAdmin = !!data;
     }
+    isAdminUser = isAdmin;
     ['adminBtn', 'adminBtnMobile'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
   }
 
@@ -1872,6 +1922,7 @@
     document.getElementById('adminModal').classList.remove('hidden');
     loadAdminPending();
     loadAdminReports();
+    adminSearch(); // recent profiles list turant dikhao (Edit/Suspend ke saath)
   }
   function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
 
@@ -1931,6 +1982,7 @@
     document.getElementById('aePhotoRow').classList.toggle('hidden', !p.avatar_url);
     document.getElementById('aeReason').value = '';
     document.getElementById('aeMsg').textContent = '';
+    document.getElementById('aeContact').textContent = '';
     const box = document.getElementById('adminEditBox');
     box.classList.remove('hidden');
     box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1962,6 +2014,18 @@
     const { error } = await supabaseClient.rpc('admin_suspend_profile', { p_profile_id: id, p_suspend: !isSuspended, p_reason: reason.trim() });
     if (error) { alert(error.message); return; }
     adminSearch(); loadAdminPending();
+  }
+  async function adminViewContact() {
+    const box = document.getElementById('aeContact');
+    if (!adminEditing) return;
+    const reason = prompt('Contact dekhne ka reason? (required, log me save hoga)');
+    if (!reason || !reason.trim()) return;
+    box.textContent = 'Loading…';
+    const { data, error } = await supabaseClient.rpc('admin_view_contact', { p_profile_id: adminEditing.id, p_reason: reason.trim() });
+    if (error) { box.innerHTML = `<span class="text-red-600 text-xs">${escapeHtml(error.message)}</span>`; return; }
+    const c = data || {};
+    const tel = (n) => n ? `<a href="tel:${escapeHtml(String(n).replace(/[^\d+]/g, ''))}" class="text-maroon underline">${escapeHtml(n)}</a>` : '—';
+    box.innerHTML = `<p>📞 Mobile: ${tel(c.phone)}</p><p>💬 WhatsApp: ${tel(c.whatsapp)}</p><p>👤 Wali: ${escapeHtml(c.wali_name) || '—'} · ${tel(c.wali_phone)}</p>`;
   }
   window.adminOpenEdit = adminOpenEdit;
   window.adminToggleSuspend = adminToggleSuspend;
@@ -2033,6 +2097,7 @@
 
     // Search filter bar
     document.getElementById('searchBtn').addEventListener('click', handleSearchClick);
+    document.getElementById('searchMyStateBtn').addEventListener('click', searchMyState);
 
     // View Profile modal open/close (opened via inline onclick from each card)
     document.getElementById('closeViewProfileBtn').addEventListener('click', closeViewProfileModal);
@@ -2110,6 +2175,7 @@
     document.getElementById('adminSearchBtn').addEventListener('click', adminSearch);
     document.getElementById('adminSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); adminSearch(); } });
     document.getElementById('aeSaveBtn').addEventListener('click', adminSaveEdit);
+    document.getElementById('aeContactBtn').addEventListener('click', adminViewContact);
     document.getElementById('aeCancelBtn').addEventListener('click', () => { adminEditing = null; document.getElementById('adminEditBox').classList.add('hidden'); });
     document.getElementById('adminOverlay').addEventListener('click', closeAdminModal);
 
