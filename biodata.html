@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Islamic Marriage Biodata Maker (PDF) | Sunnah Safar</title>
+<meta name="description" content="Muslim nikah ke liye free biodata banao: Bismillah ke saath, deen aur family details ke saath, live preview aur PDF download. Data aapke browser me hi rehta hai.">
+<link rel="canonical" href="https://shaadisunnah.com/biodata.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { maroon: { DEFAULT: '#0E9F52', dark: '#0A7A3F', light: '#3DD87D' }, gold: { DEFAULT: '#D4A017', dark: '#A6790A' }, ivory: '#FFFFFF', ink: '#1B3B2C', opal: '#EAF7F2' },
+  fontFamily: { display: ['"Playfair Display"', 'serif'], body: ['Jost', 'sans-serif'] } } } };
+</script>
+<style>
+  body { font-family: 'Jost', sans-serif; color: #1B3B2C; background: #F6FBF8; }
+  .font-display { font-family: 'Playfair Display', serif; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .in { width: 100%; border: 1px solid rgba(212,160,23,.4); border-radius: .5rem; padding: .55rem .8rem; font-size: .875rem; background: #fff; }
+  .in:focus { outline: none; box-shadow: 0 0 0 2px rgba(212,160,23,.35); }
+  .lb { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(27,59,44,.55); margin-bottom: .25rem; }
+  details > summary { cursor: pointer; font-weight: 600; color: #0A7A3F; list-style: none; }
+  #bio { --a: #0E9F52; --b: #EAFBF1; background: #fff; border: 2px solid var(--a); outline: 1px solid var(--a); outline-offset: 4px; aspect-ratio: auto; min-height: 520px; }
+  #bio.t-gold { --a: #A6790A; --b: #FFF7DB; } #bio.t-classic { --a: #222; --b: #F2F2F2; }
+  #bio .sec { background: var(--b); color: var(--a); font-weight: 600; padding: .25rem .6rem; margin: .9rem 0 .35rem; border-left: 4px solid var(--a); font-size: .9rem; }
+  #bio .row { display: flex; gap: .5rem; font-size: .85rem; padding: .12rem .6rem; }
+  #bio .row b { width: 9rem; flex-shrink: 0; font-weight: 500; opacity: .65; }
+  @media print {
+    body { background: #fff; } body * { visibility: hidden; }
+    #bio, #bio * { visibility: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #bio { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+    @page { size: A4; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+<header class="border-b border-gold/20 bg-white sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2"><span class="w-9 h-9 rounded-full bg-maroon/10 text-maroon flex items-center justify-center"><i class="fa-solid fa-mosque"></i></span><span class="font-display text-xl text-maroon">Sunnah Safar</span></a>
+    <nav class="flex gap-5 text-sm"><a href="/" class="hover:text-maroon">Home</a><a href="biodata.html" class="text-maroon font-medium">Biodata Maker</a><a href="career.html" class="hover:text-maroon">Careers</a></nav>
+  </div>
+</header>
+
+<section class="text-center px-5 pt-10 pb-6">
+  <p class="arabic text-4xl sm:text-5xl text-maroon-dark leading-relaxed">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  <p class="text-xs tracking-widest uppercase text-gold-dark mt-1">Bismillahir Rahmanir Raheem</p>
+  <h1 class="font-display text-3xl sm:text-4xl font-semibold mt-4">Free Islamic Marriage Biodata Maker</h1>
+  <p class="text-ink/60 mt-2 max-w-xl mx-auto text-sm">Form bharo, saath-saath biodata banta dekho, aur PDF download karo. Koi sign-up nahi. Aapka data is device ke browser me hi rehta hai, hamare server par nahi jaata.</p>
+</section>
+
+<main class="max-w-6xl mx-auto px-5 pb-16 grid lg:grid-cols-12 gap-6">
+  <!-- FORM -->
+  <div class="lg:col-span-5 space-y-3">
+    <details open class="bg-white rounded-xl border border-gold/20 p-4"><summary>Personal Details</summary>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="col-span-2"><label class="lb">Poora Naam *</label><input id="f_name" class="in" placeholder="e.g. Abdullah Khan"></div>
+        <div><label class="lb">Gender</label><select id="f_gender" class="in"><option value="">Select</option><option>Male</option><option>Female</option></select></div>
+        <div><label class="lb">Date of Birth</label><input id="f_dob" type="date" class="in"></div>
+        <div><label class="lb">Height</label><input id="f_height" class="in" placeholder="5'7&quot;"></div>
+        <div><label class="lb">Complexion</label><select id="f_complexion" class="in"><option value="">Select</option><option>Very Fair</option><option>Fair</option><option>Wheatish</option><option>Dark</option></select></div>
+        <div><label class="lb">Marital Status</label><select id="f_marital" class="in"><option value="">Select</option><option>Never Married</option><option>Divorced</option><option>Widowed</option></select></div>
+        <div><label class="lb">Mother Tongue</label><input id="f_tongue" class="in" placeholder="Urdu / Hindi"></div>
+        <div><label class="lb">City</label><input id="f_city" class="in"></div>
+        <div><label class="lb">State</label><input id="f_state" class="in"></div>
+      </div>
+    </details>
+    <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Deen / Religious</summary>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="col-span-2"><label class="lb">Maslak / Sect</label><select id="f_sect" class="in"><option value="">Select</option><option>Sunni - Hanafi</option><option>Sunni - Shafi'i</option><option>Ahle Hadith</option><option>Deobandi</option><option>Barelvi</option><option>Shia</option><option>Other</option></select></div>
+        <div><label class="lb">Namaz</label><select id="f_namaz" class="in"><option value="">Select</option><option>Paanchon waqt</option><option>Aksar</option><option>Kabhi kabhi</option><option>Seekh raha/rahi hoon</option></select></div>
+        <div><label class="lb">Quran</label><select id="f_quran" class="in"><option value="">Select</option><option>Nazra</option><option>Tarjuma ke saath</option><option>Hafiz / Hafiza</option><option>Seekh raha/rahi hoon</option></select></div>
+        <div class="col-span-2"><label class="lb">Hijab / Niqab / Daadhi</label><input id="f_appearance" class="in" placeholder="e.g. Hijab, ya Daadhi aur topi"></div>
+      </div>
+    </details>
+    <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Education &amp; Career</summary>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="col-span-2"><label class="lb">Education</label><input id="f_education" class="in" placeholder="e.g. B.Tech, Alimiyyah"></div>
+        <div><label class="lb">Profession</label><input id="f_profession" class="in"></div>
+        <div><label class="lb">Annual Income</label><input id="f_income" class="in" placeholder="Optional"></div>
+      </div>
+    </details>
+    <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Family Details</summary>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div><label class="lb">Father ka Naam</label><input id="f_fatherName" class="in"></div>
+        <div><label class="lb">Father ka Kaam</label><input id="f_fatherOcc" class="in"></div>
+        <div><label class="lb">Mother ka Naam</label><input id="f_motherName" class="in"></div>
+        <div><label class="lb">Mother ka Kaam</label><input id="f_motherOcc" class="in" placeholder="Homemaker"></div>
+        <div><label class="lb">Brothers</label><input id="f_brothers" class="in" placeholder="e.g. 2 (1 shaadishuda)"></div>
+        <div><label class="lb">Sisters</label><input id="f_sisters" class="in"></div>
+        <div class="col-span-2"><label class="lb">Family Type</label><select id="f_famType" class="in"><option value="">Select</option><option>Nuclear</option><option>Joint</option></select></div>
+      </div>
+    </details>
+    <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>About &amp; Expectations</summary>
+      <div class="space-y-3 mt-3">
+        <div><label class="lb">Apne baare me</label><textarea id="f_about" rows="3" class="in"></textarea></div>
+        <div><label class="lb">Rishte se umeedein</label><textarea id="f_expect" rows="3" class="in"></textarea></div>
+      </div>
+    </details>
+    <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Photo &amp; Contact</summary>
+      <div class="space-y-3 mt-3">
+        <div><label class="lb">Photo (optional, khaas kar behno ke liye chhodna bhi theek hai)</label>
+          <input id="photoIn" type="file" accept="image/*" class="text-sm"> <button id="photoDel" type="button" class="text-xs text-red-600 underline ml-2">Hatao</button></div>
+        <label class="flex items-start gap-2 text-sm"><input id="showContact" type="checkbox" class="mt-1"> Contact details biodata me dikhao <span class="text-ink/50">(sirf tab jab sirf apne rishtedaaron ko bhejna ho)</span></label>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="lb">Wali ka Naam</label><input id="f_wali" class="in"></div>
+          <div><label class="lb">Phone / WhatsApp</label><input id="f_phone" class="in" inputmode="tel"></div>
+          <div class="col-span-2"><label class="lb">Address</label><input id="f_address" class="in"></div>
+        </div>
+      </div>
+    </details>
+    <button id="clearBtn" type="button" class="text-xs text-red-600 underline">Form saaf karo (draft bhi hat jayega)</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="lg:col-span-7">
+    <div class="lg:sticky lg:top-20">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="text-xs uppercase tracking-wider text-ink/50">Template:</span>
+        <button data-t="green" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#0E9F52" aria-label="Green"></button>
+        <button data-t="gold" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#A6790A" aria-label="Gold"></button>
+        <button data-t="classic" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#222" aria-label="Classic"></button>
+        <span class="flex-1"></span>
+        <button id="waBtn" type="button" class="px-4 py-2 rounded-full border border-maroon text-maroon text-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+        <button id="pdfBtn" type="button" class="px-4 py-2 rounded-full bg-maroon text-white text-sm"><i class="fa-solid fa-download"></i> PDF Download</button>
+      </div>
+      <div id="bio" class="t-green p-6 sm:p-8 shadow-lg"></div>
+      <p class="text-[11px] text-ink/45 mt-2">PDF ke liye "PDF Download" dabao, phir print window me <b>Destination: Save as PDF</b> chuno.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-gold/20 py-6 text-center text-sm text-ink/50">
+  Biodata ke baad apni profile bhi banao: <a href="/#register" class="text-maroon underline">Sunnah Safar par register karo</a>
+</footer>
+
+<script>
+const KEYS = ['name','gender','dob','height','complexion','marital','tongue','city','state','sect','namaz','quran','appearance','education','profession','income','fatherName','fatherOcc','motherName','motherOcc','brothers','sisters','famType','about','expect','wali','phone','address'];
+const LS = 'sunnah_biodata_v1';
+let photo = '', theme = 'green';
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const val = k => $('f_' + k).value.trim();
+
+function age(dob) { if (!dob) return ''; const d = new Date(dob), n = new Date(); let a = n.getFullYear() - d.getFullYear(); if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--; return a > 0 && a < 100 ? a + ' saal' : ''; }
+function sections() {
+  const v = {}; KEYS.forEach(k => v[k] = val(k));
+  const join = (a, b) => [a, b].filter(Boolean).join(' - ');
+  const loc = [v.city, v.state].filter(Boolean).join(', ');
+  const secs = [
+    ['Personal Details', [['Gender', v.gender], ['Umar', age(v.dob)], ['Height', v.height], ['Complexion', v.complexion], ['Marital Status', v.marital], ['Location', loc], ['Mother Tongue', v.tongue]]],
+    ['Deen / Religious', [['Maslak / Sect', v.sect], ['Namaz', v.namaz], ['Quran', v.quran], ['Hijab / Daadhi', v.appearance]]],
+    ['Education & Career', [['Education', v.education], ['Profession', v.profession], ['Annual Income', v.income]]],
+    ['Family Details', [['Father', join(v.fatherName, v.fatherOcc)], ['Mother', join(v.motherName, v.motherOcc)], ['Brothers', v.brothers], ['Sisters', v.sisters], ['Family Type', v.famType]]],
+    ['About Me', [['', v.about]]],
+    ['Expectations', [['', v.expect]]],
+  ];
+  if ($('showContact').checked) secs.push(['Contact', [['Wali', v.wali], ['Phone', v.phone], ['Address', v.address]]]);
+  else secs.push(['Contact', [['', 'Rabta biodata bhejne wale ke zariye karein.']]]);
+  return { v, secs: secs.map(([t, rows]) => [t, rows.filter(r => r[1])]).filter(s => s[1].length) };
+}
+function render() {
+  const { v, secs } = sections();
+  const body = secs.map(([t, rows]) => `<div class="sec">${esc(t)}</div>` + rows.map(([l, x]) => `<div class="row">${l ? `<b>${esc(l)}</b>` : ''}<span>${esc(x)}</span></div>`).join('')).join('');
+  const ph = photo ? `<img src="${photo}" alt="" style="width:110px;height:130px;object-fit:cover;border:2px solid var(--a);border-radius:6px">` : `<div style="width:110px;height:130px;border:2px dashed var(--a);border-radius:6px;display:flex;align-items:center;justify-content:center;opacity:.35"><i class="fa-solid fa-user fa-2x"></i></div>`;
+  $('bio').className = 't-' + theme + ' p-6 sm:p-8 shadow-lg';
+  $('bio').innerHTML = `
+    <div style="text-align:center">
+      <div class="arabic" style="font-size:2rem;color:var(--a);line-height:1.6">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.6">Bismillahir Rahmanir Raheem</div>
+    </div>
+    <div style="display:flex;gap:1rem;align-items:center;justify-content:space-between;margin-top:1rem">
+      <div><div class="font-display" style="font-size:1.7rem;font-weight:600;color:var(--a)">${esc(v.name || 'Aapka Naam')}</div>
+      <div style="font-size:.85rem;opacity:.65">${esc([v.profession, [v.city, v.state].filter(Boolean).join(', ')].filter(Boolean).join(' • ')) || 'Muslim Marriage Biodata'}</div></div>${ph}
+    </div>
+    ${body || '<p style="opacity:.45;font-size:.85rem;margin-top:1rem">Form bharte hi yahan aapka biodata banta dikhega.</p>'}
+    <div class="arabic" style="text-align:center;margin-top:1.2rem;font-size:1.05rem;color:var(--a)">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</div>
+    <div style="text-align:center;font-size:.65rem;opacity:.5;margin-top:.3rem">Jazakallahu khairan • shaadisunnah.com</div>`;
+  document.querySelectorAll('.th').forEach(b => b.style.outline = b.dataset.t === theme ? '2px solid #D4A017' : 'none');
+}
+function save() {
+  try { const o = { theme, show: $('showContact').checked }; KEYS.forEach(k => o[k] = val(k)); localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {}
+}
+function load() {
+  try { const o = JSON.parse(localStorage.getItem(LS) || 'null'); if (!o) return; KEYS.forEach(k => { if (o[k]) $('f_' + k).value = o[k]; }); theme = o.theme || 'green'; $('showContact').checked = !!o.show; } catch (e) {}
+}
+KEYS.forEach(k => $('f_' + k).addEventListener('input', () => { render(); save(); }));
+$('f_gender').addEventListener('change', () => { render(); save(); });
+$('showContact').addEventListener('change', () => { render(); save(); });
+document.querySelectorAll('.th').forEach(b => b.addEventListener('click', () => { theme = b.dataset.t; render(); save(); }));
+$('photoIn').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 400 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = im.width * s; c.height = im.height * s; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); photo = c.toDataURL('image/jpeg', .85); render(); }; im.src = r.result; };
+  r.readAsDataURL(f);
+});
+$('photoDel').addEventListener('click', () => { photo = ''; $('photoIn').value = ''; render(); });
+$('clearBtn').addEventListener('click', () => { if (!confirm('Poora form aur saved draft hata dein?')) return; KEYS.forEach(k => $('f_' + k).value = ''); $('showContact').checked = false; photo = ''; try { localStorage.removeItem(LS); } catch (e) {} render(); });
+$('pdfBtn').addEventListener('click', () => window.print());
+$('waBtn').addEventListener('click', () => {
+  const { v, secs } = sections();
+  const t = ['بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '*' + (v.name || 'Marriage Biodata') + '*'].concat(secs.map(([h, rows]) => '\n*' + h + '*\n' + rows.map(([l, x]) => (l ? l + ': ' : '') + x).join('\n')));
+  window.open('https://wa.me/?text=' + encodeURIComponent(t.join('\n')), '_blank');
+});
+load(); render();
+</script>
+</body>
+</html>
