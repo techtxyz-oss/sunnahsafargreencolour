@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers | Sunnah Safar - Hamare saath judiye</title>
+<meta name="description" content="Sunnah Safar ek naya Muslim matrimony startup hai. Verification, community outreach, development aur content team me shuruaati saathi chahiye.">
+<link rel="canonical" href="https://shaadisunnah.com/career.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { maroon: { DEFAULT: '#0E9F52', dark: '#0A7A3F', light: '#3DD87D' }, gold: { DEFAULT: '#D4A017', dark: '#A6790A' }, ivory: '#FFFFFF', ink: '#1B3B2C', opal: '#EAF7F2' },
+  fontFamily: { display: ['"Playfair Display"', 'serif'], body: ['Jost', 'sans-serif'] } } } };
+</script>
+<style>
+  body { font-family: 'Jost', sans-serif; color: #1B3B2C; background: #F6FBF8; }
+  .font-display { font-family: 'Playfair Display', serif; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .in { width: 100%; border: 1px solid rgba(212,160,23,.4); border-radius: .5rem; padding: .6rem .85rem; font-size: .875rem; background: #fff; }
+  .in:focus { outline: none; box-shadow: 0 0 0 2px rgba(212,160,23,.35); }
+  .lb { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(27,59,44,.55); margin-bottom: .25rem; }
+</style>
+</head>
+<body>
+<header class="border-b border-gold/20 bg-white sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2"><span class="w-9 h-9 rounded-full bg-maroon/10 text-maroon flex items-center justify-center"><i class="fa-solid fa-mosque"></i></span><span class="font-display text-xl text-maroon">Sunnah Safar</span></a>
+    <nav class="flex gap-5 text-sm"><a href="/" class="hover:text-maroon">Home</a><a href="biodata.html" class="hover:text-maroon">Biodata Maker</a><a href="career.html" class="text-maroon font-medium">Careers</a></nav>
+  </div>
+</header>
+
+<section class="text-center px-5 pt-12 pb-8">
+  <p class="arabic text-3xl text-maroon-dark">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  <h1 class="font-display text-3xl sm:text-5xl font-semibold mt-4">Sunnah Safar ke saath judiye</h1>
+  <p class="text-ink/65 mt-3 max-w-2xl mx-auto">Hum abhi shuru kar rahe hain. Jo kaam hum kar rahe hain, yaani Muslim families ko aasan aur izzat ke saath nikah tak pahunchana, usme shuruaati saathiyon ki jagah khuli hai. Is waqt hum chhoti team hain, isliye aapka kaam seedha asar dikhata hai.</p>
+  <a href="#apply" class="inline-block mt-6 px-8 py-3 rounded-full bg-maroon text-white text-sm hover:bg-maroon-dark">Apply karo</a>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 grid sm:grid-cols-3 gap-4 mb-12">
+  <div class="bg-white rounded-xl border border-gold/20 p-5"><i class="fa-solid fa-handshake text-gold-dark text-xl"></i><h3 class="font-display text-lg mt-2">Amanat</h3><p class="text-sm text-ink/60 mt-1">Families ka bharosa aur unki privacy hamari sabse badi zimmedari hai. Kisi ka data kabhi ghalat tarah use nahi hota.</p></div>
+  <div class="bg-white rounded-xl border border-gold/20 p-5"><i class="fa-solid fa-heart text-gold-dark text-xl"></i><h3 class="font-display text-lg mt-2">Ikhlaas</h3><p class="text-sm text-ink/60 mt-1">Hum kaam niyat se karte hain, dikhave se nahi. Sach bolna, wada nibhana, aur kisi ko dhoka na dena.</p></div>
+  <div class="bg-white rounded-xl border border-gold/20 p-5"><i class="fa-solid fa-people-group text-gold-dark text-xl"></i><h3 class="font-display text-lg mt-2">Khidmat</h3><p class="text-sm text-ink/60 mt-1">Har rishta ek ghar banne ki shuruaat hai. Hum community ki asli madad karna chahte hain, sirf business nahi.</p></div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 mb-14">
+  <h2 class="font-display text-2xl font-semibold mb-1">Khuli jagahein</h2>
+  <p class="text-sm text-ink/55 mb-5">Shuruaat me role flexible hain. Time aur kaam ke hisab se baat hogi.</p>
+  <div id="roles" class="grid sm:grid-cols-2 gap-4"></div>
+</section>
+
+<section id="apply" class="max-w-2xl mx-auto px-5 mb-16">
+  <div class="bg-white rounded-2xl border border-gold/30 p-6 sm:p-8 shadow-sm">
+    <h2 class="font-display text-2xl font-semibold">Apply karo</h2>
+    <p class="text-sm text-ink/55 mb-5">Form bharne par aapka email app (ya WhatsApp) apne aap khulega, bas bhej dena.</p>
+    <form id="appForm" class="space-y-4">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="lb">Naam *</label><input id="a_name" required class="in"></div>
+        <div><label class="lb">Phone / WhatsApp *</label><input id="a_phone" required class="in" inputmode="tel"></div>
+        <div><label class="lb">City *</label><input id="a_city" required class="in"></div>
+        <div><label class="lb">Role *</label><select id="a_role" required class="in"></select></div>
+      </div>
+      <div><label class="lb">Experience</label><select id="a_exp" class="in"><option>Fresher</option><option>1-2 saal</option><option>3+ saal</option></select></div>
+      <div><label class="lb">Resume / Portfolio / GitHub link (optional)</label><input id="a_link" class="in" placeholder="https://"></div>
+      <div><label class="lb">Aap kyun judna chahte hain? *</label><textarea id="a_msg" required rows="4" class="in"></textarea></div>
+      <button class="w-full py-3 rounded-full bg-maroon text-white text-sm hover:bg-maroon-dark" type="submit">Application bhejo</button>
+      <p id="a_note" class="text-xs text-ink/50"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="border-t border-gold/20 py-6 text-center text-sm text-ink/50">&copy; Sunnah Safar &middot; <a href="/" class="underline">Home</a> &middot; <a href="biodata.html" class="underline">Free Biodata Maker</a></footer>
+
+<script>
+/* ===== YAHAN BADLO ===== */
+const APPLY_EMAIL = 'careers@shaadisunnah.com';  // apna asli email likho jahan applications aani chahiye
+const APPLY_WHATSAPP = '';                        // optional: country code ke saath, jaise 919XXXXXXXXX. Bhara hoga to WhatsApp khulega
+const ROLES = [                                   // roles yahan se badlo / hatao / jodo
+  { t: 'Profile Verification Executive', m: 'Gaya / Remote - Part-time', d: 'Naye profiles ki jaanch, phone par tasdeeq, aur galat ya fake profiles pakadna. Hindi/Urdu bolna zaroori.' },
+  { t: 'Community Outreach Associate', m: 'Gaya & Bihar - Field', d: 'Masjid, madrasa aur local committees se judkar Sunnah Safar ko families tak pahunchana.' },
+  { t: 'Web Developer (Supabase / JS)', m: 'Remote - Part-time', d: 'Site ke features banana, security aur speed sudharna. HTML, JavaScript, Supabase aana chahiye.' },
+  { t: 'Content & Social Media (Hindi/Urdu)', m: 'Remote - Part-time', d: 'Nikah ki sunnat, rishta chunne ke aadaab aur safety par saaf aur izzatdaar content likhna.' },
+];
+/* ======================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+$('roles').innerHTML = ROLES.map((r, i) => `<div class="bg-white rounded-xl border border-gold/20 p-5 flex flex-col">
+  <h3 class="font-display text-lg">${esc(r.t)}</h3><p class="text-xs text-gold-dark mt-0.5">${esc(r.m)}</p>
+  <p class="text-sm text-ink/60 mt-2 flex-1">${esc(r.d)}</p>
+  <button type="button" data-i="${i}" class="apply-role mt-4 self-start text-sm text-maroon underline">Is role ke liye apply karo &rarr;</button></div>`).join('');
+$('a_role').innerHTML = '<option value="">Chuno</option>' + ROLES.map(r => `<option>${esc(r.t)}</option>`).join('') + '<option>Koi aur / General</option>';
+document.querySelectorAll('.apply-role').forEach(b => b.addEventListener('click', () => { $('a_role').value = ROLES[b.dataset.i].t; $('apply').scrollIntoView({ behavior: 'smooth' }); $('a_name').focus(); }));
+$('appForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = `Assalamu alaikum,\n\nMain Sunnah Safar me apply karna chahta/chahti hoon.\n\nNaam: ${$('a_name').value.trim()}\nPhone: ${$('a_phone').value.trim()}\nCity: ${$('a_city').value.trim()}\nRole: ${$('a_role').value}\nExperience: ${$('a_exp').value}\nLink: ${$('a_link').value.trim() || '-'}\n\n${$('a_msg').value.trim()}`;
+  if (APPLY_WHATSAPP) window.open('https://wa.me/' + APPLY_WHATSAPP.replace(/\D/g, '') + '?text=' + encodeURIComponent(text), '_blank');
+  else window.location.href = 'mailto:' + APPLY_EMAIL + '?subject=' + encodeURIComponent('Career application: ' + $('a_role').value) + '&body=' + encodeURIComponent(text);
+  $('a_note').textContent = 'Agar email app nahi khula, to ye details copy karke ' + (APPLY_WHATSAPP ? 'WhatsApp' : APPLY_EMAIL) + ' par bhej dein.';
+});
+</script>
+</body>
+</html>
