@@ -557,6 +557,11 @@
     <div id="adminReportsList" class="space-y-2">
       <p class="text-sm text-ink/40 font-body">Loading…</p>
     </div>
+
+    <p class="font-body text-sm font-bold text-maroon mt-8 mb-2">Career Applications</p>
+    <div id="adminAppsList" class="space-y-2">
+      <p class="text-sm text-ink/40 font-body">Loading…</p>
+    </div>
   </div>
 </div>
 
@@ -887,6 +892,8 @@
           <li><a href="#search" class="hover:text-ivory">Search</a></li>
           <li><a href="#about" class="hover:text-ivory">About</a></li>
           <li id="registerNavLinkFooter"><a href="#register" class="hover:text-ivory">Register</a></li>
+          <li><a href="biodata.html" class="hover:text-ivory">Free Biodata Maker</a></li>
+          <li><a href="career.html" class="hover:text-ivory">Careers</a></li>
         </ul>
       </div>
 
@@ -1435,10 +1442,10 @@
     const yes = data.filter(x => x.r === 'yes').length, no = data.filter(x => x.r === 'no').length;
     const icon = r => r === 'yes' ? '<i class="fa-solid fa-circle-check text-green-600"></i>'
       : r === 'no' ? '<i class="fa-solid fa-circle-xmark text-red-500"></i>' : '<i class="fa-solid fa-minus text-ink/30"></i>';
-    const pinNa = data.some(x => x.key === 'pincode' && x.r === 'na');
+    const pinNa = data.some(x => x.key === 'area' && x.r === 'na');
     el.innerHTML = `<p class="font-bold text-maroon mb-2">Aapse match: ${yes}/${yes + no}</p>`
       + data.map(x => `<p class="flex items-center gap-2 py-0.5 ${x.r === 'na' ? 'text-ink/40' : ''}">${icon(x.r)} ${escapeHtml(x.label)}${x.r === 'na' ? ' <span class="text-[11px]">(info nahi)</span>' : ''}</p>`).join('')
-      + (pinNa ? '<p class="text-[11px] text-ink/40 mt-2">Pincode match ke liye dono ke pincode chahiye. Apna pincode My Profile me daalo.</p>' : '');
+      + (pinNa ? '<p class="text-[11px] text-ink/40 mt-2">Area match ke liye dono ke pincode chahiye. Apna pincode My Profile me daalo.</p>' : '');
     el.classList.remove('hidden');
   }
 
@@ -1912,7 +1919,7 @@
     let isAdmin = false;
     if (session) {
       const { data } = await supabaseClient.rpc('am_i_admin');
-      isAdmin = !!data;
+      isAdmin = data === true; // sirf asli boolean true; [] / 'false' / object ko admin nahi maanna
     }
     isAdminUser = isAdmin;
     ['adminBtn', 'adminBtnMobile'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
@@ -1923,6 +1930,7 @@
     loadAdminPending();
     loadAdminReports();
     adminSearch(); // recent profiles list turant dikhao (Edit/Suspend ke saath)
+    loadAdminApplications();
   }
   function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
 
@@ -2029,6 +2037,32 @@
   }
   window.adminOpenEdit = adminOpenEdit;
   window.adminToggleSuspend = adminToggleSuspend;
+
+  async function loadAdminApplications() {
+    const el = document.getElementById('adminAppsList');
+    const { data, error } = await supabaseClient.rpc('admin_list_applications');
+    if (error) { el.innerHTML = `<p class="text-sm text-red-600">${escapeHtml(error.message)}</p>`; return; }
+    if (!data || !data.length) { el.innerHTML = '<p class="text-sm text-ink/40 font-body">Abhi koi application nahi.</p>'; return; }
+    el.innerHTML = data.map(a => {
+      const tel = escapeHtml(String(a.phone || '').replace(/[^\d+]/g, ''));
+      const link = /^https?:\/\//i.test(a.link || '') ? `<a href="${escapeHtml(a.link)}" target="_blank" rel="noopener noreferrer" class="text-maroon underline">Link</a>` : '';
+      const opt = (v) => `<option value="${v}" ${a.status === v ? 'selected' : ''}>${v}</option>`;
+      return `<div class="bg-white border border-gold/20 rounded-lg px-4 py-3 text-sm font-body">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span><strong>${escapeHtml(a.name)}</strong> · ${escapeHtml(a.role)}</span>
+          <select onchange="adminSetAppStatus('${escapeHtml(a.id)}', this.value)" class="border border-gold/40 rounded px-2 py-1 text-xs">${opt('new')}${opt('shortlisted')}${opt('rejected')}</select>
+        </div>
+        <p class="text-xs text-ink/55 mt-1">${escapeHtml(a.city)} · ${escapeHtml(a.experience || '-')} · <a href="tel:${tel}" class="underline">${escapeHtml(a.phone)}</a> · ${new Date(a.created_at).toLocaleDateString('en-IN')} ${link}</p>
+        <details class="mt-1"><summary class="text-xs text-maroon cursor-pointer">Message</summary><p class="text-xs text-ink/70 mt-1 whitespace-pre-line">${escapeHtml(a.message)}</p></details>
+      </div>`;
+    }).join('');
+  }
+  async function adminSetAppStatus(id, status) {
+    const { error } = await supabaseClient.rpc('admin_set_application_status', { p_id: id, p_status: status });
+    if (error) alert(error.message);
+    loadAdminApplications();
+  }
+  window.adminSetAppStatus = adminSetAppStatus;
 
   async function loadAdminReports() {
     const el = document.getElementById('adminReportsList');
