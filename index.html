@@ -647,7 +647,7 @@
       <p class="mt-5 text-ink/75 font-body max-w-md">Muslim matrimony built around Nikah, family and privacy. Reviewed profiles. Serious intentions. Halal connections.</p>
       <div class="mt-7 flex flex-wrap gap-3">
         <a href="#search" class="px-7 py-3 rounded-lg bg-maroon text-white text-sm font-body hover:bg-maroon-dark transition-colors shadow-lg shadow-maroon/30"><i class="fa-solid fa-magnifying-glass mr-2"></i>Find Your Match</a>
-        <a href="#register" class="px-7 py-3 rounded-lg border border-maroon text-maroon text-sm font-body hover:bg-maroon hover:text-white transition-colors">Create Profile</a>
+        <a href="#register" id="heroCreateBtn" class="px-7 py-3 rounded-lg border border-maroon text-maroon text-sm font-body hover:bg-maroon hover:text-white transition-colors">Create Profile</a>
       </div>
       <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm font-body text-ink/70">
         <span><i class="fa-solid fa-shield-halved text-maroon mr-2"></i><b class="text-ink">Reviewed Profiles</b></span>
@@ -923,15 +923,24 @@
 
 <!-- ============ FAQ + CTA ============ -->
 <section class="max-w-3xl mx-auto px-5 sm:px-8 py-14"><h3 class="font-display text-2xl text-ink font-semibold mb-1">Frequently Asked Questions</h3><p class="text-sm text-ink/60 font-body mb-5">Find answers to common questions.</p><div class="space-y-2"><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">How does profile review work?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Every new profile stays pending until our admin team reviews and approves it. Only approved profiles appear in search.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">Who can see my photo and details?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Photos and full names are blurred for visitors who are not logged in. Contact details are never shown on your profile card.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">Can I hide my mobile number?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Yes. Your mobile and WhatsApp numbers are shared only after an interest is accepted.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">What happens after mutual interest?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Once an interest is accepted, contact details become visible so you and your families can talk further.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">What if someone misbehaves?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Use Report or Block on their profile. Our team reviews every report.</p></details></div></section>
-<section class="bg-maroon-dark text-center px-5 py-12"><h3 class="font-display text-2xl text-white">Ready to begin your Sunnah Safar?</h3><p class="text-white/70 text-sm font-body mt-2 mb-6">Create your profile and start your search the halal way.</p><a href="#register" class="inline-block px-8 py-3 rounded-lg bg-white text-maroon text-sm font-body font-medium mr-2">Create Profile</a><button onclick="document.getElementById('loginBtnDesktop').click()" class="px-8 py-3 rounded-lg border border-white/60 text-white text-sm font-body">Login</button></section>
+<section id="ctaBand" class="bg-maroon-dark text-center px-5 py-12"><h3 class="font-display text-2xl text-white">Ready to begin your Sunnah Safar?</h3><p class="text-white/70 text-sm font-body mt-2 mb-6">Create your profile and start your search the halal way.</p><a href="#register" class="inline-block px-8 py-3 rounded-lg bg-white text-maroon text-sm font-body font-medium mr-2">Create Profile</a><button onclick="document.getElementById('loginBtnDesktop').click()" class="px-8 py-3 rounded-lg border border-white/60 text-white text-sm font-body">Login</button></section>
 
 <!-- ============ ABOUT (SEO / GEO) ============ -->
-<section class="max-w-4xl mx-auto px-5 sm:px-8 pb-14 text-sm text-ink/70 font-body leading-relaxed">
-  <h2 class="font-display text-2xl text-ink font-semibold mb-3">ShaadiSunnah – Muslim Matrimony in India for a Halal Nikah</h2>
-  <p class="mb-3">ShaadiSunnah (Sunnah Safar) is a Muslim matrimony platform built around Nikah, family and privacy. Every profile is reviewed by our team before it goes live, so you meet serious people who are looking for marriage. You can search for a life partner in line with the Sunnah, with the involvement of your parents and guardians (wali).</p>
-  <p class="mb-3">Whether you live in Patna, Delhi, Mumbai, Hyderabad, Lucknow, Kolkata or anywhere else in India, you can create a profile for free, search Muslim matrimony profiles using filters and send an interest. Your mobile and WhatsApp numbers stay hidden and are shared only after both sides accept an interest.</p>
-  <p class="mb-1"><a href="biodata.html" class="text-maroon underline">Free Muslim Biodata Maker</a></p>
-  <p>Need help? <a href="https://wa.me/919189415356" target="_blank" rel="noopener" class="text-maroon underline">Chat with us on WhatsApp</a></p>
+<section id="about-seo" class="bg-rose-light/70 px-5 sm:px-8 py-14 sm:py-16">
+  <div class="corner-flourish max-w-4xl mx-auto bg-white rounded-2xl border border-gold/30 shadow-lg shadow-maroon-dark/5 px-6 sm:px-12 py-9 sm:py-11">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="w-11 h-11 rounded-full bg-maroon/10 text-maroon flex items-center justify-center"><i class="fa-solid fa-moon"></i></span>
+      <span class="h-px flex-1 bg-gold/40"></span>
+    </div>
+    <h2 class="font-display text-2xl sm:text-3xl text-ink font-semibold leading-snug mb-4">ShaadiSunnah – Muslim Matrimony in India for a Halal Nikah</h2>
+    <p class="font-body text-[15px] sm:text-base text-ink/75 leading-[1.85] mb-4">ShaadiSunnah (Sunnah Safar) is a Muslim matrimony platform built around Nikah, family and privacy. Every profile is reviewed by our team before it goes live, so you meet serious people who are looking for marriage. You can search for a life partner in line with the Sunnah, with the involvement of your parents and guardians (wali).</p>
+    <p class="font-body text-[15px] sm:text-base text-ink/75 leading-[1.85] mb-6">Whether you live in Patna, Delhi, Mumbai, Hyderabad, Lucknow, Kolkata or anywhere else in India, you can create a profile for free, search Muslim matrimony profiles using filters and send an interest. Your mobile and WhatsApp numbers stay hidden and are shared only after both sides accept an interest.</p>
+    <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-gold/25">
+      <a href="biodata.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-maroon text-maroon text-sm font-body hover:bg-maroon hover:text-white transition-colors"><i class="fa-solid fa-id-card"></i><span>Free Muslim Biodata Maker</span></a>
+      <span class="text-sm font-body text-ink/60 sm:ml-2">Need help?</span>
+      <a href="https://wa.me/919189415356" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-maroon text-white text-sm font-body hover:bg-maroon-dark transition-colors"><i class="fa-brands fa-whatsapp"></i><span>Chat with us on WhatsApp</span></a>
+    </div>
+  </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
@@ -1448,6 +1457,11 @@
       document.getElementById(id).classList.toggle('hidden', !!session);
     });
     document.getElementById('register').classList.toggle('hidden', !!session);
+    // Logged-in users: hero "Create Profile" and the bottom "Create Profile / Login" band are not needed
+    ['heroCreateBtn', 'ctaBand'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden', !!session);
+    });
   }
 
   async function handleAuthButtonClick() {
