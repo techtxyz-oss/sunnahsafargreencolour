@@ -1,19 +1,16 @@
-# ShaadiSunnah (Sunnah Safar)
+# Shaadi Sunnah
 
-> ShaadiSunnah (also known as Sunnah Safar) is a Muslim matrimony platform for Nikah, based in India. It is built around family involvement and privacy: every profile is reviewed by the team before it goes live, and mobile/WhatsApp numbers are shared only after both people accept an interest. The platform is for adults (18+) looking for marriage, not for casual chat.
+> Shaadi Sunnah (shaadisunnah.com, also written ShaadiSunnah; earlier name "Sunnah Safar") is a Muslim matrimony platform for Nikah in India. Profiles are reviewed by the team, the process is family-first (guardian/wali details supported), and mobile/WhatsApp numbers stay private until both sides accept an interest. Photos and full names are blurred for logged-out visitors. A free Biodata Maker is available.
 
-## Key facts
-- Name: ShaadiSunnah (Sunnah Safar). Website: https://shaadisunnah.com
-- Service: Muslim matrimony / Muslim rishta search for Nikah, with guardian (wali) and family involvement
-- How it works: create a profile, browse reviewed profiles with filters, send an interest, contact details unlock after mutual acceptance, families then get involved
-- Privacy: contact details are never shown on profile cards; members can report and block
-- Registration: currently free
-- Audience: Muslim individuals and families in India, and Indian Muslims living abroad
-- Languages on the site: English, Arabic, Urdu (language switcher on the home page)
-- Support: WhatsApp / phone +91 91894 15356, email support@shaadisunnah.com
+Shaadi Sunnah is a matchmaking/introduction platform. It does not guarantee marriage; families should independently verify details before finalising a rishta.
 
-## Pages
-- [Home](https://shaadisunnah.com/): overview, how it works, safety, FAQ, registration
-- [Free Muslim Biodata Maker](https://shaadisunnah.com/biodata.html): create a marriage biodata (PDF) with Bismillah header; runs in the browser and data is not uploaded
-- [Careers](https://shaadisunnah.com/career.html): open roles and application form
-- [Privacy & Terms](https://shaadisunnah.com/privacy-terms.html): how information is used, safety guidance, member rules
+## Key pages
+- [Home](https://shaadisunnah.com/): overview, search, registration, FAQ
+- [Free Biodata Maker](https://shaadisunnah.com/biodata.html): create a Nikah biodata
+- [Community Guidelines & Safety](https://shaadisunnah.com/safety.html): rules, safety tips, how to report
+- [Privacy Policy](https://shaadisunnah.com/privacy.html)
+- [Terms of Service](https://shaadisunnah.com/terms.html)
+- [Careers](https://shaadisunnah.com/career.html)
+
+## Contact
+- Phone / WhatsApp: +91 91894 15356
