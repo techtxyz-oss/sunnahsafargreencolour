@@ -71,6 +71,7 @@
         "@type": "ContactPoint",
         "telephone": "+919189415356",
         "contactType": "customer support",
+        "email": "support@shaadisunnah.com",
         "areaServed": "IN",
         "availableLanguage": ["en", "hi", "ur"]
       }]
@@ -258,6 +259,37 @@
     <button id="loginBtnMobile" class="w-full mt-2 px-6 py-2.5 rounded-full border border-maroon text-maroon text-sm tracking-wide">Login</button>
   </div>
 </nav>
+
+<!-- ============ WELCOME BAND (logged-in users only) ============ -->
+<section id="welcomeBand" class="hidden bg-rose-light/70 border-b border-maroon/10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-5 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+    <div class="flex-1 min-w-0">
+      <p dir="rtl" class="text-left text-gold-dark text-3xl leading-none" style="font-family:'Amiri','Playfair Display',serif;">السلام عليكم</p>
+      <p class="font-display text-xl sm:text-2xl text-ink mt-2">Welcome back, <span id="wbName" class="text-maroon"></span></p>
+      <p id="wbMsg" class="text-sm text-ink/70 font-body mt-1"></p>
+      <a id="wbHelp" href="mailto:support@shaadisunnah.com?subject=Profile%20support" class="hidden inline-flex items-center gap-2 mt-2 text-sm text-maroon underline font-body"><i class="fa-solid fa-envelope"></i>Email support@shaadisunnah.com</a>
+    </div>
+    <div class="lg:w-72">
+      <div class="flex items-center justify-between mb-1.5">
+        <span id="wbStatus" class="text-[11px] tracking-wide font-body font-semibold px-2.5 py-1 rounded-full"></span>
+        <span class="text-xs text-ink/60 font-body">Profile <b id="wbPct" class="text-ink">0%</b> complete</span>
+      </div>
+      <div class="h-2 rounded-full bg-maroon/10 overflow-hidden"><div id="wbBar" class="h-full bg-maroon rounded-full transition-all" style="width:0%"></div></div>
+      <button id="wbComplete" type="button" class="mt-2 text-xs text-maroon underline font-body">Complete your profile</button>
+    </div>
+    <div class="flex gap-3">
+      <button id="wbInterests" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
+        <span id="wbInterestsN" class="block font-display text-2xl text-maroon leading-none">0</span>
+        <span class="block text-xs text-ink/60 font-body mt-1">New interests</span>
+      </button>
+      <button id="wbShortlist" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
+        <span id="wbShortlistN" class="block font-display text-2xl text-maroon leading-none">0</span>
+        <span class="block text-xs text-ink/60 font-body mt-1">Shortlisted</span>
+      </button>
+    </div>
+  </div>
+</section>
+
 
 <!-- ============ LOGIN MODAL ============ -->
 <div id="loginModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center px-5">
@@ -921,6 +953,19 @@
   </div>
 </section>
 
+<!-- ============ FREE BIODATA MAKER ============ -->
+<section id="biodata-promo" class="px-5 sm:px-8 pt-4 pb-6">
+  <div class="max-w-5xl mx-auto bg-rose-light/70 border border-gold/30 rounded-2xl px-6 sm:px-10 py-7 sm:py-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+    <span class="shrink-0 w-14 h-14 rounded-full bg-white border border-gold/30 text-maroon flex items-center justify-center text-xl"><i class="fa-solid fa-id-card"></i></span>
+    <div class="flex-1 min-w-0">
+      <p dir="rtl" class="text-left text-gold-dark text-xl leading-none mb-1" style="font-family:'Amiri','Playfair Display',serif;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <h3 class="font-display text-xl sm:text-2xl text-ink font-semibold">Free Muslim Biodata Maker</h3>
+      <p class="text-sm text-ink/70 font-body mt-1.5 leading-relaxed">Create a clean marriage biodata with your deen and family details, and download it as a PDF. No sign-up needed. Your details stay in your browser.</p>
+    </div>
+    <a href="biodata.html" class="shrink-0 inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg bg-maroon text-white text-sm font-body hover:bg-maroon-dark transition-colors shadow-lg shadow-maroon/20">Create Your Biodata <i class="fa-solid fa-arrow-right text-xs"></i></a>
+  </div>
+</section>
+
 <!-- ============ FAQ + CTA ============ -->
 <section class="max-w-3xl mx-auto px-5 sm:px-8 py-14"><h3 class="font-display text-2xl text-ink font-semibold mb-1">Frequently Asked Questions</h3><p class="text-sm text-ink/60 font-body mb-5">Find answers to common questions.</p><div class="space-y-2"><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">How does profile review work?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Every new profile stays pending until our admin team reviews and approves it. Only approved profiles appear in search.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">Who can see my photo and details?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Photos and full names are blurred for visitors who are not logged in. Contact details are never shown on your profile card.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">Can I hide my mobile number?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Yes. Your mobile and WhatsApp numbers are shared only after an interest is accepted.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">What happens after mutual interest?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Once an interest is accepted, contact details become visible so you and your families can talk further.</p></details><details class="faq border border-maroon/10 rounded-lg bg-white px-4 py-3"><summary class="flex justify-between items-center text-sm font-body font-medium text-ink">What if someone misbehaves?<span class="plus text-maroon text-lg transition-transform">+</span></summary><p class="text-sm text-ink/65 font-body mt-2">Use Report or Block on their profile. Our team reviews every report.</p></details></div></section>
 <section id="ctaBand" class="bg-maroon-dark text-center px-5 py-12"><h3 class="font-display text-2xl text-white">Ready to begin your Sunnah Safar?</h3><p class="text-white/70 text-sm font-body mt-2 mb-6">Create your profile and start your search the halal way.</p><a href="#register" class="inline-block px-8 py-3 rounded-lg bg-white text-maroon text-sm font-body font-medium mr-2">Create Profile</a><button onclick="document.getElementById('loginBtnDesktop').click()" class="px-8 py-3 rounded-lg border border-white/60 text-white text-sm font-body">Login</button></section>
@@ -934,12 +979,7 @@
     </div>
     <h2 class="font-display text-2xl sm:text-3xl text-ink font-semibold leading-snug mb-4">ShaadiSunnah – Muslim Matrimony in India for a Halal Nikah</h2>
     <p class="font-body text-[15px] sm:text-base text-ink/75 leading-[1.85] mb-4">ShaadiSunnah (Sunnah Safar) is a Muslim matrimony platform built around Nikah, family and privacy. Every profile is reviewed by our team before it goes live, so you meet serious people who are looking for marriage. You can search for a life partner in line with the Sunnah, with the involvement of your parents and guardians (wali).</p>
-    <p class="font-body text-[15px] sm:text-base text-ink/75 leading-[1.85] mb-6">Whether you live in Patna, Delhi, Mumbai, Hyderabad, Lucknow, Kolkata or anywhere else in India, you can create a profile for free, search Muslim matrimony profiles using filters and send an interest. Your mobile and WhatsApp numbers stay hidden and are shared only after both sides accept an interest.</p>
-    <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-gold/25">
-      <a href="biodata.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-maroon text-maroon text-sm font-body hover:bg-maroon hover:text-white transition-colors"><i class="fa-solid fa-id-card"></i><span>Free Muslim Biodata Maker</span></a>
-      <span class="text-sm font-body text-ink/60 sm:ml-2">Need help?</span>
-      <a href="https://wa.me/919189415356" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-maroon text-white text-sm font-body hover:bg-maroon-dark transition-colors"><i class="fa-brands fa-whatsapp"></i><span>Chat with us on WhatsApp</span></a>
-    </div>
+    <p class="font-body text-[15px] sm:text-base text-ink/75 leading-[1.85]">Whether you live in Patna, Delhi, Mumbai, Hyderabad, Lucknow, Kolkata or anywhere else in India, you can create a profile for free, search Muslim matrimony profiles using filters and send an interest. Your mobile and WhatsApp numbers stay hidden and are shared only after both sides accept an interest.</p>
   </div>
 </section>
 
@@ -974,6 +1014,7 @@
       <div>
         <h5 class="font-display text-gold mb-4">Connect</h5>
         <ul class="space-y-2 text-sm text-ivory/70 mb-4">
+          <li><a href="mailto:support@shaadisunnah.com" class="hover:text-ivory"><i class="fa-solid fa-envelope text-gold mr-2"></i>support@shaadisunnah.com</a></li>
           <li><a href="https://wa.me/919189415356?text=Assalamu%20Alaikum%2C%20I%20would%20like%20to%20know%20more%20about%20ShaadiSunnah." target="_blank" rel="noopener" class="hover:text-ivory"><i class="fa-brands fa-whatsapp text-gold mr-2"></i>WhatsApp: +91 91894 15356</a></li>
           <li><a href="tel:+919189415356" class="hover:text-ivory"><i class="fa-solid fa-phone text-gold mr-2"></i>Call: +91 91894 15356</a></li>
         </ul>
@@ -1438,8 +1479,63 @@
   // "My Profile" / "Interests" buttons only show when logged in.
   let isUserLoggedIn = false;
 
+  // Welcome band for logged-in users: greeting, profile status, completion, quick counts
+  async function loadWelcomeBand() {
+    const band = document.getElementById('welcomeBand');
+    if (!band) return;
+    try {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) { band.classList.add('hidden'); return; }
+      const uid = session.user.id;
+      const [prof, contact, sl, rec] = await Promise.all([
+        supabaseClient.from('profiles').select('full_name,status,dob,profession,city,bio,avatar_url,father_profession,family_type,prayer_habit').eq('user_id', uid).maybeSingle(),
+        supabaseClient.from('profile_contacts').select('phone').eq('user_id', uid).maybeSingle(),
+        supabaseClient.from('shortlists').select('profile_id', { count: 'exact', head: true }).eq('user_id', uid),
+        supabaseClient.rpc('get_received_interests'),
+      ]);
+      const p = prof.data || {};
+      const first = String(p.full_name || '').trim().split(/\s+/)[0] || 'there';
+      document.getElementById('wbName').textContent = first;
+
+      const checks = [p.full_name, p.dob, p.profession, p.city, p.bio, p.avatar_url, p.father_profession, p.family_type, p.prayer_habit, contact.data && contact.data.phone];
+      const pct = Math.round(checks.filter(Boolean).length / checks.length * 100);
+      document.getElementById('wbPct').textContent = pct + '%';
+      document.getElementById('wbBar').style.width = pct + '%';
+      document.getElementById('wbComplete').classList.toggle('hidden', pct >= 100);
+
+      const st = p.status || 'pending';
+      const map = {
+        pending:   ['UNDER REVIEW', 'bg-yellow-100 text-yellow-800', 'Your profile is under review. It will appear in search once our team approves it.', false],
+        approved:  ['LIVE',         'bg-green-100 text-green-800',   'Your profile is live. Browse matches and send an interest when you are ready.', false],
+        rejected:  ['NOT APPROVED', 'bg-red-100 text-red-700',       'Your profile was not approved. Please contact support so we can help you fix it.', true],
+        suspended: ['SUSPENDED',    'bg-red-100 text-red-700',       'Your profile is currently suspended. Please contact support for help.', true],
+      };
+      const m = map[st] || map.pending;
+      const chip = document.getElementById('wbStatus');
+      chip.textContent = m[0];
+      chip.className = 'text-[11px] tracking-wide font-body font-semibold px-2.5 py-1 rounded-full ' + m[1];
+      document.getElementById('wbMsg').textContent = m[2];
+      document.getElementById('wbHelp').classList.toggle('hidden', !m[3]);
+
+      document.getElementById('wbShortlistN').textContent = sl.count || 0;
+      const list = Array.isArray(rec.data) ? rec.data : [];
+      document.getElementById('wbInterestsN').textContent = list.filter(i => i.status === 'pending').length;
+      band.classList.remove('hidden');
+    } catch (e) {
+      band.classList.add('hidden');
+    }
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('#wbComplete, #wbInterests, #wbShortlist');
+    if (!t) return;
+    const target = { wbComplete: 'myProfileBtn', wbInterests: 'myInterestsBtn', wbShortlist: 'shortlistBtn' }[t.id];
+    const btn = document.getElementById(target);
+    if (btn) btn.click();
+  });
+
   function updateAuthUI(session) {
     isUserLoggedIn = !!session;
+    if (session) loadWelcomeBand(); else { const wb = document.getElementById('welcomeBand'); if (wb) wb.classList.add('hidden'); }
     const label = session ? 'Logout' : 'Login';
     document.getElementById('loginBtnDesktop').textContent = label;
     document.getElementById('loginBtnMobile').textContent = label;
@@ -1744,7 +1840,7 @@
 
     document.getElementById('myProfileModal').classList.remove('hidden');
   }
-  function closeMyProfileModal() { document.getElementById('myProfileModal').classList.add('hidden'); }
+  function closeMyProfileModal() { document.getElementById('myProfileModal').classList.add('hidden'); if (isUserLoggedIn) loadWelcomeBand(); }
 
   // Profile completion — a simple checklist of the fields that make a
   // profile genuinely useful for others to consider.
@@ -1981,7 +2077,7 @@
           </div>`).join('')
       : '<p class="text-sm text-ink/40 font-body">You haven\'t sent any interests yet.</p>';
   }
-  function closeInterestsModal() { document.getElementById('interestsModal').classList.add('hidden'); }
+  function closeInterestsModal() { document.getElementById('interestsModal').classList.add('hidden'); if (isUserLoggedIn) loadWelcomeBand(); }
 
   async function respondToInterest(interestId, status) {
     const { error } = await supabaseClient.from('interests').update({ status }).eq('id', interestId);
