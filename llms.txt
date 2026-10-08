@@ -1,6 +1,6 @@
 # ShaadiSunnah (Sunnah Safar)
 
-> ShaadiSunnah (also known as Sunnah Safar) is a Muslim matrimony platform for Nikah, based in India. It is built around family involvement and privacy: every profile is reviewed by the team before it goes live, photos and names are blurred for visitors who are not logged in, and mobile/WhatsApp numbers are shared only after both people accept an interest. The platform is for adults (18+) looking for marriage, not for casual chat.
+> ShaadiSunnah (also known as Sunnah Safar) is a Muslim matrimony platform for Nikah, based in India. It is built around family involvement and privacy: every profile is reviewed by the team before it goes live, and mobile/WhatsApp numbers are shared only after both people accept an interest. The platform is for adults (18+) looking for marriage, not for casual chat.
 
 ## Key facts
 - Name: ShaadiSunnah (Sunnah Safar). Website: https://shaadisunnah.com
@@ -16,5 +16,4 @@
 - [Home](https://shaadisunnah.com/): overview, how it works, safety, FAQ, registration
 - [Free Muslim Biodata Maker](https://shaadisunnah.com/biodata.html): create a marriage biodata (PDF) with Bismillah header; runs in the browser and data is not uploaded
 - [Careers](https://shaadisunnah.com/career.html): open roles and application form
-- [Privacy Policy](https://shaadisunnah.com/privacy.html)
-- [Terms of Service](https://shaadisunnah.com/terms.html)
+- [Privacy & Terms](https://shaadisunnah.com/privacy-terms.html): how information is used, safety guidance, member rules
