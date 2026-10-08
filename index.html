@@ -262,31 +262,41 @@
 
 <!-- ============ WELCOME BAND (logged-in users only) ============ -->
 <section id="welcomeBand" class="hidden bg-rose-light/70 border-b border-maroon/10">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-5 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-col-reverse lg:flex-row lg:items-center gap-6 lg:gap-12">
+
+    <!-- Left: greeting, profile score, quick counts -->
     <div class="flex-1 min-w-0">
-      <p dir="rtl" class="text-left text-gold-dark text-3xl leading-none" style="font-family:'Amiri','Playfair Display',serif;">السلام عليكم</p>
-      <p class="font-display text-xl sm:text-2xl text-ink mt-2">Welcome back, <span id="wbName" class="text-maroon"></span></p>
+      <p class="font-display text-xl sm:text-2xl text-ink">Welcome back, <span id="wbName" class="text-maroon"></span></p>
       <p id="wbMsg" class="text-sm text-ink/70 font-body mt-1"></p>
       <a id="wbHelp" href="mailto:support@shaadisunnah.com?subject=Profile%20support" class="hidden inline-flex items-center gap-2 mt-2 text-sm text-maroon underline font-body"><i class="fa-solid fa-envelope"></i>Email support@shaadisunnah.com</a>
-    </div>
-    <div class="lg:w-72">
-      <div class="flex items-center justify-between mb-1.5">
-        <span id="wbStatus" class="text-[11px] tracking-wide font-body font-semibold px-2.5 py-1 rounded-full"></span>
-        <span class="text-xs text-ink/60 font-body">Profile <b id="wbPct" class="text-ink">0%</b> complete</span>
+
+      <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+        <div class="sm:w-72">
+          <div class="flex items-center justify-between mb-1.5">
+            <span id="wbStatus" class="text-[11px] tracking-wide font-body font-semibold px-2.5 py-1 rounded-full"></span>
+            <span class="text-xs text-ink/60 font-body">Profile <b id="wbPct" class="text-ink">0%</b> complete</span>
+          </div>
+          <div class="h-2 rounded-full bg-maroon/10 overflow-hidden"><div id="wbBar" class="h-full bg-maroon rounded-full transition-all" style="width:0%"></div></div>
+          <button id="wbComplete" type="button" class="mt-2 text-xs text-maroon underline font-body">Complete your profile</button>
+        </div>
+        <div class="flex gap-3">
+          <button id="wbInterests" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
+            <span id="wbInterestsN" class="block font-display text-2xl text-maroon leading-none">0</span>
+            <span class="block text-xs text-ink/60 font-body mt-1">New interests</span>
+          </button>
+          <button id="wbShortlist" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
+            <span id="wbShortlistN" class="block font-display text-2xl text-maroon leading-none">0</span>
+            <span class="block text-xs text-ink/60 font-body mt-1">Shortlisted</span>
+          </button>
+        </div>
       </div>
-      <div class="h-2 rounded-full bg-maroon/10 overflow-hidden"><div id="wbBar" class="h-full bg-maroon rounded-full transition-all" style="width:0%"></div></div>
-      <button id="wbComplete" type="button" class="mt-2 text-xs text-maroon underline font-body">Complete your profile</button>
     </div>
-    <div class="flex gap-3">
-      <button id="wbInterests" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
-        <span id="wbInterestsN" class="block font-display text-2xl text-maroon leading-none">0</span>
-        <span class="block text-xs text-ink/60 font-body mt-1">New interests</span>
-      </button>
-      <button id="wbShortlist" type="button" class="min-w-[110px] bg-white border border-gold/30 rounded-xl px-4 py-3 text-left hover:border-maroon transition-colors">
-        <span id="wbShortlistN" class="block font-display text-2xl text-maroon leading-none">0</span>
-        <span class="block text-xs text-ink/60 font-body mt-1">Shortlisted</span>
-      </button>
+
+    <!-- Right: Bismillah -->
+    <div class="lg:w-[430px] shrink-0 text-center lg:text-right">
+      <p dir="rtl" class="text-gold-dark text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.7]" style="font-family:'Amiri','Playfair Display',serif;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
     </div>
+
   </div>
 </section>
 
