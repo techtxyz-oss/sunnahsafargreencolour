@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 tailwind.config = { theme: { extend: {
   colors: { maroon: { DEFAULT: '#0E9F52', dark: '#0A7A3F', light: '#3DD87D' }, gold: { DEFAULT: '#D4A017', dark: '#A6790A' }, ivory: '#FFFFFF', ink: '#1B3B2C', opal: '#EAF7F2' },
@@ -22,17 +24,43 @@ tailwind.config = { theme: { extend: {
   .in:focus { outline: none; box-shadow: 0 0 0 2px rgba(212,160,23,.35); }
   .lb { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(27,59,44,.55); margin-bottom: .25rem; }
   details > summary { cursor: pointer; font-weight: 600; color: #0A7A3F; list-style: none; }
-  #bio { --a: #0E9F52; --b: #EAFBF1; background: #fff; border: 2px solid var(--a); outline: 1px solid var(--a); outline-offset: 4px; aspect-ratio: auto; min-height: 520px; }
-  #bio.t-gold { --a: #A6790A; --b: #FFF7DB; } #bio.t-classic { --a: #222; --b: #F2F2F2; }
-  #bio .sec { background: var(--b); color: var(--a); font-weight: 600; padding: .25rem .6rem; margin: .9rem 0 .35rem; border-left: 4px solid var(--a); font-size: .9rem; }
-  #bio .row { display: flex; gap: .5rem; font-size: .85rem; padding: .12rem .6rem; }
-  #bio .row b { width: 9rem; flex-shrink: 0; font-weight: 500; opacity: .65; }
-  @media print {
-    body { background: #fff; } body * { visibility: hidden; }
-    #bio, #bio * { visibility: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    #bio { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
-    @page { size: A4; margin: 10mm; }
-  }
+  #bioWrap { width: 100%; overflow: hidden; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.12); background: #fff; }
+  #bioScale { transform-origin: 0 0; width: 794px; }
+  .th { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem; border-radius: 999px; border: 1px solid rgba(27,59,44,.2); background: #fff; font-size: .75rem; white-space: nowrap; }
+  .th i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 2px solid #D4A017; }
+  .th.on { border-color: #0E9F52; box-shadow: 0 0 0 2px rgba(14,159,82,.25); font-weight: 600; }
+  #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 96px; background: #1B3B2C; color: #fff; padding: .6rem 1rem; border-radius: 999px; font-size: .85rem; z-index: 100; display: none; max-width: 90vw; text-align: center; }
+  #waFloat { bottom: calc(16px + env(safe-area-inset-bottom,0px)); }
+  @media (max-width: 1023px) { #waFloat { bottom: calc(92px + env(safe-area-inset-bottom,0px)) !important; } }
+
+  /* ===== Biodata sheet: one A4 page (794 x 1123 px), scaled down on phones ===== */
+  .sheet { width: 794px; background: #fff; padding: 10px; box-sizing: border-box; font-family: 'Jost', sans-serif; color: #1f2937; text-align: left; }
+  .sheet * { box-sizing: border-box; }
+  .bio { min-height: 1103px; background: #fff; border: 2px solid var(--a); box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--a); padding: 30px 42px 22px; display: flex; flex-direction: column; }
+  .bio .content { flex: 1; }
+  .bio .bis { text-align: center; }
+  .bio .bis .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 36px; line-height: 1.6; color: var(--a); }
+  .bio .bis .la { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #777; }
+  .bio .head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 12px; }
+  .bio .head.center { justify-content: center; text-align: center; }
+  .bio .nm { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: var(--a); line-height: 1.15; }
+  .bio .sub { font-size: 14px; color: #666; margin-top: 6px; }
+  .bio .gl { width: 90px; height: 3px; background: var(--g); border-radius: 3px; margin-top: 12px; }
+  .bio .head.center .gl { margin-left: auto; margin-right: auto; }
+  .bio .photo { width: 190px; height: 240px; object-fit: cover; object-position: center 20%; border: 3px solid var(--g); border-radius: 10px; display: block; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 3px var(--a); }
+  .bio .noph { width: 190px; height: 240px; border: 2px dashed var(--a); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--a); opacity: .4; font-size: 12px; flex-shrink: 0; }
+  .bio .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+  .bio .blk { min-width: 0; }
+  .bio .sec { background: var(--b); color: var(--a); font-weight: 600; font-size: 14.5px; padding: 4px 10px; margin: 12px 0 5px; border-left: 4px solid var(--a); }
+  .bio .row { display: flex; gap: 8px; font-size: 13.5px; line-height: 1.45; padding: 2px 10px; }
+  .bio .row b { width: 100px; flex-shrink: 0; font-weight: 500; color: #6b6b6b; }
+  .bio .row span { min-width: 0; overflow-wrap: anywhere; }
+  .bio .txt { font-size: 13.5px; line-height: 1.6; padding: 2px 10px; white-space: pre-line; }
+  .bio .dua { text-align: center; margin-top: 14px; font-family: 'Amiri', serif; direction: rtl; font-size: 19px; color: var(--a); }
+  .bio .jz { text-align: center; font-size: 11px; color: #888; margin-top: 2px; }
+  .bio .brandw { display: flex; justify-content: center; margin-top: 14px; }
+  .bio .brand { background: var(--a); color: #fff; border: 1px solid var(--g); border-radius: 999px; padding: 7px 22px; font-size: 12.5px; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .bio .brand .url { font-weight: 600; color: #FFE9A8; }
 </style>
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0E9F52">
@@ -56,7 +84,7 @@ tailwind.config = { theme: { extend: {
   <p class="text-ink/60 mt-2 max-w-xl mx-auto text-sm">Fill in the form, watch your biodata build live, and download it as a PDF. No sign-up needed. Your details stay in your browser and are never uploaded to our server.</p>
 </section>
 
-<main class="max-w-6xl mx-auto px-5 pb-16 grid lg:grid-cols-12 gap-6">
+<main class="max-w-6xl mx-auto px-5 pb-32 lg:pb-16 grid lg:grid-cols-12 gap-6">
   <!-- FORM -->
   <div class="lg:col-span-5 space-y-3">
     <details open class="bg-white rounded-xl border border-gold/20 p-4"><summary>Personal Details</summary>
@@ -77,7 +105,7 @@ tailwind.config = { theme: { extend: {
         <div class="col-span-2"><label class="lb">Sect</label><select id="f_sect" class="in"><option value="">Select</option><option>Sunni - Hanafi</option><option>Sunni - Shafi'i</option><option>Ahle Hadith</option><option>Deobandi</option><option>Barelvi</option><option>Shia</option><option>Other</option></select></div>
         <div><label class="lb">Prayer (Namaz)</label><select id="f_namaz" class="in"><option value="">Select</option><option>All five daily prayers</option><option>Most of the time</option><option>Sometimes</option><option>Learning</option></select></div>
         <div><label class="lb">Quran</label><select id="f_quran" class="in"><option value="">Select</option><option>Can recite (Nazra)</option><option>With translation</option><option>Hafiz / Hafiza</option><option>Learning</option></select></div>
-        <div class="col-span-2"><label class="lb">Hijab / Niqab / Beard</label><input id="f_appearance" class="in" placeholder="e.g. Hijab, or beard and cap"></div>
+        <div class="col-span-2"><label id="lb_appearance" class="lb">Hijab / Niqab / Beard</label><input id="f_appearance" class="in" placeholder="e.g. Hijab, or beard and cap"></div>
       </div>
     </details>
     <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Education &amp; Career</summary>
@@ -100,14 +128,16 @@ tailwind.config = { theme: { extend: {
     </details>
     <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>About &amp; Expectations</summary>
       <div class="space-y-3 mt-3">
-        <div><label class="lb">About me</label><textarea id="f_about" rows="3" class="in"></textarea></div>
-        <div><label class="lb">Expectations from a spouse</label><textarea id="f_expect" rows="3" class="in"></textarea></div>
+        <p class="text-xs text-ink/55">A short general text is pre-filled (it changes with Male / Female). Edit it freely &ndash; once you type, it stays exactly as you wrote it.</p>
+        <div><label class="lb">About me</label><textarea id="f_about" rows="4" class="in"></textarea></div>
+        <div><label class="lb">Expectations from a spouse</label><textarea id="f_expect" rows="4" class="in"></textarea></div>
+        <button id="resetAuto" type="button" class="text-xs text-maroon underline">Reset both to suggested text</button>
       </div>
     </details>
     <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Photo &amp; Contact</summary>
       <div class="space-y-3 mt-3">
-        <div><label class="lb">Photo (optional - it is fine to skip it, especially for sisters)</label>
-          <input id="photoIn" type="file" accept="image/*" class="text-sm"> <button id="photoDel" type="button" class="text-xs text-red-600 underline ml-2">Remove</button></div>
+        <div><label class="lb">Photo (optional - fine to skip, especially for sisters). Use a clear, front-facing photo.</label>
+          <input id="photoIn" type="file" accept="image/*" class="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-maroon file:text-white file:text-sm"> <button id="photoDel" type="button" class="text-xs text-red-600 underline ml-2">Remove</button></div>
         <label class="flex items-start gap-2 text-sm"><input id="showContact" type="checkbox" class="mt-1"> Show contact details on the biodata <span class="text-ink/50">(only if you will share it with your own relatives)</span></label>
         <div class="grid grid-cols-2 gap-3">
           <div><label class="lb">Guardian (Wali) Name</label><input id="f_wali" class="in"></div>
@@ -120,20 +150,23 @@ tailwind.config = { theme: { extend: {
   </div>
 
   <!-- PREVIEW -->
-  <div class="lg:col-span-7">
-    <div class="lg:sticky lg:top-20">
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <span class="text-xs uppercase tracking-wider text-ink/50">Template:</span>
-        <button data-t="green" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#0E9F52" aria-label="Green"></button>
-        <button data-t="gold" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#A6790A" aria-label="Gold"></button>
-        <button data-t="classic" class="th w-7 h-7 rounded-full border-2 border-ink/30" style="background:#222" aria-label="Classic"></button>
-        <span class="flex-1"></span>
-        <button id="waBtn" type="button" class="px-4 py-2 rounded-full border border-maroon text-maroon text-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
-        <button id="pdfBtn" type="button" class="px-4 py-2 rounded-full bg-maroon text-white text-sm"><i class="fa-solid fa-download"></i> PDF Download</button>
+  <div id="previewWrap" class="lg:col-span-7 min-w-0">
+    <div class="lg:sticky lg:top-[57px] z-20 bg-[#F6FBF8] pb-3 pt-1">
+      <div class="flex gap-2 overflow-x-auto pb-1" id="themeRow">
+        <button data-t="pink" class="th"><i style="background:#C2376B"></i>Pink</button>
+        <button data-t="gold" class="th"><i style="background:#D4A017"></i>Golden</button>
+        <button data-t="green" class="th"><i style="background:#0E9F52"></i>Green</button>
       </div>
-      <div id="bio" class="t-green p-6 sm:p-8 shadow-lg"></div>
-      <p class="text-[11px] text-ink/45 mt-2">To save a PDF, click "PDF Download", then choose <b>Destination: Save as PDF</b> in the print window.</p>
+      <div class="flex flex-wrap items-center gap-2 mt-2">
+        <span class="flex-1"></span>
+        <span class="hidden lg:flex gap-2">
+          <button type="button" class="js-wa px-4 py-2 rounded-full border border-maroon text-maroon text-sm"><i class="fa-brands fa-whatsapp"></i> <span class="lbl">Share on WhatsApp</span></button>
+          <button type="button" class="js-pdf px-4 py-2 rounded-full bg-maroon text-white text-sm"><i class="fa-solid fa-download"></i> <span class="lbl">Download PDF</span></button>
+        </span>
+      </div>
     </div>
+    <div id="bioWrap"><div id="bioScale"><div id="bio"></div></div></div>
+    <p class="text-[11px] text-ink/45 mt-2">Your biodata downloads as a single-page A4 PDF with your photo in full quality. The preview above is exactly what the PDF looks like, just scaled to fit your screen.</p>
   </div>
 </main>
 
@@ -141,22 +174,56 @@ tailwind.config = { theme: { extend: {
 <p>&copy; 2026 ShaadiSunnah (Sunnah Safar) &middot; <a href="/" class="underline">Home</a> &middot; <a href="biodata.html" class="underline">Free Biodata Maker</a> &middot; <a href="career.html" class="underline">Careers</a> &middot; <a href="privacy.html" class="underline">Privacy Policy</a> &middot; <a href="terms.html" class="underline">Terms of Service</a></p>
 <p class="mt-1">Support: <a href="mailto:support@shaadisunnah.com" class="underline">support@shaadisunnah.com</a> &middot; WhatsApp / Call: <a href="https://wa.me/919189415356" class="underline">+91 91894 15356</a></p></footer>
 
+<div class="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-white border-t border-gold/30 px-3 pt-2 flex gap-2" style="padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))">
+  <button type="button" id="goPrev" class="px-4 py-3 rounded-xl border border-ink/20 text-sm"><i class="fa-regular fa-eye"></i></button>
+  <button type="button" class="js-wa flex-1 py-3 rounded-xl border border-maroon text-maroon text-sm font-medium"><i class="fa-brands fa-whatsapp"></i> <span class="lbl">Share</span></button>
+  <button type="button" class="js-pdf flex-[1.3] py-3 rounded-xl bg-maroon text-white text-sm font-medium"><i class="fa-solid fa-download"></i> <span class="lbl">Download PDF</span></button>
+</div>
+<div id="toast"></div>
 <script>
+const SITE = 'https://shaadisunnah.com/biodata.html';
+const SITE_SHOW = 'shaadisunnah.com/biodata.html';
 const KEYS = ['name','gender','dob','height','complexion','marital','tongue','city','state','sect','namaz','quran','appearance','education','profession','income','fatherName','fatherOcc','motherName','motherOcc','brothers','sisters','famType','about','expect','wali','phone','address'];
-const LS = 'sunnah_biodata_v1';
-let photo = '', theme = 'green';
+const LS = 'sunnah_biodata_v2';
+const PAGE_W = 794, PAGE_H = 1123;
+let photo = '', theme = 'green', themeTouched = false, auto = { about: true, expect: true };
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const val = k => $('f_' + k).value.trim();
 
+const THEMES = {
+  pink:  { a: '#C2376B', b: '#FFF0F5', g: '#D4A017' },
+  gold:  { a: '#A6790A', b: '#FFF7DB', g: '#D4A017' },
+  green: { a: '#0E9F52', b: '#EAFBF1', g: '#D4A017' }
+};
+
+/* General, short default text. Changes only with gender, and only until the user edits it. */
+const DEF = {
+  Male: {
+    about: 'Alhamdulillah, I am a practicing Muslim who tries to follow the Quran and Sunnah in daily life. I am honest, respectful and family-oriented, and I hope for a marriage built on taqwa, kindness and mutual understanding.',
+    expect: 'I am looking for a pious, caring and well-mannered Muslim wife who values deen and family, and who will be a supportive partner in both this world and the Hereafter.'
+  },
+  Female: {
+    about: 'Alhamdulillah, I am a practicing Muslimah who tries to live by the teachings of the Quran and Sunnah. I am kind, modest and family-oriented, and I hope to build a home based on taqwa, mutual respect and love for the sake of Allah.',
+    expect: 'I am looking for a pious, responsible and kind Muslim husband who practices his deen, treats others with respect, and will be a caring partner in both this world and the Hereafter.'
+  },
+  '': {
+    about: 'Alhamdulillah, I am a practicing Muslim who tries to follow the Quran and Sunnah in daily life. I am honest, respectful and family-oriented, and I hope for a marriage built on taqwa and mutual understanding.',
+    expect: 'I am looking for a pious, kind and understanding Muslim spouse who values deen and family, and who will be a supportive partner in this life and the Hereafter.'
+  }
+};
+function applyAuto() { ['about', 'expect'].forEach(k => { if (auto[k]) $('f_' + k).value = (DEF[val('gender')] || DEF[''])[k]; }); }
+
+/* ---------- Content ---------- */
 function age(dob) { if (!dob) return ''; const d = new Date(dob), n = new Date(); let a = n.getFullYear() - d.getFullYear(); if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--; return a > 0 && a < 100 ? a + ' years' : ''; }
 function sections() {
   const v = {}; KEYS.forEach(k => v[k] = val(k));
   const join = (a, b) => [a, b].filter(Boolean).join(' - ');
   const loc = [v.city, v.state].filter(Boolean).join(', ');
+  const hl = v.gender === 'Female' ? 'Hijab / Niqab' : v.gender === 'Male' ? 'Beard / Cap' : 'Hijab / Beard';
   const secs = [
     ['Personal Details', [['Gender', v.gender], ['Age', age(v.dob)], ['Height', v.height], ['Complexion', v.complexion], ['Marital Status', v.marital], ['Location', loc], ['Mother Tongue', v.tongue]]],
-    ['Deen / Religious', [['Sect', v.sect], ['Prayer (Namaz)', v.namaz], ['Quran', v.quran], ['Hijab / Beard', v.appearance]]],
+    ['Deen / Religious', [['Sect', v.sect], ['Prayer (Namaz)', v.namaz], ['Quran', v.quran], [hl, v.appearance]]],
     ['Education & Career', [['Education', v.education], ['Profession', v.profession], ['Annual Income', v.income]]],
     ['Family Details', [['Father', join(v.fatherName, v.fatherOcc)], ['Mother', join(v.motherName, v.motherOcc)], ['Brothers', v.brothers], ['Sisters', v.sisters], ['Family Type', v.famType]]],
     ['About Me', [['', v.about]]],
@@ -166,51 +233,144 @@ function sections() {
   else secs.push(['Contact', [['', 'Please contact through the person who shared this biodata.']]]);
   return { v, secs: secs.map(([t, rows]) => [t, rows.filter(r => r[1])]).filter(s => s[1].length) };
 }
+const USER_SVG = '<svg width="54" height="54" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8z"/></svg>';
+function bioHTML(forExport) {
+  const { v, secs } = sections(), th = THEMES[theme], map = Object.fromEntries(secs);
+  const blk = (t, rows) => `<div class="blk"><div class="sec">${esc(t)}</div>${rows.map(([l, x]) => l ? `<div class="row"><b>${esc(l)}</b><span>${esc(x)}</span></div>` : `<div class="txt">${esc(x)}</div>`).join('')}</div>`;
+  let body = '';
+  [['Personal Details', 'Deen / Religious'], ['Education & Career', 'Family Details']].forEach(p => {
+    const have = p.filter(t => map[t]);
+    if (have.length === 2) body += `<div class="two">${have.map(t => blk(t, map[t])).join('')}</div>`;
+    else if (have.length === 1) body += blk(have[0], map[have[0]]);
+  });
+  const ae = ['About Me', 'Expectations'].filter(t => map[t]);
+  if (ae.length === 2) body += `<div class="two">${ae.map(t => blk(t, map[t])).join('')}</div>`; else ae.forEach(t => body += blk(t, map[t]));
+  if (map['Contact']) body += blk('Contact', map['Contact']);
+  const ph = photo ? `<img class="photo" alt="" src="${photo}">` : (forExport ? '' : `<div class="noph">${USER_SVG}<span>Photo (optional)</span></div>`);
+  const sub = esc([v.profession, [v.city, v.state].filter(Boolean).join(', ')].filter(Boolean).join(' • ')) || 'Muslim Marriage Biodata';
+  return `<div class="sheet"><div class="bio" style="--a:${th.a};--b:${th.b};--g:${th.g}">
+    <div class="content">
+      <div class="bis"><div class="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div><div class="la">Bismillahir Rahmanir Raheem</div></div>
+      <div class="head ${ph ? '' : 'center'}"><div><div class="nm">${esc(v.name || 'Your Name')}</div><div class="sub">${sub}</div><div class="gl"></div></div>${ph}</div>
+      ${body || '<p style="opacity:.45;font-size:14px;margin-top:20px">Your biodata will appear here as you fill in the form.</p>'}
+      <div class="dua">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</div>
+      <div class="jz">Jazakallahu khairan</div>
+    </div>
+    <div class="brandw"><div class="brand"><span>Created free with <b>ShaadiSunnah</b></span><span>&bull;</span><span class="url">${SITE_SHOW}</span></div></div>
+  </div></div>`;
+}
+
+/* ---------- Preview (fixed A4 sheet scaled to the screen) ---------- */
+function fit() {
+  const wrap = $('bioWrap'), sc = $('bioScale'), s = Math.min(1, wrap.clientWidth / PAGE_W);
+  sc.style.transform = `scale(${s})`; wrap.style.height = (sc.offsetHeight * s) + 'px';
+}
 function render() {
-  const { v, secs } = sections();
-  const body = secs.map(([t, rows]) => `<div class="sec">${esc(t)}</div>` + rows.map(([l, x]) => `<div class="row">${l ? `<b>${esc(l)}</b>` : ''}<span>${esc(x)}</span></div>`).join('')).join('');
-  const ph = photo ? `<img src="${photo}" alt="" style="width:110px;height:130px;object-fit:cover;border:2px solid var(--a);border-radius:6px">` : `<div style="width:110px;height:130px;border:2px dashed var(--a);border-radius:6px;display:flex;align-items:center;justify-content:center;opacity:.35"><i class="fa-solid fa-user fa-2x"></i></div>`;
-  $('bio').className = 't-' + theme + ' p-6 sm:p-8 shadow-lg';
-  $('bio').innerHTML = `
-    <div style="text-align:center">
-      <div class="arabic" style="font-size:2rem;color:var(--a);line-height:1.6">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.6">Bismillahir Rahmanir Raheem</div>
-    </div>
-    <div style="display:flex;gap:1rem;align-items:center;justify-content:space-between;margin-top:1rem">
-      <div><div class="font-display" style="font-size:1.7rem;font-weight:600;color:var(--a)">${esc(v.name || 'Your Name')}</div>
-      <div style="font-size:.85rem;opacity:.65">${esc([v.profession, [v.city, v.state].filter(Boolean).join(', ')].filter(Boolean).join(' • ')) || 'Muslim Marriage Biodata'}</div></div>${ph}
-    </div>
-    ${body || '<p style="opacity:.45;font-size:.85rem;margin-top:1rem">Your biodata will appear here as you fill in the form.</p>'}
-    <div class="arabic" style="text-align:center;margin-top:1.2rem;font-size:1.05rem;color:var(--a)">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</div>
-    <div style="text-align:center;font-size:.65rem;opacity:.5;margin-top:.3rem">Jazakallahu khairan • shaadisunnah.com</div>`;
-  document.querySelectorAll('.th').forEach(b => b.style.outline = b.dataset.t === theme ? '2px solid #D4A017' : 'none');
+  $('bio').innerHTML = bioHTML(false);
+  document.querySelectorAll('.th').forEach(b => b.classList.toggle('on', b.dataset.t === theme));
+  const g = val('gender'); $('lb_appearance').textContent = g === 'Female' ? 'Hijab / Niqab' : g === 'Male' ? 'Beard / Cap' : 'Hijab / Niqab / Beard';
+  fit();
 }
 function save() {
-  try { const o = { theme, show: $('showContact').checked }; KEYS.forEach(k => o[k] = val(k)); localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {}
+  try { const o = { theme, themeTouched, auto, show: $('showContact').checked }; KEYS.forEach(k => o[k] = val(k)); localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {}
 }
 function load() {
-  try { const o = JSON.parse(localStorage.getItem(LS) || 'null'); if (!o) return; KEYS.forEach(k => { if (o[k]) $('f_' + k).value = o[k]; }); theme = o.theme || 'green'; $('showContact').checked = !!o.show; } catch (e) {}
+  let o = null; try { o = JSON.parse(localStorage.getItem(LS) || 'null'); } catch (e) {}
+  if (!o) { applyAuto(); return; }
+  KEYS.forEach(k => { if (o[k]) $('f_' + k).value = o[k]; });
+  theme = THEMES[o.theme] ? o.theme : 'green'; themeTouched = !!o.themeTouched; 
+  auto = o.auto || { about: false, expect: false }; $('showContact').checked = !!o.show;
+  applyAuto();
 }
+
 KEYS.forEach(k => $('f_' + k).addEventListener('input', () => { render(); save(); }));
-$('f_gender').addEventListener('change', () => { render(); save(); });
+['about', 'expect'].forEach(k => $('f_' + k).addEventListener('input', () => { auto[k] = false; save(); }));
+$('f_gender').addEventListener('change', () => {
+  const g = val('gender');
+  if (!themeTouched && g) theme = g === 'Female' ? 'pink' : 'green';
+  applyAuto(); render(); save();
+});
+$('resetAuto').addEventListener('click', () => { auto = { about: true, expect: true }; applyAuto(); render(); save(); });
 $('showContact').addEventListener('change', () => { render(); save(); });
-document.querySelectorAll('.th').forEach(b => b.addEventListener('click', () => { theme = b.dataset.t; render(); save(); }));
+document.querySelectorAll('.th').forEach(b => b.addEventListener('click', () => { theme = b.dataset.t; themeTouched = true; render(); save(); }));
 $('photoIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 400 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = im.width * s; c.height = im.height * s; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); photo = c.toDataURL('image/jpeg', .85); render(); }; im.src = r.result; };
+  r.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 1100 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s); const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(im, 0, 0, c.width, c.height); photo = c.toDataURL('image/jpeg', .92); render(); }; im.src = r.result; };
   r.readAsDataURL(f);
 });
 $('photoDel').addEventListener('click', () => { photo = ''; $('photoIn').value = ''; render(); });
-$('clearBtn').addEventListener('click', () => { if (!confirm('Clear the whole form and the saved draft?')) return; KEYS.forEach(k => $('f_' + k).value = ''); $('showContact').checked = false; photo = ''; try { localStorage.removeItem(LS); } catch (e) {} render(); });
-$('pdfBtn').addEventListener('click', () => window.print());
-$('waBtn').addEventListener('click', () => {
-  const { v, secs } = sections();
-  const t = ['بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '*' + (v.name || 'Marriage Biodata') + '*'].concat(secs.map(([h, rows]) => '\n*' + h + '*\n' + rows.map(([l, x]) => (l ? l + ': ' : '') + x).join('\n')));
-  window.open('https://wa.me/?text=' + encodeURIComponent(t.join('\n')), '_blank');
+$('clearBtn').addEventListener('click', () => {
+  if (!confirm('Clear the whole form and the saved draft?')) return;
+  KEYS.forEach(k => $('f_' + k).value = ''); $('showContact').checked = false; photo = ''; auto = { about: true, expect: true }; themeTouched = false; theme = 'green';
+  try { localStorage.removeItem(LS); } catch (e) {} applyAuto(); render();
 });
+$('goPrev').addEventListener('click', () => $('previewWrap').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+if (window.ResizeObserver) new ResizeObserver(fit).observe($('bioWrap')); else window.addEventListener('resize', fit);
+
+/* ---------- PDF: real file download + WhatsApp share ---------- */
+function toast(m) { const t = $('toast'); t.textContent = m; t.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => t.style.display = 'none', 3800); }
+function setBusy(b, txt) { document.querySelectorAll('.js-pdf,.js-wa').forEach(x => { x.disabled = b; x.style.opacity = b ? .6 : 1; }); if (b) document.querySelectorAll('.js-pdf .lbl,.js-wa .lbl').forEach(l => { l.dataset.o = l.textContent; l.textContent = txt; }); else document.querySelectorAll('.js-pdf .lbl,.js-wa .lbl').forEach(l => { if (l.dataset.o) l.textContent = l.dataset.o; }); }
+const fileName = () => 'Biodata-' + (val('name').replace(/[^\w\u0600-\u06FF]+/g, '-').replace(/^-|-$/g, '') || 'ShaadiSunnah') + '.pdf';
+
+async function buildPDF() {
+  if (!window.html2canvas || !window.jspdf) throw new Error('lib');
+  try { await document.fonts.ready; await Promise.all(['700 30px "Playfair Display"', '600 16px "Playfair Display"', '400 14px Jost', '500 14px Jost', '600 14px Jost', '32px Amiri'].map(f => document.fonts.load(f))); } catch (e) {}
+  const host = document.createElement('div');
+  host.style.cssText = 'position:absolute;left:-10000px;top:0;width:' + PAGE_W + 'px';
+  host.innerHTML = bioHTML(true); document.body.appendChild(host);
+  try {
+    const el = host.firstElementChild;
+    await Promise.all([...el.querySelectorAll('img')].map(im => im.decode ? im.decode().catch(() => {}) : null));
+    const H = el.offsetHeight, W = el.offsetWidth;
+    const scale = Math.min(3, Math.sqrt(14e6 / (W * H)));
+    const canvas = await html2canvas(el, { scale, backgroundColor: '#ffffff', logging: false, useCORS: true, scrollX: 0, scrollY: 0 });
+    const br = el.querySelector('.brand').getBoundingClientRect(), er = el.getBoundingClientRect();
+    // Everything always goes on ONE A4 page: if the content is taller than A4 it is scaled down to fit.
+    let w = 210, h = 210 * H / W;
+    if (h > 297) { h = 297; w = 297 * W / H; }
+    const x0 = (210 - w) / 2, k = w / W;
+    const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'p', compress: true });
+    pdf.setProperties({ title: 'Muslim Marriage Biodata - ' + (val('name') || ''), creator: 'ShaadiSunnah' });
+    pdf.addImage(canvas.toDataURL('image/jpeg', .95), 'JPEG', x0, 0, w, h);
+    pdf.link(x0 + (br.left - er.left) * k, (br.top - er.top) * k, br.width * k, br.height * k, { url: SITE });
+    return pdf.output('blob');
+  } finally { host.remove(); }
+}
+function needName() { if (val('name')) return false; toast('Please enter the Full Name first.'); $('f_name').focus(); return true; }
+function saveBlob(blob) {
+  const u = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = u; a.download = fileName(); document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 60000);
+}
+async function doDownload() {
+  if (needName()) return; setBusy(true, 'Preparing…');
+  try { saveBlob(await buildPDF()); toast('PDF saved to your downloads.'); }
+  catch (e) { toast('Could not create the PDF. Please check your internet and try again.'); }
+  setBusy(false);
+}
+async function doShare() {
+  if (needName()) return; setBusy(true, 'Preparing…');
+  const text = 'Assalamu Alaikum.\nMarriage biodata of ' + val('name') + '.\n\nMake your free Muslim biodata here: ' + SITE;
+  try {
+    const blob = await buildPDF(), file = new File([blob], fileName(), { type: 'application/pdf' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'Marriage Biodata', text }); }
+      catch (e) { if (e.name !== 'AbortError') throw e; }
+    } else {
+      saveBlob(blob); toast('PDF saved. Attach it in WhatsApp now.');
+      setTimeout(() => window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank'), 900);
+    }
+  } catch (e) { toast('Could not share. Please use Download PDF and attach it in WhatsApp.'); }
+  setBusy(false);
+}
+document.querySelectorAll('.js-pdf').forEach(b => b.addEventListener('click', doDownload));
+document.querySelectorAll('.js-wa').forEach(b => b.addEventListener('click', doShare));
+
 load(); render();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 </script>
-<a href="https://wa.me/919189415356?text=Assalamu%20Alaikum%2C%20I%20would%20like%20to%20know%20more%20about%20ShaadiSunnah." target="_blank" rel="noopener" aria-label="Chat with ShaadiSunnah on WhatsApp" style="position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 8px 20px rgba(0,0,0,.25)"><i class="fa-brands fa-whatsapp"></i></a>
+
+<a id="waFloat" href="https://wa.me/919189415356?text=Assalamu%20Alaikum%2C%20I%20would%20like%20to%20know%20more%20about%20ShaadiSunnah." target="_blank" rel="noopener" aria-label="Chat with ShaadiSunnah on WhatsApp" style="position:fixed;right:16px;z-index:90;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 8px 20px rgba(0,0,0,.25)"><i class="fa-brands fa-whatsapp"></i></a>
 </body>
 </html>
