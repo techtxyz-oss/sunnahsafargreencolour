@@ -61,7 +61,7 @@ tailwind.config = { theme: { extend: {
   .bio .dua { text-align: center; margin-top: 14px; font-family: 'Amiri', serif; direction: rtl; font-size: 19px; line-height: 2; color: var(--a); }
   .bio .jz { text-align: center; font-size: 11px; color: #888; margin-top: 2px; }
   .bio .brandw { display: flex; justify-content: center; margin-top: 14px; }
-  .bio .brand { background: var(--a); color: #fff; border: 1px solid var(--g); border-radius: 999px; padding: 7px 22px; font-size: 12.5px; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .bio .brand { background: var(--a); color: #fff; border: 1px solid var(--g); border-radius: 999px; padding: 8px 30px; font-size: 14px; letter-spacing: .03em; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
   .bio .brand .url { font-weight: 600; color: #FFE9A8; }
 
   /* ===== Soft, elegant header: tinted ivory, deep theme colour, fine gold lines ===== */
@@ -77,8 +77,8 @@ tailwind.config = { theme: { extend: {
   .bio .hdr .gl { background: #C9A227; width: 70px; height: 2px; margin-top: 12px; }
   .bio .hdr .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
   .bio .hdr .chip { border: 1px solid rgba(201,162,39,.7); background: #fff; color: var(--a2); border-radius: 999px; padding: 4px 13px; font-size: 12.5px; font-weight: 500; }
-  .bio .hdr .photo { width: 175px; height: 220px; border: 3px solid #fff; border-radius: 10px; box-shadow: 0 0 0 2px #C9A227, 0 4px 10px rgba(0,0,0,.12); }
-  .bio .hdr .noph { width: 175px; height: 220px; border-color: var(--a); color: var(--a); opacity: .45; }
+  .bio .hdr .photo { width: 175px; height: 225px; border: 3px solid #fff; border-radius: 88px 88px 12px 12px; box-shadow: 0 0 0 2px #C9A227, 0 0 0 8px rgba(201,162,39,.20), 0 8px 16px rgba(0,0,0,.14); }
+  .bio .hdr .noph { width: 175px; height: 225px; border-radius: 88px 88px 12px 12px; border-color: var(--a); color: var(--a); opacity: .45; }
   .bio .hdr .head.center .chips { justify-content: center; }
 </style>
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -313,7 +313,7 @@ function bioHTML(forExport) {
       ${arTag('d' + th.a, '<div class="dua">' + AR_DUA + '</div>')}
       <div class="jz">Jazakallahu khairan</div>
     </div>
-    <div class="brandw"><div class="brand"><span>Created free with <b>ShaadiSunnah</b></span><span>&bull;</span><span class="url">${SITE_SHOW}</span></div></div>
+    <div class="brandw"><div class="brand"><span class="url">Shaadisunnah.com</span></div></div>
   </div></div>`;
 }
 
