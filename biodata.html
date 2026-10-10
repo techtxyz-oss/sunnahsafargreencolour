@@ -29,6 +29,8 @@ tailwind.config = { theme: { extend: {
   .th { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem; border-radius: 999px; border: 1px solid rgba(27,59,44,.2); background: #fff; font-size: .75rem; white-space: nowrap; }
   .th i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 2px solid #D4A017; }
   .th.on { border-color: #0E9F52; box-shadow: 0 0 0 2px rgba(14,159,82,.25); font-weight: 600; }
+  .sibrow { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; padding: .5rem; border: 1px solid rgba(27,59,44,.12); background: #F6FBF8; border-radius: .6rem; }
+  .addsib { font-size: .75rem; color: #0A7A3F; border: 1px dashed #0E9F52; border-radius: 999px; padding: .3rem .9rem; margin-top: .4rem; background: #fff; }
   #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 96px; background: #1B3B2C; color: #fff; padding: .6rem 1rem; border-radius: 999px; font-size: .85rem; z-index: 100; display: none; max-width: 90vw; text-align: center; }
   #waFloat { bottom: calc(16px + env(safe-area-inset-bottom,0px)); }
   @media (max-width: 1023px) { #waFloat { bottom: calc(92px + env(safe-area-inset-bottom,0px)) !important; } }
@@ -36,7 +38,7 @@ tailwind.config = { theme: { extend: {
   /* ===== Biodata sheet: one A4 page (794 x 1123 px), scaled down on phones ===== */
   .sheet { width: 794px; background: #fff; padding: 10px; box-sizing: border-box; font-family: 'Jost', sans-serif; color: #1f2937; text-align: left; }
   .sheet * { box-sizing: border-box; }
-  .bio { min-height: 1103px; background: #fff; border: 2px solid var(--a); box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--a); padding: 30px 42px 22px; display: flex; flex-direction: column; }
+  .bio { min-height: 1103px; background: #fff; border: 2px solid var(--a); box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--a); padding: 26px 42px 20px; display: flex; flex-direction: column; }
   .bio .content { flex: 1; }
   .bio .bis { text-align: center; }
   .bio .bis .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 36px; line-height: 1.6; color: var(--a); }
@@ -47,11 +49,11 @@ tailwind.config = { theme: { extend: {
   .bio .sub { font-size: 14px; color: #666; margin-top: 6px; }
   .bio .gl { width: 90px; height: 3px; background: var(--g); border-radius: 3px; margin-top: 12px; }
   .bio .head.center .gl { margin-left: auto; margin-right: auto; }
-  .bio .photo { width: 190px; height: 240px; object-fit: cover; object-position: center 20%; border: 3px solid var(--g); border-radius: 10px; display: block; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 3px var(--a); }
-  .bio .noph { width: 190px; height: 240px; border: 2px dashed var(--a); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--a); opacity: .4; font-size: 12px; flex-shrink: 0; }
+  .bio .photo { width: 240px; height: 300px; object-fit: cover; object-position: center var(--py, 20%); border: 3px solid var(--g); border-radius: 10px; display: block; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 3px var(--a); }
+  .bio .noph { width: 240px; height: 300px; border: 2px dashed var(--a); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--a); opacity: .4; font-size: 12px; flex-shrink: 0; }
   .bio .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
   .bio .blk { min-width: 0; }
-  .bio .sec { background: var(--b); color: var(--a); font-weight: 600; font-size: 14.5px; padding: 4px 10px; margin: 12px 0 5px; border-left: 4px solid var(--a); }
+  .bio .sec { background: var(--b); color: var(--a); font-weight: 600; font-size: 14.5px; padding: 4px 10px; margin: 10px 0 5px; border-left: 4px solid var(--a); }
   .bio .row { display: flex; gap: 8px; font-size: 13.5px; line-height: 1.45; padding: 2px 10px; }
   .bio .row b { width: 100px; flex-shrink: 0; font-weight: 500; color: #6b6b6b; }
   .bio .row span { min-width: 0; overflow-wrap: anywhere; }
@@ -98,6 +100,8 @@ tailwind.config = { theme: { extend: {
         <div><label class="lb">Mother Tongue</label><input id="f_tongue" class="in" placeholder="Urdu / Hindi"></div>
         <div><label class="lb">City</label><input id="f_city" class="in"></div>
         <div><label class="lb">State</label><input id="f_state" class="in"></div>
+        <div><label class="lb">Native Place</label><input id="f_native" class="in" placeholder="Optional"></div>
+        <div><label class="lb">Children (if any)</label><input id="f_children" class="in" placeholder="e.g. 1 son, age 4"></div>
       </div>
     </details>
     <details class="bg-white rounded-xl border border-gold/20 p-4"><summary>Deen / Religious</summary>
@@ -121,8 +125,8 @@ tailwind.config = { theme: { extend: {
         <div><label class="lb">Father's Occupation</label><input id="f_fatherOcc" class="in"></div>
         <div><label class="lb">Mother's Name</label><input id="f_motherName" class="in"></div>
         <div><label class="lb">Mother's Occupation</label><input id="f_motherOcc" class="in" placeholder="Homemaker"></div>
-        <div><label class="lb">Brothers</label><input id="f_brothers" class="in" placeholder="e.g. 2 (1 married)"></div>
-        <div><label class="lb">Sisters</label><input id="f_sisters" class="in"></div>
+        <div class="col-span-2"><label class="lb">Brothers (name &amp; occupation)</label><div id="sib_brothers" class="space-y-2"></div><button type="button" class="addsib" data-add="brothers">+ Add brother</button></div>
+        <div class="col-span-2"><label class="lb">Sisters (name &amp; occupation)</label><div id="sib_sisters" class="space-y-2"></div><button type="button" class="addsib" data-add="sisters">+ Add sister</button></div>
         <div class="col-span-2"><label class="lb">Family Type</label><select id="f_famType" class="in"><option value="">Select</option><option>Nuclear</option><option>Joint</option></select></div>
       </div>
     </details>
@@ -138,6 +142,7 @@ tailwind.config = { theme: { extend: {
       <div class="space-y-3 mt-3">
         <div><label class="lb">Photo (optional - fine to skip, especially for sisters). Use a clear, front-facing photo.</label>
           <input id="photoIn" type="file" accept="image/*" class="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-maroon file:text-white file:text-sm"> <button id="photoDel" type="button" class="text-xs text-red-600 underline ml-2">Remove</button></div>
+        <div><label class="lb">Photo position (move face up / down in the frame)</label><input id="photoPos" type="range" min="0" max="100" value="20" class="w-full"></div>
         <label class="flex items-start gap-2 text-sm"><input id="showContact" type="checkbox" class="mt-1"> Show contact details on the biodata <span class="text-ink/50">(only if you will share it with your own relatives)</span></label>
         <div class="grid grid-cols-2 gap-3">
           <div><label class="lb">Guardian (Wali) Name</label><input id="f_wali" class="in"></div>
@@ -183,10 +188,10 @@ tailwind.config = { theme: { extend: {
 <script>
 const SITE = 'https://shaadisunnah.com/biodata.html';
 const SITE_SHOW = 'shaadisunnah.com/biodata.html';
-const KEYS = ['name','gender','dob','height','complexion','marital','tongue','city','state','sect','namaz','quran','appearance','education','profession','income','fatherName','fatherOcc','motherName','motherOcc','brothers','sisters','famType','about','expect','wali','phone','address'];
-const LS = 'sunnah_biodata_v2';
+const KEYS = ['name','gender','dob','height','complexion','marital','tongue','city','state','native','children','sect','namaz','quran','appearance','education','profession','income','fatherName','fatherOcc','motherName','motherOcc','famType','about','expect','wali','phone','address'];
+const LS = 'sunnah_biodata_v2', LSP = 'sunnah_biodata_photo_v1';
 const PAGE_W = 794, PAGE_H = 1123;
-let photo = '', theme = 'green', themeTouched = false, auto = { about: true, expect: true };
+let sibs = { brothers: [], sisters: [] }, photoPos = 20, photo = '', theme = 'green', themeTouched = false, auto = { about: true, expect: true };
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const val = k => $('f_' + k).value.trim();
@@ -222,10 +227,10 @@ function sections() {
   const loc = [v.city, v.state].filter(Boolean).join(', ');
   const hl = v.gender === 'Female' ? 'Hijab / Niqab' : v.gender === 'Male' ? 'Beard / Cap' : 'Hijab / Beard';
   const secs = [
-    ['Personal Details', [['Gender', v.gender], ['Age', age(v.dob)], ['Height', v.height], ['Complexion', v.complexion], ['Marital Status', v.marital], ['Location', loc], ['Mother Tongue', v.tongue]]],
+    ['Personal Details', [['Gender', v.gender], ['Age', age(v.dob)], ['Height', v.height], ['Complexion', v.complexion], ['Marital Status', v.marital], ['Location', loc], ['Native Place', v.native], ['Mother Tongue', v.tongue], ['Children', v.children]]],
     ['Deen / Religious', [['Sect', v.sect], ['Prayer (Namaz)', v.namaz], ['Quran', v.quran], [hl, v.appearance]]],
     ['Education & Career', [['Education', v.education], ['Profession', v.profession], ['Annual Income', v.income]]],
-    ['Family Details', [['Father', join(v.fatherName, v.fatherOcc)], ['Mother', join(v.motherName, v.motherOcc)], ['Brothers', v.brothers], ['Sisters', v.sisters], ['Family Type', v.famType]]],
+    ['Family Details', [['Father', join(v.fatherName, v.fatherOcc)], ['Mother', join(v.motherName, v.motherOcc)], ['Family Type', v.famType]]],
     ['About Me', [['', v.about]]],
     ['Expectations', [['', v.expect]]],
   ];
@@ -243,12 +248,21 @@ function bioHTML(forExport) {
     if (have.length === 2) body += `<div class="two">${have.map(t => blk(t, map[t])).join('')}</div>`;
     else if (have.length === 1) body += blk(have[0], map[have[0]]);
   });
+  const sibBlk = (kind, title) => {
+    const list = sibs[kind].filter(x => x.n.trim() || x.o.trim()); if (!list.length) return '';
+    return `<div class="blk"><div class="sec">${title} (${list.length})</div>${list.map((x, i) => {
+      const tag = [x.e, x.m].filter(Boolean).join(', ');
+      return `<div class="row"><b style="width:20px">${i + 1}.</b><span>${esc([x.n.trim(), x.o.trim()].filter(Boolean).join(' - '))}${tag ? ' <i style="color:#888">(' + esc(tag) + ')</i>' : ''}</span></div>`;
+    }).join('')}</div>`;
+  };
+  const sb = [sibBlk('brothers', 'Brothers'), sibBlk('sisters', 'Sisters')].filter(Boolean);
+  body += sb.length === 2 ? `<div class="two">${sb.join('')}</div>` : sb.join('');
   const ae = ['About Me', 'Expectations'].filter(t => map[t]);
   if (ae.length === 2) body += `<div class="two">${ae.map(t => blk(t, map[t])).join('')}</div>`; else ae.forEach(t => body += blk(t, map[t]));
   if (map['Contact']) body += blk('Contact', map['Contact']);
   const ph = photo ? `<img class="photo" alt="" src="${photo}">` : (forExport ? '' : `<div class="noph">${USER_SVG}<span>Photo (optional)</span></div>`);
   const sub = esc([v.profession, [v.city, v.state].filter(Boolean).join(', ')].filter(Boolean).join(' • ')) || 'Muslim Marriage Biodata';
-  return `<div class="sheet"><div class="bio" style="--a:${th.a};--b:${th.b};--g:${th.g}">
+  return `<div class="sheet"><div class="bio" style="--a:${th.a};--b:${th.b};--g:${th.g};--py:${photoPos}%">
     <div class="content">
       <div class="bis"><div class="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div><div class="la">Bismillahir Rahmanir Raheem</div></div>
       <div class="head ${ph ? '' : 'center'}"><div><div class="nm">${esc(v.name || 'Your Name')}</div><div class="sub">${sub}</div><div class="gl"></div></div>${ph}</div>
@@ -272,17 +286,39 @@ function render() {
   fit();
 }
 function save() {
-  try { const o = { theme, themeTouched, auto, show: $('showContact').checked }; KEYS.forEach(k => o[k] = val(k)); localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {}
+  try { const o = { theme, themeTouched, auto, sibs, pp: photoPos, show: $('showContact').checked }; KEYS.forEach(k => o[k] = val(k)); localStorage.setItem(LS, JSON.stringify(o)); } catch (e) {}
 }
 function load() {
   let o = null; try { o = JSON.parse(localStorage.getItem(LS) || 'null'); } catch (e) {}
+  try { photo = localStorage.getItem(LSP) || ''; } catch (e) {}
   if (!o) { applyAuto(); return; }
+  if (o.sibs) ['brothers', 'sisters'].forEach(k => sibs[k] = (o.sibs[k] || []).map(x => ({ n: x.n || '', o: x.o || '', e: x.e || '', m: x.m || '' })));
+  if (typeof o.pp === 'number') { photoPos = o.pp; $('photoPos').value = o.pp; }
   KEYS.forEach(k => { if (o[k]) $('f_' + k).value = o[k]; });
   theme = THEMES[o.theme] ? o.theme : 'green'; themeTouched = !!o.themeTouched; 
   auto = o.auto || { about: false, expect: false }; $('showContact').checked = !!o.show;
   applyAuto();
 }
 
+function sibForm(kind) {
+  const L = kind === 'brothers' ? 'Brother' : 'Sister', opt = (cur, arr) => arr.map(a => `<option${cur === a ? ' selected' : ''}>${a}</option>`).join('');
+  $('sib_' + kind).innerHTML = sibs[kind].map((x, i) => `<div class="sibrow" data-k="${kind}" data-i="${i}">
+    <input class="in" data-f="n" placeholder="${L} ${i + 1} name" value="${esc(x.n)}">
+    <input class="in" data-f="o" placeholder="Occupation / Studying" value="${esc(x.o)}">
+    <select class="in" data-f="e"><option value="">Elder / Younger</option>${opt(x.e, ['Elder', 'Younger'])}</select>
+    <select class="in" data-f="m"><option value="">Marital status</option>${opt(x.m, ['Single', 'Married', 'Divorced', 'Widowed'])}</select>
+    <button type="button" class="text-xs text-red-600 underline text-left" data-del>Remove</button></div>`).join('');
+}
+document.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.add; sibs[k].push({ n: '', o: '', e: '', m: '' }); sibForm(k); render(); save();
+  const ins = $('sib_' + k).querySelectorAll('.sibrow'); ins[ins.length - 1].querySelector('input').focus();
+}));
+['sib_brothers', 'sib_sisters'].forEach(id => {
+  const box = $(id), upd = e => { const r = e.target.closest('.sibrow'), f = e.target.dataset.f; if (!r || !f) return; sibs[r.dataset.k][+r.dataset.i][f] = e.target.value; render(); save(); };
+  box.addEventListener('input', upd); box.addEventListener('change', upd);
+  box.addEventListener('click', e => { if (!e.target.hasAttribute('data-del')) return; const r = e.target.closest('.sibrow'); sibs[r.dataset.k].splice(+r.dataset.i, 1); sibForm(r.dataset.k); render(); save(); });
+});
+$('photoPos').addEventListener('input', e => { photoPos = +e.target.value; render(); save(); });
 KEYS.forEach(k => $('f_' + k).addEventListener('input', () => { render(); save(); }));
 ['about', 'expect'].forEach(k => $('f_' + k).addEventListener('input', () => { auto[k] = false; save(); }));
 $('f_gender').addEventListener('change', () => {
@@ -296,14 +332,14 @@ document.querySelectorAll('.th').forEach(b => b.addEventListener('click', () => 
 $('photoIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 1100 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s); const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(im, 0, 0, c.width, c.height); photo = c.toDataURL('image/jpeg', .92); render(); }; im.src = r.result; };
+  r.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 1100 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s); const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(im, 0, 0, c.width, c.height); photo = c.toDataURL('image/jpeg', .92); try { localStorage.setItem(LSP, photo); } catch (e) {} render(); }; im.src = r.result; };
   r.readAsDataURL(f);
 });
-$('photoDel').addEventListener('click', () => { photo = ''; $('photoIn').value = ''; render(); });
+$('photoDel').addEventListener('click', () => { photo = ''; $('photoIn').value = ''; try { localStorage.removeItem(LSP); } catch (e) {} render(); });
 $('clearBtn').addEventListener('click', () => {
   if (!confirm('Clear the whole form and the saved draft?')) return;
-  KEYS.forEach(k => $('f_' + k).value = ''); $('showContact').checked = false; photo = ''; auto = { about: true, expect: true }; themeTouched = false; theme = 'green';
-  try { localStorage.removeItem(LS); } catch (e) {} applyAuto(); render();
+  KEYS.forEach(k => $('f_' + k).value = ''); $('showContact').checked = false; photo = ''; sibs = { brothers: [], sisters: [] }; photoPos = 20; $('photoPos').value = 20; sibForm('brothers'); sibForm('sisters'); auto = { about: true, expect: true }; themeTouched = false; theme = 'green';
+  try { localStorage.removeItem(LS); localStorage.removeItem(LSP); } catch (e) {} applyAuto(); render();
 });
 $('goPrev').addEventListener('click', () => $('previewWrap').scrollIntoView({ behavior: 'smooth', block: 'start' }));
 if (window.ResizeObserver) new ResizeObserver(fit).observe($('bioWrap')); else window.addEventListener('resize', fit);
@@ -367,7 +403,7 @@ async function doShare() {
 document.querySelectorAll('.js-pdf').forEach(b => b.addEventListener('click', doDownload));
 document.querySelectorAll('.js-wa').forEach(b => b.addEventListener('click', doShare));
 
-load(); render();
+load(); sibForm('brothers'); sibForm('sisters'); render();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 </script>
 
