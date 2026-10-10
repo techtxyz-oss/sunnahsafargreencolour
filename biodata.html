@@ -41,16 +41,16 @@ tailwind.config = { theme: { extend: {
   .bio { min-height: 1103px; background: #fff; border: 2px solid var(--a); box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--a); padding: 26px 42px 20px; display: flex; flex-direction: column; }
   .bio .content { flex: 1; }
   .bio .bis { text-align: center; }
-  .bio .bis .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 36px; line-height: 1.6; color: var(--a); }
-  .bio .bis .la { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #777; }
-  .bio .head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 12px; }
+  .bio .bis .ar { font-family: 'Amiri', serif; direction: rtl; font-size: 34px; line-height: 2; padding: 6px 0 14px; color: var(--a); }
+  .bio .bis .la { margin-top: 0; position: relative; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #777; }
+  .bio .head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 14px; }
   .bio .head.center { justify-content: center; text-align: center; }
   .bio .nm { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: var(--a); line-height: 1.15; }
-  .bio .sub { font-size: 14px; color: #666; margin-top: 6px; }
+  .bio .sub { text-transform: capitalize; font-size: 14px; color: #666; margin-top: 6px; }
   .bio .gl { width: 90px; height: 3px; background: var(--g); border-radius: 3px; margin-top: 12px; }
   .bio .head.center .gl { margin-left: auto; margin-right: auto; }
-  .bio .photo { width: 240px; height: 300px; object-fit: cover; object-position: center var(--py, 20%); border: 3px solid var(--g); border-radius: 10px; display: block; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 3px var(--a); }
-  .bio .noph { width: 240px; height: 300px; border: 2px dashed var(--a); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--a); opacity: .4; font-size: 12px; flex-shrink: 0; }
+  .bio .photo { width: 185px; height: 235px; object-fit: cover; object-position: center var(--py, 20%); border: 3px solid var(--g); border-radius: 10px; display: block; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 3px var(--a); }
+  .bio .noph { width: 185px; height: 235px; border: 2px dashed var(--a); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--a); opacity: .4; font-size: 12px; flex-shrink: 0; }
   .bio .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
   .bio .blk { min-width: 0; }
   .bio .sec { background: var(--b); color: var(--a); font-weight: 600; font-size: 14.5px; padding: 4px 10px; margin: 10px 0 5px; border-left: 4px solid var(--a); }
@@ -58,11 +58,28 @@ tailwind.config = { theme: { extend: {
   .bio .row b { width: 100px; flex-shrink: 0; font-weight: 500; color: #6b6b6b; }
   .bio .row span { min-width: 0; overflow-wrap: anywhere; }
   .bio .txt { font-size: 13.5px; line-height: 1.6; padding: 2px 10px; white-space: pre-line; }
-  .bio .dua { text-align: center; margin-top: 14px; font-family: 'Amiri', serif; direction: rtl; font-size: 19px; color: var(--a); }
+  .bio .dua { text-align: center; margin-top: 14px; font-family: 'Amiri', serif; direction: rtl; font-size: 19px; line-height: 2; color: var(--a); }
   .bio .jz { text-align: center; font-size: 11px; color: #888; margin-top: 2px; }
   .bio .brandw { display: flex; justify-content: center; margin-top: 14px; }
   .bio .brand { background: var(--a); color: #fff; border: 1px solid var(--g); border-radius: 999px; padding: 7px 22px; font-size: 12.5px; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
   .bio .brand .url { font-weight: 600; color: #FFE9A8; }
+
+  /* ===== Soft, elegant header: tinted ivory, deep theme colour, fine gold lines ===== */
+  .bio .hdr { background: linear-gradient(180deg, var(--b) 0%, #fff 100%); border: 1px solid rgba(201,162,39,.55); border-top: 4px solid #C9A227; border-radius: 12px; padding: 8px 28px 22px; margin: 2px 0 6px; }
+  .bio .hdr .bis .la { color: #9A7B1E; font-size: 10.5px; letter-spacing: .26em; margin-top: 0; }
+  .bio .hdr .orn { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 18px; }
+  .bio .hdr .orn span { width: 120px; height: 1px; background: linear-gradient(90deg, rgba(201,162,39,0), #C9A227); }
+  .bio .hdr .orn span:last-child { background: linear-gradient(270deg, rgba(201,162,39,0), #C9A227); }
+  .bio .hdr .orn i { width: 7px; height: 7px; background: #C9A227; transform: rotate(45deg); display: block; }
+  .bio .hdr .head { margin-top: 0; }
+  .bio .hdr .nm { color: var(--a2); font-size: 36px; }
+  .bio .hdr .sub { color: #5f6b64; font-size: 14.5px; margin-top: 8px; }
+  .bio .hdr .gl { background: #C9A227; width: 70px; height: 2px; margin-top: 12px; }
+  .bio .hdr .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .bio .hdr .chip { border: 1px solid rgba(201,162,39,.7); background: #fff; color: var(--a2); border-radius: 999px; padding: 4px 13px; font-size: 12.5px; font-weight: 500; }
+  .bio .hdr .photo { width: 175px; height: 220px; border: 3px solid #fff; border-radius: 10px; box-shadow: 0 0 0 2px #C9A227, 0 4px 10px rgba(0,0,0,.12); }
+  .bio .hdr .noph { width: 175px; height: 220px; border-color: var(--a); color: var(--a); opacity: .45; }
+  .bio .hdr .head.center .chips { justify-content: center; }
 </style>
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0E9F52">
@@ -197,9 +214,9 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 const val = k => $('f_' + k).value.trim();
 
 const THEMES = {
-  pink:  { a: '#C2376B', b: '#FFF0F5', g: '#D4A017' },
-  gold:  { a: '#A6790A', b: '#FFF7DB', g: '#D4A017' },
-  green: { a: '#0E9F52', b: '#EAFBF1', g: '#D4A017' }
+  pink:  { a: '#C2376B', a2: '#86194A', b: '#FFF0F5', g: '#D4A017' },
+  gold:  { a: '#A6790A', a2: '#5E4204', b: '#FFF7DB', g: '#D4A017' },
+  green: { a: '#0E9F52', a2: '#066B35', b: '#EAFBF1', g: '#D4A017' }
 };
 
 /* General, short default text. Changes only with gender, and only until the user edits it. */
@@ -218,6 +235,28 @@ const DEF = {
   }
 };
 function applyAuto() { ['about', 'expect'].forEach(k => { if (auto[k]) $('f_' + k).value = (DEF[val('gender')] || DEF[''])[k]; }); }
+
+/* ---------- Arabic lines drawn once to canvas -> <img>, so PDF export never shifts/overlaps them ---------- */
+const AR_BIS = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', AR_DUA = 'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ';
+const arCache = {};
+function drawAr(text, px, color) {
+  const sc = 4, c = document.createElement('canvas'), x = c.getContext('2d'), f = (px * sc) + 'px Amiri';
+  x.font = f; x.direction = 'rtl';
+  const w = Math.ceil(x.measureText(text).width) + 16 * sc, h = Math.ceil(px * sc * 2.1);
+  c.width = w; c.height = h;
+  x.font = f; x.direction = 'rtl'; x.textAlign = 'center'; x.textBaseline = 'alphabetic'; x.fillStyle = color;
+  x.fillText(text, w / 2, h * 0.66);
+  return { url: c.toDataURL('image/png'), w: w / sc, h: h / sc };
+}
+async function prepAr() {
+  try {
+    await document.fonts.ready;
+    await Promise.all(['34px Amiri', '19px Amiri'].map(f => document.fonts.load(f, AR_BIS + AR_DUA)));
+    if (!document.fonts.check('34px Amiri', AR_BIS)) return;
+    Object.values(THEMES).forEach(t => { arCache['b' + t.a] = drawAr(AR_BIS, 34, t.a2);  arCache['d' + t.a] = drawAr(AR_DUA, 19, t.a); });
+  } catch (e) {}
+}
+const arTag = (k, fb) => { const i = arCache[k]; return i ? `<img alt="" src="${i.url}" style="display:block;margin:0 auto;width:${i.w}px;height:${i.h}px">` : fb; };
 
 /* ---------- Content ---------- */
 function age(dob) { if (!dob) return ''; const d = new Date(dob), n = new Date(); let a = n.getFullYear() - d.getFullYear(); if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--; return a > 0 && a < 100 ? a + ' years' : ''; }
@@ -261,13 +300,17 @@ function bioHTML(forExport) {
   if (ae.length === 2) body += `<div class="two">${ae.map(t => blk(t, map[t])).join('')}</div>`; else ae.forEach(t => body += blk(t, map[t]));
   if (map['Contact']) body += blk('Contact', map['Contact']);
   const ph = photo ? `<img class="photo" alt="" src="${photo}">` : (forExport ? '' : `<div class="noph">${USER_SVG}<span>Photo (optional)</span></div>`);
+  const chips = [age(v.dob), v.height, v.marital, v.sect].filter(Boolean).map(c => '<span class="chip">' + esc(c) + '</span>').join('');
   const sub = esc([v.profession, [v.city, v.state].filter(Boolean).join(', ')].filter(Boolean).join(' • ')) || 'Muslim Marriage Biodata';
   return `<div class="sheet"><div class="bio" style="--a:${th.a};--b:${th.b};--g:${th.g};--py:${photoPos}%">
     <div class="content">
-      <div class="bis"><div class="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div><div class="la">Bismillahir Rahmanir Raheem</div></div>
-      <div class="head ${ph ? '' : 'center'}"><div><div class="nm">${esc(v.name || 'Your Name')}</div><div class="sub">${sub}</div><div class="gl"></div></div>${ph}</div>
+      <div class="hdr">
+        <div class="bis">${arTag('b' + th.a, '<div class="ar" style="color:' + th.a2 + '">' + AR_BIS + '</div>')}<div class="la">Bismillahir Rahmanir Raheem</div></div>
+        <div class="orn"><span></span><i></i><span></span></div>
+        <div class="head ${ph ? '' : 'center'}"><div><div class="nm">${esc(v.name || 'Your Name')}</div><div class="sub">${sub}</div><div class="gl"></div>${chips ? '<div class="chips">' + chips + '</div>' : ''}</div>${ph}</div>
+      </div>
       ${body || '<p style="opacity:.45;font-size:14px;margin-top:20px">Your biodata will appear here as you fill in the form.</p>'}
-      <div class="dua">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</div>
+      ${arTag('d' + th.a, '<div class="dua">' + AR_DUA + '</div>')}
       <div class="jz">Jazakallahu khairan</div>
     </div>
     <div class="brandw"><div class="brand"><span>Created free with <b>ShaadiSunnah</b></span><span>&bull;</span><span class="url">${SITE_SHOW}</span></div></div>
@@ -351,6 +394,7 @@ const fileName = () => 'Biodata-' + (val('name').replace(/[^\w\u0600-\u06FF]+/g,
 
 async function buildPDF() {
   if (!window.html2canvas || !window.jspdf) throw new Error('lib');
+  await prepAr();
   try { await document.fonts.ready; await Promise.all(['700 30px "Playfair Display"', '600 16px "Playfair Display"', '400 14px Jost', '500 14px Jost', '600 14px Jost', '32px Amiri'].map(f => document.fonts.load(f))); } catch (e) {}
   const host = document.createElement('div');
   host.style.cssText = 'position:absolute;left:-10000px;top:0;width:' + PAGE_W + 'px';
@@ -403,7 +447,7 @@ async function doShare() {
 document.querySelectorAll('.js-pdf').forEach(b => b.addEventListener('click', doDownload));
 document.querySelectorAll('.js-wa').forEach(b => b.addEventListener('click', doShare));
 
-load(); sibForm('brothers'); sibForm('sisters'); render();
+load(); sibForm('brothers'); sibForm('sisters'); render(); prepAr().then(render);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 </script>
 
